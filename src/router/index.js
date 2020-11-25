@@ -7,6 +7,9 @@ import StockCreate from "@/views/StockCreate.vue";
 import StockEdit from "@/views/StockEdit.vue";
 import Report from "@/views/Report.vue";
 import About from "@/views/About.vue";
+import Accounting from "@/views/Accounting.vue";
+import Promotion from "@/views/Promotion.vue";
+import Employee from "@/views/ManageEmployee.vue";
 
 Vue.use(VueRouter);
 
@@ -49,10 +52,10 @@ const routes = [
     component: About
   },
   {
-    path: "/about",
+    path: "/accounting",
     meta: { isSecured: false },
-    name: "about",
-    component: About
+    name: "accounting",
+    component: Accounting
   },
   {
     path: "/",
@@ -61,6 +64,16 @@ const routes = [
   {
     path: "*",
     redirect: "/login"
+  },
+  {
+    path: "/promotion",
+    name: "promotion",
+    component: Promotion
+  },
+  {
+    path: "/employee",
+    name: "employee",
+    component: Employee
   }
 ];
 
