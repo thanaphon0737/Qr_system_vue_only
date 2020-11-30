@@ -1,7 +1,7 @@
 <template>
   <v-navigation-drawer app permanent dark src="@/assets/background_menu.jpg">
     <router-link to="/" exact>
-      <v-img src="@/assets/vue_display.jpg" alt="" width="100%" />
+      <v-img src="@/assets/vue_display.jpg" alt="" width="0%" />
     </router-link>
     <v-list shaped>
       <v-list-item-group v-model="selectedMenu" mandatory color="primary">
@@ -40,10 +40,12 @@ export default {
     return {
       selectedMenu: 0,
       menus: [
-        ["mdi-apps-box", "Stock", "/stock"],
+        ["mdi-bank","Accounting","/accounting"],
+        ["mdi-apps-box", "Manage Stock", "/stock"],
         ["mdi-chart-areaspline", "Report", "/report"],
-        ["mdi-file-document-box-check-outline", "About", "/about"],
-        ["mdi-bank","Accounting","/accounting"]
+        ["mdi-tag","Promotion","/promotion"],
+        ["mdi-account-box-multiple","Manage Employee","/employee"],
+        ["mdi-file-document-box-check-outline", "About", "/about"]
       ]
     };
   },
