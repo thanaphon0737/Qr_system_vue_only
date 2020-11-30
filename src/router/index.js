@@ -7,6 +7,7 @@ import StockCreate from "@/views/StockCreate.vue";
 import StockEdit from "@/views/StockEdit.vue";
 import Report from "@/views/Report.vue";
 import About from "@/views/About.vue";
+import Accounting from "@/views/Accounting.vue"
 
 Vue.use(VueRouter);
 
@@ -49,10 +50,9 @@ const routes = [
     component: About
   },
   {
-    path: "/about",
-    meta: { isSecured: false },
-    name: "about",
-    component: About
+    path: "/accounting",
+    name: "accounting",
+    component: Accounting
   },
   {
     path: "/",

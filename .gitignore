@@ -20,6 +20,7 @@ yarn-error.log*
 *.sln
 *.sw?
 
-
+/backend
+/backend_dummy
 /uploaded
 *.sqlite

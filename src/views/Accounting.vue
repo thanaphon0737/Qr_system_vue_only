@@ -1,5 +1,5 @@
 <template>
-  <div class="about">
+  <div class="accounting">
     <h1>This is an accounting page</h1>
     
     <qrcode-vue :value="value" :size="size" level="H"></qrcode-vue>
