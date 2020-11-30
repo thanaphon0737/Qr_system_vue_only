@@ -7,13 +7,9 @@ import StockCreate from "@/views/StockCreate.vue";
 import StockEdit from "@/views/StockEdit.vue";
 import Report from "@/views/Report.vue";
 import About from "@/views/About.vue";
-<<<<<<< HEAD
-import Accounting from "@/views/Accounting.vue"
-=======
 import Accounting from "@/views/Accounting.vue";
 import Promotion from "@/views/Promotion.vue";
 import Employee from "@/views/ManageEmployee.vue";
->>>>>>> 789459d5caffae28fbcd70f1cbecc0cf7c3cb160
 
 Vue.use(VueRouter);
 
@@ -57,10 +53,7 @@ const routes = [
   },
   {
     path: "/accounting",
-<<<<<<< HEAD
-=======
     meta: { isSecured: false },
->>>>>>> 789459d5caffae28fbcd70f1cbecc0cf7c3cb160
     name: "accounting",
     component: Accounting
   },
