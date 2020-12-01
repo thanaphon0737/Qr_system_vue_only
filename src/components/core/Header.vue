@@ -1,21 +1,15 @@
 <template>
   <div>
-    <v-app-bar
-      app
-      color="primary"
-      dense
-      dark
-    >
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+    <v-app-bar app color="primary" dense dark>
 
-      <v-toolbar-title>{{title}} V{{ version }}</v-toolbar-title>
-
+      <v-list-item-content>
+        <v-list-item-title>Role: {{ $store.getters["role_name"] }}</v-list-item-title>
+        <v-list-item-subtitle>Username:{{ $store.getters["username"] | capitalize }}</v-list-item-subtitle>
+      </v-list-item-content>
       <v-spacer></v-spacer>
-
-    <span>{{$store.getters["username"] | capitalize}}</span>
-    <v-btn icon @click="onClickLogOff">
-      <v-icon>mdi-export</v-icon>
-    </v-btn>
+      <v-btn icon @click="onClickLogOff">
+        <v-icon>mdi-export</v-icon>
+      </v-btn>
     </v-app-bar>
   </div>
 </template>
@@ -24,21 +18,19 @@
 export default {
   name: "Header",
   computed: {
-    version(){
-      return process.env.VUE_APP_VERSION
+    version() {
+      return process.env.VUE_APP_VERSION;
     },
-    title(){
-      return process.env.VUE_APP_TITLE
-    }
+    title() {
+      return process.env.VUE_APP_TITLE;
+    },
   },
-   methods: {
-      onClickLogOff(){
-        this.$store.dispatch('doLogout')
-      }
-    }
-}
+  methods: {
+    onClickLogOff() {
+      this.$store.dispatch("doLogout");
+    },
+  },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

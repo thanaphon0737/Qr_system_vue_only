@@ -23,9 +23,6 @@ const login = async values => {
   }
 };
 
-const roleCheck = async values =>{
-  let result = await httpClient.get('role')
-}
 const register = async values => {
   let result = await httpClient.post(server.REGISTER_URL, values);
   if (result.data.result == "ok") {

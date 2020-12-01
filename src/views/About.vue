@@ -1,7 +1,8 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-    <span>Your role is {{$store.getters["role_name"]}}</span>
+  <div class="about text-center">
+    <h1>Your role is {{$store.getters["role_name"]}}</h1>
+    
+    
     <qrcode-vue :value="value" :size="size" level="H"></qrcode-vue>
   
   </div>

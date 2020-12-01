@@ -52,7 +52,7 @@ import api from "@/services/api";
 export default {
   mounted() {
     if (api.isLoggedIn()) {
-      this.$router.push("/stock");
+      this.$router.push("/about");
     }
   },
   data() {
@@ -66,7 +66,7 @@ export default {
   },
   methods: {
     submit() {
-      this.$router.push("/stock");
+      this.$router.push("/about");
       this.$store.dispatch({
         type: "doLogin",
         username: this.account.username,
