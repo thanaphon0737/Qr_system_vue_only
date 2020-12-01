@@ -9,17 +9,23 @@ const isLoggedIn = () => {
 };
 
 const login = async values => {
-  let result = await httpClient.post(server.LOGIN_URL, values);
+  const result = await httpClient.post(server.LOGIN_URL, values);
+  console.log("login_url ", server.LOGIN_URL)
+  console.log(result.data.message)
   if (result.data.result == "ok") {
     localStorage.setItem(server.USERNAME, values.username);
     localStorage.setItem(server.TOKEN_KEY, result.data.token);
-    router.push("/stock");
+    localStorage.setItem("role_name",result.data.message.role_name)
+    router.push("/about");
     return true;
   } else {
     return false;
   }
 };
 
+const roleCheck = async values =>{
+  let result = await httpClient.get('role')
+}
 const register = async values => {
   let result = await httpClient.post(server.REGISTER_URL, values);
   if (result.data.result == "ok") {

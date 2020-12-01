@@ -60,7 +60,7 @@ export default {
       isShowPassword: false,
       account: {
         username: "",
-        password: ""
+        password: "",
       }
     };
   },
@@ -70,7 +70,7 @@ export default {
       this.$store.dispatch({
         type: "doLogin",
         username: this.account.username,
-        password: this.account.password
+        password: this.account.password,
       });
     }
   }
