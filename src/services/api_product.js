@@ -23,6 +23,3 @@ export const updateProduct = data => {
   return httpClient.put(server.PRODUCT_URL, data);
 };
 
-export const getRoles = () =>{
-  return httpClient.get(`role`);
-}

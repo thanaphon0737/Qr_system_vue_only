@@ -2,7 +2,7 @@ import httpClient from "@/services/httpClient";
 import { server } from "@/services/constants";
 import router from "@/router";
 import * as productApis from "@/services/api_product.js"
-
+import * as employeeApis from "@/services/api_employee.js"
 const isLoggedIn = () => {
   let token = localStorage.getItem(server.TOKEN_KEY);
   return token != null;
@@ -42,5 +42,6 @@ export default {
   login,
   register,
   logoff,
-  ...productApis
+  ...productApis,
+  ...employeeApis
 };

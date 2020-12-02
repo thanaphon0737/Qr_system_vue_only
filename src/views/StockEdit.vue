@@ -60,13 +60,13 @@ import api from "@/services/api";
 export default {
   name: "stock-create",
   data: () => ({
-    product: {
-      name: "",
-      price: "",
-      stock: "",
-      image: null
+    employee: {
+      username: "",
+      role: "",
+      firstName: "",
+      lastName: "",
+      contact: ""
     },
-    imageFile: null
   }),
   async mounted() {
     let result = await api.getProductById(this.$route.params.id);
