@@ -18,12 +18,7 @@
 export default {
   name: "Header",
   computed: {
-    version() {
-      return process.env.VUE_APP_VERSION;
-    },
-    title() {
-      return process.env.VUE_APP_TITLE;
-    },
+    
   },
   methods: {
     onClickLogOff() {

@@ -16,6 +16,7 @@
     "qrcode.vue": "^1.7.0",
     "vue": "^2.6.12",
     "vue-chartjs": "^3.5.0",
+    "vue-route-middleware": "^1.0.7",
     "vue-router": "^3.4.9",
     "vue2-filters": "^0.9.1",
     "vuetify": "^2.3.19",
