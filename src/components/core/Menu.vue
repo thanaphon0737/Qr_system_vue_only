@@ -1,12 +1,9 @@
 <template>
   <v-navigation-drawer app permanent dark src="@/assets/background_menu.jpg">
-    <router-link to="/" exact>
-      <v-img src="@/assets/vue_display.jpg" alt="" width="0%" />
-    </router-link>
     <v-list shaped>
       <v-list-item-group v-model="selectedMenu" mandatory color="primary">
-        <v-list-item       
-        class="tile" 
+        <v-list-item
+          class="tile"
           v-for="([icon, title, route], index) in menus"
           :key="index"
           @click="onClickMenu(route)"
@@ -40,11 +37,12 @@ export default {
     return {
       selectedMenu: 0,
       menus: [
-        ["mdi-bank","Accounting","/accounting"],
+        ["mdi-account-edit","User Profile","/employee-edit/:id"],
+        ["mdi-bank", "Accounting", "/accounting"],
         ["mdi-apps-box", "Manage Stock", "/stock"],
         ["mdi-chart-areaspline", "Report", "/report"],
-        ["mdi-tag","Promotion","/promotion"],
-        ["mdi-account-box-multiple","Manage Employee","/employee"],
+        ["mdi-tag", "Promotion", "/promotion"],
+        ["mdi-account-box-multiple", "Manage Employee", "/employee"],
         ["mdi-file-document-box-check-outline", "About", "/about"]
       ]
     };
@@ -58,9 +56,7 @@ export default {
 </script>
 
 <style>
-
-
-.v-list-item-group .v-list-item--active{
+.v-list-item-group .v-list-item--active {
   color: #fff !important;
   font-weight: bold;
 }
@@ -69,7 +65,7 @@ export default {
   opacity: 0.7;
 }
 
-.tile{
+.tile {
   color: white;
 }
 

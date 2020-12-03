@@ -17,7 +17,7 @@
             ></v-text-field>
             <v-spacer></v-spacer>
             <v-btn
-              @click="$router.push('/stock-create')"
+              @click="$router.push('/promotion/promo-create')"
               color="primary"
               dark
               class="mb-2"
@@ -76,10 +76,9 @@
 </template>
 
 <script>
-import StockCard from "@/components/cards/StockCard";
 import api from "@/services/api";
 export default {
-  name: "Stock",
+  name: "Promotion",
   data() {
     return {
       search: "",
@@ -93,15 +92,12 @@ export default {
           sortable: false,
           value: "id"
         },
-        { text: "Name", value: "name" },
+        { text: "Code", value: "code" },
         { text: "Price", value: "price" },
         { text: "Stock", value: "stock" },
         { text: "Action", value: "action" }
       ]
     };
-  },
-  components: {
-    StockCard
   },
   async mounted() {
     this.loadProducts();

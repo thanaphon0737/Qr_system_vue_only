@@ -1,10 +1,16 @@
 <template>
   <div>
     <v-app-bar app color="primary" dense dark>
-
-      <v-list-item-content>
-        <v-list-item-title>Role: {{ $store.getters["role_name"] }}</v-list-item-title>
-        <v-list-item-subtitle>Username:{{ $store.getters["username"] | capitalize }}</v-list-item-subtitle>
+      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+      <v-list-item-content class="">
+        <v-list-item-title
+          >Role: {{ $store.getters["role_name"] }}</v-list-item-title
+        >
+        <v-list-item-subtitle
+          >Username:{{
+            $store.getters["username"] | capitalize
+          }}</v-list-item-subtitle
+        >
       </v-list-item-content>
       <v-spacer></v-spacer>
       <v-btn icon @click="onClickLogOff">
@@ -28,9 +34,13 @@ export default {
   methods: {
     onClickLogOff() {
       this.$store.dispatch("doLogout");
-    },
-  },
+    }
+  }
 };
 </script>
 
-<style></style>
+<style>
+.Role {
+
+}
+</style>

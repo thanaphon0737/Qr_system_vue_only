@@ -16,7 +16,6 @@
               hide-details
             ></v-text-field>
             <v-spacer></v-spacer>
-            
           </v-toolbar>
         </template>
 
@@ -63,7 +62,6 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
-
     </v-card>
   </v-container>
 </template>
@@ -88,14 +86,14 @@ export default {
           text: "Id",
           align: "left",
           sortable: false,
-          value: "id",
+          value: "id"
         },
         { text: "Username", value: "username" },
         { text: "Role", value: "role_name" },
         { text: "Frist Name", value: "first_name" },
         { text: "Last Name", value: "last_name" },
-        { text: "Contact", value: "contact" },
-      ],
+        { text: "Contact", value: "contact" }
+      ]
     };
   },
   async mounted() {
@@ -105,7 +103,7 @@ export default {
     editEmployeeInfo(item) {
       this.$router.push(`/employee-edit/${item.id}`);
     },
-    
+
     deleteItem(item) {
       this.selectedProductId = item.id;
       this.confirmDeleteDlg = true;
@@ -115,13 +113,12 @@ export default {
       this.confirmDeleteDlg = false;
       this.loadData();
     },
-    
+
     async loadData() {
       let result = await api.getEmployee();
       this.mDataArray = result.data;
-    },
-    
-  },
+    }
+  }
 };
 </script>
 
