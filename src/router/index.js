@@ -22,7 +22,7 @@ const routes = [
     name: "login",
     component: Login,
     meta:{
-      middlewater: [authWaiter]
+      middleware: [authWaiter]
     }
   }, 
   {

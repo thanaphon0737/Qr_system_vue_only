@@ -16,6 +16,7 @@ const login = async values => {
     localStorage.setItem(server.USERNAME, values.username);
     localStorage.setItem(server.TOKEN_KEY, result.data.token);
     localStorage.setItem("role_name",result.data.message.role_name)
+    localStorage.setItem("id",result.data.message.id)
     router.push("/about");
     return true;
   } else {

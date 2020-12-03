@@ -9,7 +9,8 @@ export default new Vuex.Store({
   state: {
     isLogged: false,
     username: "",
-    role_name:""
+    role_name:"",
+    id:""
   },  
   getters: {
     isLogin(state) {
@@ -20,6 +21,9 @@ export default new Vuex.Store({
     },
     role_name(state){
       return state.role_name;
+    },
+    id(state){
+      return state.id;
     }
   },
   mutations: {
@@ -34,6 +38,9 @@ export default new Vuex.Store({
     },
     SET_ROLE_NAME(state, value){
       state.role_name = value
+    },
+    SET_ID(state, value){
+      state.id = value
     }
   },
   actions: {
@@ -51,6 +58,8 @@ export default new Vuex.Store({
       api.logoff();
       commit("SET_LOGGED_OUT");
       commit("SET_USERNAME", "");
+      commit("SET_ROLE_NAME","");
+      commit("SET_ID","");
     },
     restoreLogin({ commit }) {
       if (api.isLoggedIn() == true) {
