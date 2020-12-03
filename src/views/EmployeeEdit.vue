@@ -111,10 +111,11 @@ export default {
       this.roleArray = tempa;
     },
     async submit() {
-      let result = await api.updateEmployee(
-        this.$route.params.id,
-        this.employee
-      );
+   
+      if(this.employee.username == this.$store.getters.username){
+        this.employee.role = this.$store.getters.role_name;
+      }
+        let result = await api.updateEmployee(this.$route.params.id,this.employee);
       console.log(this.employee);
       console.log(result);
       console.log(result.data.message);

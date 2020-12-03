@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import VueRouteMiddleware from 'vue-route-middleware';
 import Login from "@/views/Login.vue";
 import Register from "@/views/Register.vue";
 import Stock from "@/views/Stock.vue";
@@ -12,14 +13,18 @@ import Promotion from "@/views/Promotion.vue";
 import Employee from "@/views/ManageEmployee.vue";
 import EmployeeEdit from "@/views/EmployeeEdit.vue";
 import PromotionCreate from "@/views/PromotionCreate.vue";
-
+import {authRole,authWaiter} from "./middleware/auth"
+import WaiterDashboard from '@/views/WaiterDashboard.vue'
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/login",
     name: "login",
-    component: Login
+    component: Login,
+    meta:{
+      middleware: [authWaiter]
+    }
   }, 
   {
     path: "/register",
@@ -29,35 +34,48 @@ const routes = [
   {
     path: "/stock",    
     name: "stock",
-    component: Stock
+    component: Stock,
+    meta: {
+      middleware: [authRole]
+    }
   },
   {
     path: "/stock-create",
     name: "stock-create",
-    component: StockCreate
+    component: StockCreate,
+    meta: {
+      middleware: [authRole]
+    }
   },
   {
     path: "/stock-edit/:id",
     name: "stock-edit",
-    component: StockEdit
+    component: StockEdit,
+    meta: {
+      middleware: [authRole]
+    }
   },
   {
     path: "/report",
-    meta: { isSecured: true },
     name: "report",
-    component: Report
+    component: Report,
+    meta: {
+      middleware: [authRole]
+    }
   },
   {
     path: "/about",
-    meta: { isSecured: false },
     name: "about",
-    component: About
+    component: About,
+    
   },
   {
     path: "/accounting",
-    meta: { isSecured: false },
     name: "accounting",
-    component: Accounting
+    component: Accounting,
+    meta: {
+      middleware: [authRole]
+    }
   },
   {
     path: "/",
@@ -70,22 +88,40 @@ const routes = [
   {
     path: "/promotion",
     name: "promotion",
-    component: Promotion
+    component: Promotion,
+    meta: {
+      middleware: [authRole]
+    }
   },
   {
     path: "/employee",
     name: "employee",
-    component: Employee
+    component: Employee,
+    meta: {
+      middleware: [authRole]
+    }
   },
   {
     path: "/employee-edit/:id",
     name: "employee-edit",
-    component: EmployeeEdit
+    component: EmployeeEdit,
+    meta: {
+      middleware: [authRole]
+    }
   },
   {
     path: "/promotion/promo-create",
     name: "promo-create",
     component: PromotionCreate
+
+  },
+  {
+    path: '/waiter/:username',
+    name: 'waiter',
+    component: WaiterDashboard,
+    meta: {
+      middleware: [authWaiter]
+    }
   }
 ];
 
@@ -94,5 +130,5 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 });
-
+router.beforeEach(VueRouteMiddleware({authRole,authWaiter}))
 export default router;
