@@ -13,7 +13,7 @@ import Promotion from "@/views/Promotion.vue";
 import Employee from "@/views/ManageEmployee.vue";
 import EmployeeEdit from "@/views/EmployeeEdit.vue";
 import PromotionCreate from "@/views/PromotionCreate.vue";
-import {authRole,authWaiter} from "./middleware/auth"
+import {authLogIn, authRole,authWaiter} from "./middleware/auth"
 import WaiterDashboard from '@/views/WaiterDashboard.vue'
 Vue.use(VueRouter);
 
@@ -23,7 +23,7 @@ const routes = [
     name: "login",
     component: Login,
     meta:{
-      middleware: [authWaiter]
+      
     }
   }, 
   {
@@ -35,38 +35,31 @@ const routes = [
     path: "/stock",    
     name: "stock",
     component: Stock,
-    meta: {
-      middleware: [authRole]
-    }
+    
   },
   {
     path: "/stock-create",
     name: "stock-create",
     component: StockCreate,
-    meta: {
-      middleware: [authRole]
-    }
+    
   },
   {
     path: "/stock-edit/:id",
     name: "stock-edit",
     component: StockEdit,
-    meta: {
-      middleware: [authRole]
-    }
+    
   },
   {
     path: "/report",
     name: "report",
     component: Report,
-    meta: {
-      middleware: [authRole]
-    }
+    
   },
   {
     path: "/about",
     name: "about",
     component: About,
+    
     
   },
   {
@@ -74,7 +67,7 @@ const routes = [
     name: "accounting",
     component: Accounting,
     meta: {
-      middleware: [authRole]
+      
     }
   },
   {
@@ -90,7 +83,7 @@ const routes = [
     name: "promotion",
     component: Promotion,
     meta: {
-      middleware: [authRole]
+      
     }
   },
   {
@@ -98,30 +91,26 @@ const routes = [
     name: "employee",
     component: Employee,
     meta: {
-      middleware: [authRole]
+      
     }
   },
   {
     path: "/employee-edit/:id",
     name: "employee-edit",
     component: EmployeeEdit,
-    meta: {
-      middleware: [authRole]
-    }
   },
   {
     path: "/promotion/promo-create",
     name: "promo-create",
-    component: PromotionCreate
+    component: PromotionCreate,
+    
 
   },
   {
     path: '/waiter/:username',
     name: 'waiter',
     component: WaiterDashboard,
-    meta: {
-      middleware: [authWaiter]
-    }
+    
   }
 ];
 
@@ -130,5 +119,5 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 });
-router.beforeEach(VueRouteMiddleware({authRole,authWaiter}))
+router.beforeEach(VueRouteMiddleware({authLogIn,authRole,authWaiter}))
 export default router;

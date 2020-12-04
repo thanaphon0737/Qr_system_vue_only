@@ -49,7 +49,8 @@ export default new Vuex.Store({
       if (result == true) {
         commit("SET_LOGGED_IN");
         commit("SET_USERNAME", username);
-        commit("SET_ROLE_NAME", localStorage.getItem("role_name"));
+        commit("SET_ROLE_NAME", localStorage.getItem("role_name"))
+        commit("SET_ID",localStorage.getItem("id"))
       } else {
         dispatch("doLogout", {});
       }
@@ -68,6 +69,7 @@ export default new Vuex.Store({
         commit("SET_LOGGED_IN");
         commit("SET_USERNAME", username);
         commit("SET_ROLE_NAME", role_name)
+        commit("SET_ID",localStorage.getItem("id"))
       }
     },
   },

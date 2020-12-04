@@ -84,6 +84,7 @@ export default {
   }),
   async mounted() {
     let result = await api.getEmployeeById(this.$route.params.id);
+    console.log(result)
     this.getRole();
     this.getData = JSON.parse(result.data.message);
     this.employee.username = this.getData.username;

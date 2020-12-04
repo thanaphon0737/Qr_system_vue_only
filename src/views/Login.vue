@@ -51,12 +51,12 @@ import api from "@/services/api";
 
 export default {
   mounted() {
-    if (api.isLoggedIn()) {
-      if(this.$router.path !== '/about'){
-        this.$router.push("/about").catch(err=>{});
+    // if (api.isLoggedIn()) {
+    //   if(this.$router.path !== '/about'){
+    //     this.$router.push("/about");
 
-      }
-    }
+    //   }
+    // }
   },
   data() {
     return {

@@ -1,7 +1,7 @@
 <template>
   <v-app> 
-    <Header v-if="$store.state.isLogged"/>
-    <Menu v-if="$store.state.isLogged"/>
+    <Header v-if="$store.getters.isLogin"/>
+    <Menu v-if="$store.getters.isLogin"/>
     <Content/>
   </v-app>
 </template>
@@ -20,6 +20,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch({ type: "restoreLogin" });
+
   },
 
 };

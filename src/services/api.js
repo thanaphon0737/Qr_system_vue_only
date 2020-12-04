@@ -5,19 +5,20 @@ import * as productApis from "@/services/api_product.js"
 import * as employeeApis from "@/services/api_employee.js"
 const isLoggedIn = () => {
   let token = localStorage.getItem(server.TOKEN_KEY);
+  console.log(token != null)
   return token != null;
 };
 
 const login = async values => {
   const result = await httpClient.post(server.LOGIN_URL, values);
   console.log("login_url ", server.LOGIN_URL)
-  console.log(result.data.message)
+  console.log(values)
+  console.log("result",result.data.message)
   if (result.data.result == "ok") {
     localStorage.setItem(server.USERNAME, values.username);
     localStorage.setItem(server.TOKEN_KEY, result.data.token);
     localStorage.setItem("role_name",result.data.message.role_name)
     localStorage.setItem("id",result.data.message.id)
-    router.push("/about");
     return true;
   } else {
     return false;
@@ -35,6 +36,9 @@ const register = async values => {
 
 const logoff = () => {
   localStorage.removeItem(server.TOKEN_KEY);
+  localStorage.removeItem(server.USERNAME);
+  localStorage.removeItem("role_name")
+  localStorage.removeItem("id")
   router.push("/login");
 };
 

@@ -25,6 +25,7 @@
 export default {
   methods: {
     onClickMenu(link) {
+      console.log("link",link)
       this.$router.push(link).catch(err => {});
     }
   },
@@ -37,7 +38,7 @@ export default {
     return {
       selectedMenu: 0,
       menus: [
-        ["mdi-account-edit","User Profile","/employee-edit/:id"],
+        ["mdi-account-edit","User Profile",`employee-edit/${this.$store.getters.id}`],
         ["mdi-bank", "Accounting", "/accounting"],
         ["mdi-apps-box", "Manage Stock", "/stock"],
         ["mdi-chart-areaspline", "Report", "/report"],
