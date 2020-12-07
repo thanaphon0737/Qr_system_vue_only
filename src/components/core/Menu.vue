@@ -44,7 +44,8 @@ export default {
         ["mdi-chart-areaspline", "Report", "/report"],
         ["mdi-tag", "Promotion", "/promotion"],
         ["mdi-account-box-multiple", "Manage Employee", "/employee"],
-        ["mdi-file-document-box-check-outline", "About", "/about"]
+        ["mdi-file-document-box-check-outline", "About", "/about"],
+        ["mdi-file-document-box-check-outline", "Product", "/product"]
       ]
     };
   },

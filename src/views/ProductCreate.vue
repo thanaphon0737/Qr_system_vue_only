@@ -5,28 +5,44 @@
         <v-card class="mx-10  pa-5" outlined>
           <v-form @submit.prevent="submit">
             <v-text-field
-              v-model="product.name"
+              v-model="product.product_name"
               :counter="10"
               label="Name"
               required
             ></v-text-field>
-
             <v-text-field
-              v-model="product.price"
+              v-model="product.product_serving"
+              suffix="ps"
+              type="number"
+              label="serving"
+              required
+            ></v-text-field>
+            <v-text-field
+              v-model="product.product_sell_price"
               suffix="THB"
               type="number"
               label="Price"
               required
             ></v-text-field>
-
             <v-text-field
-              v-model="product.stock"
-              suffix="PCS"
+              v-model="product.product_buy_price"
+              suffix="THB"
               type="number"
-              label="Stock"
+              label="Price"
               required
             ></v-text-field>
-
+            <v-text-field
+              v-model="product.product_qty"
+              suffix="ea"
+              type="number"
+              label="qty"
+              required
+            ></v-text-field>
+            <v-text-field
+              v-model="product.product_type_id"
+              label="product_type_id"
+              required
+            ></v-text-field>
             <input @change="onFileSelected" type="file" name="" id="" />
             <br />
             <v-img
@@ -60,12 +76,15 @@ import api from "@/services/api";
 
 
 export default {
-  name: "stock-create",
+  name: "product-create",
   data: () => ({
     product: {
-      name: "",
-      price: "",
-      stock: "",
+      product_name: "",
+      product_serving: "",
+      product_sell_price: "",
+      product_buy_price:"",
+      product_qty:"",
+      product_type_id:"",
       image: null
     },
     imageURL: null
@@ -88,10 +107,19 @@ export default {
     },
     async submit() {
       let formData = new FormData();
-      const { name, price, stock } = this.product;
-      formData.append("name", name);
-      formData.append("stock", stock);
-      formData.append("price", price);
+      const { product_name, 
+      product_serving, 
+      product_sell_price ,
+      product_buy_price,
+      product_qty,
+      product_type_id,
+      } = this.product;
+      formData.append("product_name", product_name);
+      formData.append("product_serving", product_serving);
+      formData.append("product_sell_price", product_sell_price);
+      formData.append("product_buy_price", product_buy_price);
+      formData.append("product_qty", product_qty);
+      formData.append("product_type_id", product_type_id);
       formData.append("image", this.product.image);
       await api.addProduct(formData);
       this.$router.back();

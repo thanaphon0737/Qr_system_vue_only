@@ -80,18 +80,17 @@ export default {
     },
     roleArray: [],
     selectedRole: "",
-    getData: {},
   }),
   async mounted() {
     let result = await api.getEmployeeById(this.$route.params.id);
-    console.log(result)
     this.getRole();
-    this.getData = JSON.parse(result.data.message);
-    this.employee.username = this.getData.username;
-    this.employee.first_name = this.getData.first_name;
-    this.employee.last_name = this.getData.last_name;
-    this.employee.contact = this.getData.contact;
-    this.employee.role = this.getData.name;
+    let getData = {}
+    getData = result.data.message;
+    this.employee.username = getData.username;
+    this.employee.first_name = getData.first_name;
+    this.employee.last_name = getData.last_name;
+    this.employee.contact = getData.contact;
+    this.employee.role = getData.role_name;
   },
 
   methods: {
@@ -117,8 +116,6 @@ export default {
         this.employee.role = this.$store.getters.role_name;
       }
         let result = await api.updateEmployee(this.$route.params.id,this.employee);
-      console.log(this.employee);
-      console.log(result);
       console.log(result.data.message);
       this.$router.back();
     },

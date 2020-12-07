@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <!-- Table section -->
-
+    <StockCard/>
     <v-card>
       <v-data-table :search="search" :headers="headers" :items="mDataArray">
         <!-- table top section -->
@@ -18,7 +18,7 @@
             ></v-text-field>
             <v-spacer></v-spacer>
             <v-btn
-              @click="$router.push('/stock-create')"
+              @click="$router.push('/product-create')"
               color="primary"
               dark
               class="mb-2"
@@ -35,16 +35,19 @@
             <td>{{ item.id }}</td>
             <td>
               <v-img
-                :src="item.image | imageUrl"
+                :src="item.product_image | imageUrl"
                 lazy-src="http://www.codemobiles.com/biz/images/cm_logo.png?ref=10"
                 aspect-ratio="1"
                 max-width="50"
                 max-height="50"
               ></v-img>
             </td>
-            <td>{{ item.name }}</td>
-            <td>{{ item.price | currency("฿") }}</td>
-            <td>{{ item.stock | number("0,0") }} pcs.</td>
+            <td>{{ item.product_name }}</td>
+            <td>{{ item.product_serving | number("0,0") }} ps</td>
+            <td>{{ item.product_sell_price | currency("฿")  }}</td>
+            <td>{{ item.product_sell_price | currency("฿") }}</td>
+            <td>{{ item.product_qty | number("0,0") }} ea</td>
+            <td>{{ item.product_type_id }}</td>
             <td>
               <v-icon class="mr-2" @click="editItem(item)">
                 edit
@@ -105,9 +108,11 @@ export default {
         },
         { text: "Image", value: "image" },
         { text: "Name", value: "name" },
-        { text: "Price", value: "price" },
-        { text: "Stock", value: "stock" },
-        { text: "Action", value: "action" }
+        { text: "Serving", value: "serving" },
+        { text: "Sell Price", value: "sellPrice" },
+        { text: "Buy Price", value: "buyPrice" },
+        {text: "Qty", value:'qty'},
+        { text:'Product Type', value:'productType'}
       ]
     };
   },
@@ -119,7 +124,7 @@ export default {
   },
   methods: {
     editItem(item) {
-      this.$router.push(`/stock-edit/${item.id}`);
+      this.$router.push(`/product-edit/${item.id}`);
     },
     deleteItem(item) {
       this.selectedProductId = item.id;
@@ -132,6 +137,7 @@ export default {
     },
     async loadProducts() {
       let result = await api.getProducts();
+      console.log('product',result)
       this.mDataArray = result.data;
     }
   }

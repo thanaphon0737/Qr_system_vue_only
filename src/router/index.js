@@ -3,9 +3,9 @@ import VueRouter from "vue-router";
 import VueRouteMiddleware from 'vue-route-middleware';
 import Login from "@/views/Login.vue";
 import Register from "@/views/Register.vue";
-import Stock from "@/views/Stock.vue";
-import StockCreate from "@/views/StockCreate.vue";
-import StockEdit from "@/views/StockEdit.vue";
+import Product from "@/views/Product.vue";
+import ProductCreate from "@/views/ProductCreate.vue";
+import ProductEdit from "@/views/ProductEdit.vue";
 import Report from "@/views/Report.vue";
 import About from "@/views/About.vue";
 import Accounting from "@/views/Accounting.vue";
@@ -32,21 +32,21 @@ const routes = [
     component: Register
   },
   {
-    path: "/stock",    
-    name: "stock",
-    component: Stock,
+    path: "/product",    
+    name: "product",
+    component: Product,
     
   },
   {
-    path: "/stock-create",
-    name: "stock-create",
-    component: StockCreate,
+    path: "/product-create",
+    name: "product-create",
+    component: ProductCreate,
     
   },
   {
-    path: "/stock-edit/:id",
-    name: "stock-edit",
-    component: StockEdit,
+    path: "/product-edit/:id",
+    name: "product-edit",
+    component: ProductEdit,
     
   },
   {

@@ -5,28 +5,44 @@
         <v-card class="mx-10  pa-5" outlined>
           <v-form @submit.prevent="submit">
             <v-text-field
-              v-model="product.name"
+              v-model="product.product_name"
               :counter="10"
               label="Name"
               required
             ></v-text-field>
-
             <v-text-field
-              v-model="product.price"
+              v-model="product.product_serving"
+              suffix="ps"
+              type="number"
+              label="serving"
+              required
+            ></v-text-field>
+            <v-text-field
+              v-model="product.product_sell_price"
               suffix="THB"
               type="number"
               label="Price"
               required
             ></v-text-field>
-
             <v-text-field
-              v-model="product.stock"
-              suffix="PCS"
+              v-model="product.product_buy_price"
+              suffix="THB"
               type="number"
-              label="Stock"
+              label="Price"
               required
             ></v-text-field>
-
+            <v-text-field
+              v-model="product.product_qty"
+              suffix="ea"
+              type="number"
+              label="qty"
+              required
+            ></v-text-field>
+            <v-text-field
+              v-model="product.product_type_id"
+              label="product_type_id"
+              required
+            ></v-text-field>
             <input @change="onFileSelected" type="file" name="" id="" />
             <br />
             <v-img              
@@ -60,17 +76,19 @@ import api from "@/services/api";
 export default {
   name: "stock-create",
   data: () => ({
-    employee: {
-      username: "",
-      role: "",
-      firstName: "",
-      lastName: "",
-      contact: ""
-    },
+    product: {
+      product_name: "",
+      product_serving: "",
+      product_sell_price: "",
+      product_buy_price:"",
+      product_qty:"",
+      product_type_id:"",
+    }
   }),
   async mounted() {
     let result = await api.getProductById(this.$route.params.id);
     this.product = result.data;
+    console.log(this.product)
   },
 
   methods: {
@@ -81,7 +99,7 @@ export default {
       const reader = new FileReader();
       reader.onload = event => {
         // for preview
-        this.product.image = event.target.result;
+        this.product.product_image = event.target.result;
       };
       reader.readAsDataURL(event.target.files[0]);
 
@@ -90,11 +108,20 @@ export default {
     },
      async submit() {
       let formData = new FormData();
-      const { name, price, stock, id } = this.product;
-      formData.append("id", id);
-      formData.append("name", name);
-      formData.append("stock", stock);
-      formData.append("price", price);
+      const { product_name, 
+      product_serving, 
+      product_sell_price ,
+      product_buy_price,
+      product_qty,
+      product_type_id,
+      } = this.product;
+      formData.append("id", this.$route.params.id)
+      formData.append("product_name", product_name);
+      formData.append("product_serving", product_serving);
+      formData.append("product_sell_price", product_sell_price);
+      formData.append("product_buy_price", product_buy_price);
+      formData.append("product_qty", product_qty);
+      formData.append("product_type_id", product_type_id);
       if (this.imageFile != null) {
         formData.append("image", this.imageFile);
       }
@@ -103,10 +130,10 @@ export default {
       this.$router.back();
     },
     getProductImage() {
-      if (this.product.image.length > 100) {
-        return this.product.image;
+      if (this.product.product_image.length > 100) {
+        return this.product.product_image;
       } else {
-        return this.$options.filters.imageUrl(this.product.image);
+        return this.$options.filters.imageUrl(this.product.product_image);
         // return `${imageUrl}/${this.product.image}`;
       }
     }
