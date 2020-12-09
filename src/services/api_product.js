@@ -10,7 +10,13 @@ export const getProducts = () => {
 export const getProductById = id => {
   return httpClient.get(server.PRODUCT_URL + `/id/${id}`);
 };
+export const getProductType = () =>{
+  return httpClient.get('productType');
+}
 
+export const addProductType = data =>{
+  return httpClient.post('productType',data)
+}
 export const addProduct = data => {
   return httpClient.post(server.PRODUCT_URL, data);
 };

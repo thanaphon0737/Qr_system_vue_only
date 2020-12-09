@@ -15,6 +15,7 @@ import EmployeeEdit from "@/views/EmployeeEdit.vue";
 import PromotionCreate from "@/views/PromotionCreate.vue";
 import {authLogIn, authRole,authWaiter} from "./middleware/auth"
 import WaiterDashboard from '@/views/WaiterDashboard.vue'
+import ProductTypeCreate from '@/views/ProductTypeCreate.vue'
 Vue.use(VueRouter);
 
 const routes = [
@@ -110,7 +111,11 @@ const routes = [
     path: '/waiter/:username',
     name: 'waiter',
     component: WaiterDashboard,
-    
+  },
+  {
+    path: '/productType-create',
+    name: 'productType-create',
+    component: ProductTypeCreate
   }
 ];
 

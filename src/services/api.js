@@ -5,7 +5,6 @@ import * as productApis from "@/services/api_product.js"
 import * as employeeApis from "@/services/api_employee.js"
 const isLoggedIn = () => {
   let token = localStorage.getItem(server.TOKEN_KEY);
-  console.log(token != null)
   return token != null;
 };
 

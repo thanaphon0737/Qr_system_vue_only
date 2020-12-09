@@ -40,7 +40,6 @@ export default {
       menus: [
         ["mdi-account-edit","User Profile",`employee-edit/${this.$store.getters.id}`],
         ["mdi-bank", "Accounting", "/accounting"],
-        ["mdi-apps-box", "Manage Stock", "/stock"],
         ["mdi-chart-areaspline", "Report", "/report"],
         ["mdi-tag", "Promotion", "/promotion"],
         ["mdi-account-box-multiple", "Manage Employee", "/employee"],

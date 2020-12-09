@@ -100,7 +100,6 @@ export default {
     editRole(name) {
       this.employee.role = name;
       this.selectedRole = name;
-      console.log(name);
     },
     async getRole() {
       let result = await api.getRoles();

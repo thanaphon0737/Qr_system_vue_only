@@ -38,11 +38,22 @@
               label="qty"
               required
             ></v-text-field>
-            <v-text-field
-              v-model="product.product_type_id"
-              label="product_type_id"
-              required
-            ></v-text-field>
+            <v-menu offset-y>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn color="primary" dark v-bind="attrs" v-on="on">
+                      {{ product.product_type_name}}
+                    </v-btn>
+                  </template>
+                  <v-list dense>
+                    <v-list-item-group color="primary">
+                      <v-list-item v-for="(items, i) in productTypeArray" :key="i">
+                        <v-list-item @click="editRole(items)">
+                          {{ items.name }}
+                        </v-list-item>
+                      </v-list-item>
+                    </v-list-item-group>
+                  </v-list>
+                </v-menu>
             <input @change="onFileSelected" type="file" name="" id="" />
             <br />
             <v-img              
@@ -76,24 +87,25 @@ import api from "@/services/api";
 export default {
   name: "stock-create",
   data: () => ({
-    product: {
-      product_name: "",
-      product_serving: "",
-      product_sell_price: "",
-      product_buy_price:"",
-      product_qty:"",
-      product_type_id:"",
-    }
+    product: {},
+    productTypeArray:[],
+    selectProductType:"",
+
   }),
   async mounted() {
     let result = await api.getProductById(this.$route.params.id);
     this.product = result.data;
     console.log(this.product)
+    this.getProductType();
   },
 
   methods: {
     cancel() {
       this.$router.back();
+    },
+    editRole(obj) {
+      this.product.product_type_name = obj.name;
+      this.product.product_type_id = obj.id;
     },
     onFileSelected(event) {
       const reader = new FileReader();
@@ -130,12 +142,17 @@ export default {
       this.$router.back();
     },
     getProductImage() {
+      
       if (this.product.product_image.length > 100) {
         return this.product.product_image;
       } else {
         return this.$options.filters.imageUrl(this.product.product_image);
         // return `${imageUrl}/${this.product.image}`;
       }
+    },
+    async getProductType(){
+      let result = await api.getProductType();
+      this.productTypeArray = result.data;
     }
   }
 };

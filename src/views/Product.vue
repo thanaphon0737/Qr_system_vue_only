@@ -18,6 +18,16 @@
             ></v-text-field>
             <v-spacer></v-spacer>
             <v-btn
+              @click="$router.push('/productType-create')"
+              color="blue"
+              dark
+              class="mb-2"
+            >
+              <v-icon left>add</v-icon>
+              <span>New ProductType</span>
+            </v-btn>
+            <v-spacer></v-spacer>
+            <v-btn
               @click="$router.push('/product-create')"
               color="primary"
               dark
@@ -45,9 +55,9 @@
             <td>{{ item.product_name }}</td>
             <td>{{ item.product_serving | number("0,0") }} ps</td>
             <td>{{ item.product_sell_price | currency("฿")  }}</td>
-            <td>{{ item.product_sell_price | currency("฿") }}</td>
-            <td>{{ item.product_qty | number("0,0") }} ea</td>
-            <td>{{ item.product_type_id }}</td>
+            <td>{{ item.product_buy_price | currency("฿") }}</td>
+            <td>{{ item.product_qty | number("0,0") }}</td>
+            <td>{{ item.productType.name }}</td>
             <td>
               <v-icon class="mr-2" @click="editItem(item)">
                 edit
@@ -137,9 +147,13 @@ export default {
     },
     async loadProducts() {
       let result = await api.getProducts();
-      console.log('product',result)
+      
+      
+
+        
       this.mDataArray = result.data;
     }
+    
   }
 };
 </script>
