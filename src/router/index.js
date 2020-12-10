@@ -3,19 +3,23 @@ import VueRouter from "vue-router";
 import VueRouteMiddleware from 'vue-route-middleware';
 import Login from "@/views/Login.vue";
 import Register from "@/views/Register.vue";
-import Product from "@/views/Product.vue";
-import ProductCreate from "@/views/ProductCreate.vue";
-import ProductEdit from "@/views/ProductEdit.vue";
-import Report from "@/views/Report.vue";
+import Product from "@/views/Manager/Product.vue";
+import ProductCreate from "@/views/Manager/ProductCreate.vue";
+import ProductEdit from "@/views/Manager/ProductEdit.vue";
+import Report from "@/views/Manager/Report.vue";
 import About from "@/views/About.vue";
-import Accounting from "@/views/Accounting.vue";
-import Promotion from "@/views/Promotion.vue";
-import Employee from "@/views/ManageEmployee.vue";
-import EmployeeEdit from "@/views/EmployeeEdit.vue";
-import PromotionCreate from "@/views/PromotionCreate.vue";
-import {authLogIn, authRole,authWaiter} from "./middleware/auth"
-import WaiterDashboard from '@/views/WaiterDashboard.vue'
-import ProductTypeCreate from '@/views/ProductTypeCreate.vue'
+import Accounting from "@/views/Manager/Accounting.vue";
+import Promotion from "@/views/Manager/Promotion.vue";
+import Employee from "@/views/Manager/ManageEmployee.vue";
+import EmployeeEdit from "@/views/Manager/EmployeeEdit.vue";
+import PromotionCreate from "@/views/Manager/PromotionCreate.vue";
+import {authLogIn, authRole,authWaiter} from "./middleware/auth";
+import WaiterDashboard from '@/views/WaiterDashboard.vue';
+import ProductTypeCreate from '@/views/Manager/ProductTypeCreate.vue';
+import ChefDashboard from '@/views/ChefDashboard';
+import CustomerDashboard from '@/views/CustomerDashboard';
+import CashierDashboard from '@/views/CashierDashboard';
+import OrderInfo from '@/views/Manager/OrderInfo'
 Vue.use(VueRouter);
 
 const routes = [
@@ -67,9 +71,11 @@ const routes = [
     path: "/accounting",
     name: "accounting",
     component: Accounting,
-    meta: {
-      
-    }
+  },
+  {
+    path: '/order-info/:id',
+    name: 'order-info',
+    component: OrderInfo
   },
   {
     path: "/",
@@ -111,6 +117,21 @@ const routes = [
     path: '/waiter/:username',
     name: 'waiter',
     component: WaiterDashboard,
+  },
+  {
+    path: '/chef/:username',
+    name: 'chef',
+    component: ChefDashboard,
+  },
+  {
+    path: '/cashier/:username',
+    name: 'cashier',
+    component: CashierDashboard,
+  },
+  {
+    path: '/customer/:username',
+    name: 'customer',
+    component: CustomerDashboard,
   },
   {
     path: '/productType-create',

@@ -29,3 +29,10 @@ export const updateProduct = data => {
   return httpClient.put(server.PRODUCT_URL, data);
 };
 
+export const getOrder = () => {
+  return httpClient.get('order');
+};
+
+export const getOrderProductById = (id) => {
+  return httpClient.get(`orderProduct/order-id/${id}`);
+};
