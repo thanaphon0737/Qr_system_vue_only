@@ -1,5 +1,5 @@
 {
-  "name": "my-stock-workshop",
+  "name": "my-system-workshop",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -14,6 +14,8 @@
     "material-design-icons-iconfont": "^5.0.1",
     "nodemon": "^2.0.6",
     "qrcode.vue": "^1.7.0",
+    "socket.io": "^3.0.4",
+    "socket.io-client": "^3.0.4",
     "vue": "^2.6.12",
     "vue-chartjs": "^3.5.0",
     "vue-route-middleware": "^1.0.7",

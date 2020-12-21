@@ -2,23 +2,50 @@
   <div class="about text-center">
     <h1>Your role is {{$store.getters["role_name"]}}</h1>
     <h1>Customer Dashboard</h1>
+    <h1>{{message.data}}</h1>
+    <h1>{{message.id}}</h1>
     
     
-    <!-- <qrcode-vue :value="value" :size="size" level="H"></qrcode-vue> -->
+    
   
   </div>
 </template>
 <script>
-import QrcodeVue from 'qrcode.vue'
+// import io from 'socket.io-client';
+import io from "socket.io-client"
+// var socket = null;
+
+
 export default {
   data() {
       return {
-        value: 'https://google.com',
-        size: 300,
+        socket:{},
+        message:{
+          data:"",
+          id:0
+        },
       }
     },
-    components: {
-      QrcodeVue,
-    }
+    created(){
+      console.log("create")
+      
+      // this.socket = io("http://localhost:8081")
+    },
+    mounted() {
+      // this.socket = io("http://localhost:8081")
+      console.log("mounted")
+      this.$root.socket.on("test", (data)=>{
+        console.log(data)
+        this.message = data
+      })
+      // console.log(this.$root)
+      
+      // socket = io("http://localhost:8081");
+      // this.socket.on("connect", ()=>{
+      //   console.log(socket.id)
+      // })
+      
+      // console.log(this.socket.on("connected"),{data:"connect"})
+    },
 };
 </script>
