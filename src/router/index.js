@@ -17,7 +17,8 @@ import {authLogIn, authRole,authWaiter} from "./middleware/auth";
 import WaiterDashboard from '@/views/WaiterDashboard.vue';
 import ProductTypeCreate from '@/views/Manager/ProductTypeCreate.vue';
 import ChefDashboard from '@/views/ChefDashboard';
-import CustomerDashboard from '@/views/CustomerDashboard';
+import CustomerDashboard from '@/views/Customer/CustomerDashboard';
+import productInfo from '@/views/Customer/productInfo';
 import CashierDashboard from '@/views/CashierDashboard';
 import OrderInfo from '@/views/Manager/OrderInfo'
 Vue.use(VueRouter);
@@ -129,9 +130,14 @@ const routes = [
     component: CashierDashboard,
   },
   {
-    path: '/customer/:username',
+    path: '/customer/:id',
     name: 'customer',
     component: CustomerDashboard,
+  },
+  {
+    path: '/productInfo/:id',
+    name: 'productInfo',
+    component: productInfo
   },
   {
     path: '/productType-create',

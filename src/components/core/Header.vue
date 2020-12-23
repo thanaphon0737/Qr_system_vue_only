@@ -13,17 +13,23 @@
         >
       </v-list-item-content>
       <v-spacer></v-spacer>
+      
       <v-btn icon @click="onClickLogOff">
         <v-icon>mdi-export</v-icon>
       </v-btn>
+      
     </v-app-bar>
   </div>
 </template>
 
 <script>
+
 export default {
   name: "Header",
   computed: {
+    
+  },
+  components:{
     
   },
   methods: {

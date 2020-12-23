@@ -36,3 +36,11 @@ export const getOrder = () => {
 export const getOrderProductById = (id) => {
   return httpClient.get(`orderProduct/order-id/${id}`);
 };
+
+export const addOrder = (data)=> {
+  return httpClient.post('order', data);
+}
+
+export const addOrderProduct = (data) =>{
+  return httpClient.post('orderProduct');
+} 

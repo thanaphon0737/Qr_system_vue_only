@@ -25,7 +25,7 @@
 export default {
   methods: {
     onClickMenu(link) {
-      console.log("link",link)
+      
       this.$router.push(link).catch(err => {});
     }
   },
@@ -48,7 +48,8 @@ export default {
         ["mdi-file-document-box-check-outline", "Waiter", "/waiter/test"],
         ["mdi-file-document-box-check-outline", "Chef", "/chef/test"],
         ["mdi-file-document-box-check-outline", "Cashier", "/cashier/test"],
-        ["mdi-file-document-box-check-outline", "Customer", "/customer/test"]
+        ["mdi-file-document-box-check-outline", "Customer", "/customer/1"],
+        ["mdi-file-document-box-check-outline", "Customer", "/customer/2"]
 
       ]
     };

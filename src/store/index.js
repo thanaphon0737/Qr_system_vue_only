@@ -10,7 +10,8 @@ export default new Vuex.Store({
     isLogged: false,
     username: "",
     role_name:"",
-    id:""
+    id:"",
+    collection_food:[],
   },  
   getters: {
     isLogin(state) {
@@ -24,6 +25,9 @@ export default new Vuex.Store({
     },
     id(state){
       return state.id;
+    },
+    foods(state){
+      return state.collection_food;
     }
   },
   mutations: {
@@ -41,6 +45,9 @@ export default new Vuex.Store({
     },
     SET_ID(state, value){
       state.id = value
+    },
+    SET_FOOD(state, value){
+      state.collection_food = value;
     }
   },
   actions: {
@@ -72,6 +79,13 @@ export default new Vuex.Store({
         commit("SET_ID",localStorage.getItem("id"))
       }
     },
+    addfoods({commit}) {
+      let getfood = localStorage.getItem('collection_food')
+      commit("SET_FOOD", getfood)
+    },
+    setCustomerId({commit}, { id}){
+      commit("SET_ID",)
+    }
   },
   modules: {}
 });

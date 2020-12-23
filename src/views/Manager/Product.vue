@@ -147,10 +147,7 @@ export default {
     },
     async loadProducts() {
       let result = await api.getProducts();
-      
-      
 
-        
       this.mDataArray = result.data;
     }
     

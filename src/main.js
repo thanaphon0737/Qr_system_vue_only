@@ -15,11 +15,7 @@ new Vue({
   router,
   store,
   vuetify,
-  data(){
-    return {
-      socket: io("http://localhost:8081")
-    }
-  },
+  
   render: h => h(App)
 }).$mount("#app");
 
