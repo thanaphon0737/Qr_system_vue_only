@@ -38,7 +38,7 @@
                   </v-list-item-content>
                   <v-list-item-content>
                     <h2>
-                      {{ total | currency("฿") }}
+                      {{'฿' + total.toFixed(2) }}
                     </h2>
                   </v-list-item-content>
                 </v-list-item>
@@ -46,7 +46,7 @@
                   <v-list-item-content>tax 7%</v-list-item-content>
                   <v-list-item-content>
                     <h2>
-                      {{ (total * 1.07) | currency("฿") }}
+                      {{'฿' + (total*1.07).toFixed(2)  }}
                     </h2>
                   </v-list-item-content>
                 </v-list-item>
@@ -56,6 +56,9 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
+          <v-btn color="red" text @click="clearData">
+            clear
+          </v-btn>
           <v-btn color="blue darken-1" text @click="dialog = false">
             Close
           </v-btn>
@@ -87,22 +90,48 @@ export default {
     this.loadData();
   },
   methods: {
+    clearData() {
+      localStorage.removeItem("collection_food");
+      this.dialog = false;
+    },
     onclick() {
       this.loadData();
     },
     loadData() {
       let getData = JSON.parse(localStorage.getItem("collection_food"));
       this.items = getData;
-      getData.forEach((elem) => {
-        this.total += elem.price;
-      });
+      if (getData) {
+        getData.forEach((elem) => {
+          this.total += elem.price;
+        });
+      }
     },
-    async orderConfirm(){
-        let createOrder = {
-          customer_id:1
-        }
-       await api.addOrder();
-    }
+    async orderConfirm() {
+      let createOrder = {
+        customer_id: Number(this.$store.getters.id),
+        note: "",
+        order_status_id: 1,
+      };
+      let returnOrderId = await api.addOrder(createOrder);
+
+      let pushOrder = {
+        data: this.items.map((item) => {
+          return {
+            order_id: returnOrderId.data.id,
+            order_product_status_id: 1,
+            order_qty: item.product_qty_added,
+            product_id: item.product_id,
+          };
+        }),
+      };
+      try {
+        let result = await api.addOrderProduct(pushOrder);
+        
+      } catch (e) {
+        console.log(e);
+      }
+      this.clearData();
+    },
   },
 };
 </script>

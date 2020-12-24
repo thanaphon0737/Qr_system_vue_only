@@ -31,14 +31,14 @@
                   elevation="2"
                   icon
                   raised
-                  @click="count <= 0 ? (count = 0) : count--"
+                  @click="onCountChange('-')"
                   >-</v-btn
                 >
 
                 <span> {{ count }}</span>
 
-                <v-btn elevation="2" icon raised @click="count++">+</v-btn>
-                <v-btn outlined rounded @click="addfood(item)">
+                <v-btn elevation="2" icon raised @click="onCountChange('+')">+</v-btn>
+                <v-btn outlined rounded v-bind:disabled="disabled" @click="addfood(item)">
                   add to cart
                 </v-btn>
               </v-row>
@@ -67,14 +67,19 @@ export default {
       socket: {},
       item: {},
       count: 0,
-      alert: false
+      alert: false,
+      disabled: false,
     };
   },
   created() {
     this.socket = io("http://localhost:8081");
   },
+  compute(){
+    
+  },
   mounted() {
     this.loadProductById();
+    this.clickAble();
   },
   methods: {
     async loadProductById() {
@@ -84,6 +89,7 @@ export default {
     },
     addfood(item) {
       //check data existed
+      this.disabled= true;
       let previous_data = JSON.parse(localStorage.getItem("collection_food"));
       let exist = false;
       let initArray = []
@@ -114,8 +120,21 @@ export default {
         localStorage.setItem("collection_food", JSON.stringify(previous_data));
       }
       this.alert = true
-      setTimeout(()=>{this.alert = false; this.count =0}, 1000)
+      setTimeout(()=>{this.alert = false; this.count =0; this.disabled= false}, 1000)
     },
+    clickAble(){
+      this.count === 0 ? this.disabled = true : this.disabled = false;
+    },
+    onCountChange(operator){
+      
+      if(operator === '-'){
+        this.count <= 0 ? (this.count = 0) : this.count--
+      }else if(operator === '+') {
+        this.count++
+      }
+      this.clickAble();
+    }
+    
   },
 };
 </script>

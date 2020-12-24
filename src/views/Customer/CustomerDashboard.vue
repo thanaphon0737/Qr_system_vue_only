@@ -91,6 +91,10 @@ export default {
     
 
     this.loadProducts();
+    this.$store.dispatch({
+        type: "setCustomerId",
+        id: this.$route.params.id
+      });
   },
   methods: {
     async loadProducts() {

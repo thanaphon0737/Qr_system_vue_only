@@ -72,19 +72,20 @@ export default new Vuex.Store({
     restoreLogin({ commit }) {
       if (api.isLoggedIn() == true) {
         let username = localStorage.getItem(server.USERNAME);
-        let role_name = localStorage.getItem('role_name')
+        let role_name = localStorage.getItem('role_name');
         commit("SET_LOGGED_IN");
         commit("SET_USERNAME", username);
-        commit("SET_ROLE_NAME", role_name)
-        commit("SET_ID",localStorage.getItem("id"))
+        commit("SET_ROLE_NAME", role_name);
+        commit("SET_ID",localStorage.getItem("id"));
       }
     },
     addfoods({commit}) {
-      let getfood = localStorage.getItem('collection_food')
-      commit("SET_FOOD", getfood)
+      let getfood = localStorage.getItem('collection_food');
+      commit("SET_FOOD", getfood);
     },
     setCustomerId({commit}, { id}){
-      commit("SET_ID",)
+      localStorage.setItem("id",id);
+      commit("SET_ID",id);
     }
   },
   modules: {}

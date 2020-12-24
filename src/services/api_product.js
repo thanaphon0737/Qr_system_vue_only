@@ -42,5 +42,5 @@ export const addOrder = (data)=> {
 }
 
 export const addOrderProduct = (data) =>{
-  return httpClient.post('orderProduct');
+  return httpClient.post('orderProduct',data);
 } 
