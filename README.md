@@ -1,4 +1,4 @@
-# my-stock-workshop
+# QOSFR
 
 ## Project setup
 ```
