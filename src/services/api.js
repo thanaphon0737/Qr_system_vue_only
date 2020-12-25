@@ -3,8 +3,10 @@ import { server } from "@/services/constants";
 import router from "@/router";
 import * as productApis from "@/services/api_product.js"
 import * as employeeApis from "@/services/api_employee.js"
+import * as customerApis from "@/services/api_customer.js"
 const isLoggedIn = () => {
   let token = localStorage.getItem(server.TOKEN_KEY);
+  console.log(typeof token)
   return token != null;
 };
 
@@ -47,5 +49,6 @@ export default {
   register,
   logoff,
   ...productApis,
-  ...employeeApis
+  ...employeeApis,
+  ...customerApis
 };

@@ -113,7 +113,6 @@ export default {
         {
           text: "Id",
           align: "left",
-          sortable: false,
           value: "id"
         },
         { text: "Image", value: "image" },

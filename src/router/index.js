@@ -20,9 +20,14 @@ import CustomerDashboard from '@/views/Customer/CustomerDashboard';
 import productInfo from '@/views/Customer/productInfo';
 import CashierDashboard from '@/views/CashierDashboard';
 import OrderInfo from '@/views/Manager/OrderInfo'
+import notFoundPage from '@/views/notFoundPage'
+
+import auth from './middleware/auth'
+import managerAuth from "./middleware/managerAuth";
 Vue.use(VueRouter);
 
 const routes = [
+  //----------------------------guest acces-----------------------------------------
   {
     path: "/login",
     name: "login",
@@ -37,112 +42,147 @@ const routes = [
     component: Register
   },
   {
+    path: "/",
+    redirect: "/login"
+  },
+  {
+    path: "/notFoundPage",
+    name: "notFoundPage",
+    component: notFoundPage
+  },
+  {
+    path: "*",
+    redirect: "/notFoundPage"
+  },
+  //----------------------manager page accesable----------------------------------
+  {
     path: "/product",    
     name: "product",
     component: Product,
+    meta:{
+      middleware:[auth,managerAuth]
+    }
     
   },
   {
     path: "/product-create",
     name: "product-create",
     component: ProductCreate,
-    
+    meta:{
+      middleware:[auth,managerAuth]
+    }
   },
   {
     path: "/product-edit/:id",
     name: "product-edit",
     component: ProductEdit,
-    
+    meta:{
+      middleware:[auth,managerAuth]
+    }
   },
   {
     path: "/report",
     name: "report",
     component: Report,
-    
+    meta:{
+      middleware:[auth,managerAuth]
+    }
   },
   {
     path: "/about",
     name: "about",
     component: About,
     
-    
   },
   {
     path: "/accounting",
     name: "accounting",
     component: Accounting,
+    meta:{
+      middleware:[auth,managerAuth]
+    }
   },
   {
     path: '/order-info/:id',
     name: 'order-info',
-    component: OrderInfo
+    component: OrderInfo,
+    meta:{
+      middleware:[auth,managerAuth]
+    }
   },
-  {
-    path: "/",
-    redirect: "/login"
-  },
-  {
-    path: "*",
-    redirect: "/login"
-  },
+
   {
     path: "/promotion",
     name: "promotion",
     component: Promotion,
-    meta: {
-      
+    meta:{
+      middleware:[auth,managerAuth]
     }
   },
   {
     path: "/employee",
     name: "employee",
     component: Employee,
-    meta: {
-      
+    meta:{
+      middleware:[auth,managerAuth]
     }
   },
   {
     path: "/employee-edit/:id",
     name: "employee-edit",
     component: EmployeeEdit,
+    meta:{
+      middleware:[auth,managerAuth]
+    }
   },
   {
     path: "/promotion/promo-create",
     name: "promo-create",
     component: PromotionCreate,
-    
-
+    meta:{
+      middleware:[auth,managerAuth]
+    }
   },
+  {
+    path: '/productType-create',
+    name: 'productType-create',
+    component: ProductTypeCreate,
+    meta:{
+      middleware:[auth,managerAuth]
+    }
+  },
+  //-------------------------------------waiter accesable----------------------------
   {
     path: '/waiter/:username',
     name: 'waiter',
     component: WaiterDashboard,
   },
+  //-------------------------------------chef accesable----------------------------
   {
     path: '/chef/:username',
     name: 'chef',
     component: ChefDashboard,
   },
+  //-------------------------------------cashier accesable----------------------------
   {
     path: '/cashier/:username',
     name: 'cashier',
     component: CashierDashboard,
   },
+  //-------------------------------------customer(all) accesable----------------------------
   {
     path: '/customer/:id',
     name: 'customer',
     component: CustomerDashboard,
+    
   },
   {
     path: '/productInfo/:id',
     name: 'productInfo',
-    component: productInfo
+    component: productInfo,
+    
   },
-  {
-    path: '/productType-create',
-    name: 'productType-create',
-    component: ProductTypeCreate
-  }
+  
 ];
 
 const router = new VueRouter({
@@ -150,4 +190,5 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 });
+router.beforeEach(VueRouteMiddleware({auth,managerAuth}));
 export default router;

@@ -6,7 +6,6 @@ import vuetify from './plugins/vuetify';
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import Vue2Filters from "vue2-filters";
 import { imageUrl } from "@/services/constants";
-import io from "socket.io-client"
 Vue.config.productionTip = false;
 
 

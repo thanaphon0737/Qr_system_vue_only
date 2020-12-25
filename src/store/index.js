@@ -7,7 +7,6 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    isLogged: false,
     username: "",
     role_name:"",
     id:"",
@@ -49,17 +48,16 @@ export default new Vuex.Store({
       state.username = value
     },
     SET_ROLE_NAME(state, value){
-      value.toString();
       if(value.toLowerCase() === 'manager' ){
-        state.isManager = true;
+        state.user.isManager = true;
       }else if(value.toLowerCase() === 'chef' ){
-        state.isChef = true;
-      }else if(value.toLowerCase() === 'waiter' ){
-        state.isWaiter = true;
+        state.user.isChef = true;
+      }else if(value.toLowerCase() ==='waiter' ){
+        state.user.isWaiter = true;
       }else if(value.toLowerCase() === 'cashier' ){
-        state.isCashier = true;
+        state.user.isCashier = true;
       }else if(value.toLowerCase() === 'customer' ){
-        state.isCustomer = true;
+        state.user.isCustomer = true;
       }else {
         console.log("null role");
       }
@@ -107,7 +105,7 @@ export default new Vuex.Store({
     },
     setCustomerId({commit}, { id}){
       localStorage.setItem("id",id);
-      localStorage.setItem("ROLE_NAME", "customer")
+      localStorage.setItem("role_name", "customer")
       commit("SET_ID",id);
       commit("SET_ROLE_NAME", 'customer');
     }

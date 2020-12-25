@@ -68,12 +68,13 @@ export default {
   },
   methods: {
     submit() {
-      this.$router.push("/about");
+      
       this.$store.dispatch({
         type: "doLogin",
         username: this.account.username,
         password: this.account.password,
       });
+      this.$router.push("/about");
     }
   }
 };
