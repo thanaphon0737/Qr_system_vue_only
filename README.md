@@ -1,5 +1,5 @@
-# my-stock-workshop
-
+#QR Ordering System For Restaurant
+test change push to dev
 ## Project setup
 ```
 yarn install
