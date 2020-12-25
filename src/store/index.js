@@ -12,10 +12,18 @@ export default new Vuex.Store({
     role_name:"",
     id:"",
     collection_food:[],
+    user:{
+      isLogged: false,
+      isChef: false,
+      isWaiter: false,
+      isManager: false,
+      isCashier: false,
+      isCustomer: false,
+    }
   },  
   getters: {
-    isLogin(state) {
-      return state.isLogged;
+    auth(state) {
+      return state.user;
     },
     username(state) {
       return state.username;
@@ -32,15 +40,29 @@ export default new Vuex.Store({
   },
   mutations: {
     SET_LOGGED_IN(state){
-      state.isLogged = true
+      state.user.isLogged = true
     },
     SET_LOGGED_OUT(state) {
-      state.isLogged = false;
+      state.user.isLogged = false;
     },
     SET_USERNAME(state, value){
       state.username = value
     },
     SET_ROLE_NAME(state, value){
+      value.toString();
+      if(value.toLowerCase() === 'manager' ){
+        state.isManager = true;
+      }else if(value.toLowerCase() === 'chef' ){
+        state.isChef = true;
+      }else if(value.toLowerCase() === 'waiter' ){
+        state.isWaiter = true;
+      }else if(value.toLowerCase() === 'cashier' ){
+        state.isCashier = true;
+      }else if(value.toLowerCase() === 'customer' ){
+        state.isCustomer = true;
+      }else {
+        console.log("null role");
+      }
       state.role_name = value
     },
     SET_ID(state, value){
@@ -85,7 +107,9 @@ export default new Vuex.Store({
     },
     setCustomerId({commit}, { id}){
       localStorage.setItem("id",id);
+      localStorage.setItem("ROLE_NAME", "customer")
       commit("SET_ID",id);
+      commit("SET_ROLE_NAME", 'customer');
     }
   },
   modules: {}

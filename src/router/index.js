@@ -13,7 +13,6 @@ import Promotion from "@/views/Manager/Promotion.vue";
 import Employee from "@/views/Manager/ManageEmployee.vue";
 import EmployeeEdit from "@/views/Manager/EmployeeEdit.vue";
 import PromotionCreate from "@/views/Manager/PromotionCreate.vue";
-import {authLogIn, authRole,authWaiter} from "./middleware/auth";
 import WaiterDashboard from '@/views/WaiterDashboard.vue';
 import ProductTypeCreate from '@/views/Manager/ProductTypeCreate.vue';
 import ChefDashboard from '@/views/ChefDashboard';
@@ -151,5 +150,4 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 });
-router.beforeEach(VueRouteMiddleware({authLogIn,authRole,authWaiter}))
 export default router;
