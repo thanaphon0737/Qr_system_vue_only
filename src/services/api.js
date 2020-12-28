@@ -6,15 +6,11 @@ import * as employeeApis from "@/services/api_employee.js"
 import * as customerApis from "@/services/api_customer.js"
 const isLoggedIn = () => {
   let token = localStorage.getItem(server.TOKEN_KEY);
-  console.log(typeof token)
   return token != null;
 };
 
 const login = async values => {
   const result = await httpClient.post(server.LOGIN_URL, values);
-  console.log("login_url ", server.LOGIN_URL)
-  console.log(values)
-  console.log("result",result.data.message)
   if (result.data.result == "ok") {
     localStorage.setItem(server.USERNAME, values.username);
     localStorage.setItem(server.TOKEN_KEY, result.data.token);

@@ -2,16 +2,16 @@ import Vue from "vue";
 import Vuex from "vuex";
 import api from "@/services/api";
 import { server } from "@/services/constants";
-
+import router from "../router";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     username: "",
-    role_name:"",
-    id:"",
-    collection_food:[],
-    user:{
+    role_name: "",
+    id: "",
+    collection_food: [],
+    user: {
       isLogged: false,
       isChef: false,
       isWaiter: false,
@@ -19,7 +19,7 @@ export default new Vuex.Store({
       isCashier: false,
       isCustomer: false,
     }
-  },  
+  },
   getters: {
     auth(state) {
       return state.user;
@@ -27,46 +27,46 @@ export default new Vuex.Store({
     username(state) {
       return state.username;
     },
-    role_name(state){
+    role_name(state) {
       return state.role_name;
     },
-    id(state){
+    id(state) {
       return state.id;
     },
-    foods(state){
+    foods(state) {
       return state.collection_food;
     }
   },
   mutations: {
-    SET_LOGGED_IN(state){
+    SET_LOGGED_IN(state) {
       state.user.isLogged = true
     },
     SET_LOGGED_OUT(state) {
       state.user.isLogged = false;
     },
-    SET_USERNAME(state, value){
+    SET_USERNAME(state, value) {
       state.username = value
     },
-    SET_ROLE_NAME(state, value){
-      if(value.toLowerCase() === 'manager' ){
+    SET_ROLE_NAME(state, value) {
+      if (value.toLowerCase() === 'manager') {
         state.user.isManager = true;
-      }else if(value.toLowerCase() === 'chef' ){
+      } else if (value.toLowerCase() === 'chef') {
         state.user.isChef = true;
-      }else if(value.toLowerCase() ==='waiter' ){
+      } else if (value.toLowerCase() === 'waiter') {
         state.user.isWaiter = true;
-      }else if(value.toLowerCase() === 'cashier' ){
+      } else if (value.toLowerCase() === 'cashier') {
         state.user.isCashier = true;
-      }else if(value.toLowerCase() === 'customer' ){
+      } else if (value.toLowerCase() === 'customer') {
         state.user.isCustomer = true;
-      }else {
+      } else {
         console.log("null role");
       }
       state.role_name = value
     },
-    SET_ID(state, value){
+    SET_ID(state, value) {
       state.id = value
     },
-    SET_FOOD(state, value){
+    SET_FOOD(state, value) {
       state.collection_food = value;
     }
   },
@@ -77,7 +77,7 @@ export default new Vuex.Store({
         commit("SET_LOGGED_IN");
         commit("SET_USERNAME", username);
         commit("SET_ROLE_NAME", localStorage.getItem("role_name"))
-        commit("SET_ID",localStorage.getItem("id"))
+        commit("SET_ID", localStorage.getItem("id"))
       } else {
         dispatch("doLogout", {});
       }
@@ -86,8 +86,8 @@ export default new Vuex.Store({
       api.logoff();
       commit("SET_LOGGED_OUT");
       commit("SET_USERNAME", "");
-      commit("SET_ROLE_NAME","");
-      commit("SET_ID","");
+      commit("SET_ROLE_NAME", "");
+      commit("SET_ID", "");
     },
     restoreLogin({ commit }) {
       if (api.isLoggedIn() == true) {
@@ -96,19 +96,27 @@ export default new Vuex.Store({
         commit("SET_LOGGED_IN");
         commit("SET_USERNAME", username);
         commit("SET_ROLE_NAME", role_name);
-        commit("SET_ID",localStorage.getItem("id"));
+        commit("SET_ID", localStorage.getItem("id"));
       }
     },
-    addfoods({commit}) {
+    addfoods({ commit }) {
       let getfood = localStorage.getItem('collection_food');
       commit("SET_FOOD", getfood);
     },
-    setCustomerId({commit}, { id}){
-      localStorage.setItem("id",id);
-      localStorage.setItem("role_name", "customer")
-      commit("SET_ID",id);
-      commit("SET_ROLE_NAME", 'customer');
-    }
+    async setCustomerId({ commit }, { id }) {
+      let Cid = await api.getCustomerById(id);
+      // console.log(Cid)
+      if (Cid == true) {
+        
+        commit("SET_ROLE_NAME", localStorage.getItem('role_name'));
+        commit("SET_ID", localStorage.getItem('id'));
+        router.push(`/customer/${id}`)
+      }else {
+        // router.push('/dashboard')
+        console.log("no id match")
+      }
+    },
+    
   },
   modules: {}
 });

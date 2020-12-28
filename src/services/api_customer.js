@@ -5,7 +5,16 @@ import { server } from "@/services/constants";
 
 
 
-export const getCustomerById = () =>{
-  return httpClient.get(`customer`);
+export const getCustomerById = async (id) =>{
+  let result = await httpClient.get(`customer/${id}`);
+
+  if(result.data.result == 'ok'){
+    localStorage.setItem("id", id);
+    localStorage.setItem("role_name", "customer");
+    return true;
+  }else{
+
+    return false; 
+  }
 }
 

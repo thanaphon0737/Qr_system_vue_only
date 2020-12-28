@@ -21,9 +21,11 @@ import productInfo from '@/views/Customer/productInfo';
 import CashierDashboard from '@/views/CashierDashboard';
 import OrderInfo from '@/views/Manager/OrderInfo'
 import notFoundPage from '@/views/notFoundPage'
+import Dashboard from '@/views/Customer/Dashboard'
 
 import auth from './middleware/auth'
 import managerAuth from "./middleware/managerAuth";
+import customerValid from "./middleware/customerValid"
 Vue.use(VueRouter);
 
 const routes = [
@@ -174,14 +176,25 @@ const routes = [
     path: '/customer/:id',
     name: 'customer',
     component: CustomerDashboard,
+    meta:{
+      middleware:[customerValid]
+    }
     
   },
   {
     path: '/productInfo/:id',
     name: 'productInfo',
     component: productInfo,
+    meta:{
+      middleware:[customerValid]
+    }
     
   },
+  {
+    path: '/dashboard',
+    name:'dashboard',
+    component: Dashboard
+  }
   
 ];
 
@@ -190,5 +203,5 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 });
-router.beforeEach(VueRouteMiddleware({auth,managerAuth}));
+router.beforeEach(VueRouteMiddleware({auth,managerAuth,customerValid}));
 export default router;

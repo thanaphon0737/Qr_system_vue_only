@@ -92,6 +92,7 @@ export default {
   methods: {
     clearData() {
       localStorage.removeItem("collection_food");
+      this.total = 0;
       this.dialog = false;
     },
     onclick() {
