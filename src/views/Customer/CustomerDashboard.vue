@@ -100,8 +100,6 @@ export default {
       
     },
     infofood(item){
-      
-      
       this.$router.push(`/productInfo/${item.id}`);
     }
   },

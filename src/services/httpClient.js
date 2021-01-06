@@ -22,7 +22,7 @@ axios.interceptors.response.use(
   },
   error => {
     console.log(JSON.stringify(error, undefined, 2));
-    router.push("/");
+    // router.push("/");
     if (axios.isCancel(error)) {
       return Promise.reject(error);
     } else if (!error.response) {

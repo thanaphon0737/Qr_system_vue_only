@@ -85,6 +85,7 @@ export default {
     async loadData() {
       let result = await api.getOrder();
       this.mDataArray = result.data;
+      console.log(this.mDataArray)
     }
   }
 };

@@ -10,6 +10,7 @@
         <v-btn icon>
           <v-icon>mdi-magnify</v-icon>
         </v-btn>
+        <v-btn icon @click="$router.back()"> <v-icon>mdi-arrow-left</v-icon></v-btn>
       </v-app-bar>
     </div>
 </template>

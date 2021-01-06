@@ -38,7 +38,7 @@
                   </v-list-item-content>
                   <v-list-item-content>
                     <h2>
-                      {{'฿' + total.toFixed(2) }}
+                      {{ "฿" + total.toFixed(2) }}
                     </h2>
                   </v-list-item-content>
                 </v-list-item>
@@ -46,7 +46,7 @@
                   <v-list-item-content>tax 7%</v-list-item-content>
                   <v-list-item-content>
                     <h2>
-                      {{'฿' + (total*1.07).toFixed(2)  }}
+                      {{ "฿" + (total * 1.07).toFixed(2) }}
                     </h2>
                   </v-list-item-content>
                 </v-list-item>
@@ -108,30 +108,36 @@ export default {
       }
     },
     async orderConfirm() {
-      let createOrder = {
-        customer_id: Number(this.$store.getters.id),
-        note: "",
-        order_status_id: 1,
-      };
-      let returnOrderId = await api.addOrder(createOrder);
-
       let pushOrder = {
         data: this.items.map((item) => {
           return {
-            order_id: returnOrderId.data.id,
             order_product_status_id: 1,
             order_qty: item.product_qty_added,
             product_id: item.product_id,
           };
         }),
+        createOrder: {
+          customer_id: Number(this.$store.getters.id),
+          note: "",
+          order_status_id: 1,
+        },
       };
       try {
         let result = await api.addOrderProduct(pushOrder);
-        
+       
+        if(result.data){
+          const res = JSON.parse(result.data)
+          if(res.status === 'out of stock'){
+            console.log(res.collect_error)
+            alert(JSON.stringify(res.collect_error))
+          }
+        }
+        this.clearData();
+        this.$router.back();
       } catch (e) {
         console.log(e);
       }
-      this.clearData();
+      
     },
   },
 };
