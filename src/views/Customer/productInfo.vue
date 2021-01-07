@@ -65,8 +65,7 @@
   </div>
 </template>
 <script>
-// import io from 'socket.io-client';
-import io from "socket.io-client";
+
 import api from "@/services/api";
 import Appbar from "@/components/mobile/Appbar.vue";
 export default {
@@ -83,7 +82,7 @@ export default {
     };
   },
   created() {
-    this.socket = io("http://localhost:8081");
+    
   },
   compute() {},
   mounted() {

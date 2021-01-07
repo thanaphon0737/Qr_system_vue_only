@@ -11,6 +11,7 @@ export default new Vuex.Store({
     role_name: "",
     id: "",
     collection_food: [],
+    socket: [],
     user: {
       isLogged: false,
       isChef: false,
@@ -35,6 +36,9 @@ export default new Vuex.Store({
     },
     foods(state) {
       return state.collection_food;
+    },
+    socket(state){
+      return state.socket;
     }
   },
   mutations: {
@@ -68,6 +72,9 @@ export default new Vuex.Store({
     },
     SET_FOOD(state, value) {
       state.collection_food = value;
+    },
+    SET_SOCKET(state, value){
+      state.socket.push(value)
     }
   },
   actions: {
@@ -102,6 +109,9 @@ export default new Vuex.Store({
     addfoods({ commit }) {
       let getfood = localStorage.getItem('collection_food');
       commit("SET_FOOD", getfood);
+    },
+    setSocket({commit}, {socket}){
+      commit("SET_SOCKET", socket)
     },
     async setCustomerId({ commit }, { id }) {
       let Cid = await api.getCustomerById(id);

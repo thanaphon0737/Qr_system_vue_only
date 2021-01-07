@@ -10,7 +10,7 @@
 import Header from "@/components/core/Header"
 import Menu from "@/components/core/Menu"
 import Content from "@/components/core/Content"
-
+import io from "socket.io-client";
 export default {
   name: "App",
   components:{
@@ -18,7 +18,13 @@ export default {
     Menu,
     Content
   },
-  
+  created(){
+    this.socket = io("http://192.168.1.22:8081");
+    this.$store.dispatch({
+        type: "setSocket",
+        socket: this.socket
+      });
+  },
   mounted() {
     this.$store.dispatch({ type: "restoreLogin" });
 

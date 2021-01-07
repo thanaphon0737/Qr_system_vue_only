@@ -63,7 +63,7 @@
 </template>
 <script>
 // import io from 'socket.io-client';
-import io from "socket.io-client";
+
 import api from "@/services/api";
 import Appbar from "@/components/mobile/Appbar.vue"
 export default {
@@ -72,7 +72,6 @@ export default {
   },
   data() {
     return {
-      socket: {},
       items: [
         {
           color: "#34eb59",

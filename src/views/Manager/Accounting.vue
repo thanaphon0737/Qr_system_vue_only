@@ -47,6 +47,7 @@
 import api from "@/services/api";
 export default {
   name: "Stock",
+  socket:{},
   data() {
     return {
       search: "",
@@ -74,20 +75,40 @@ export default {
     };
   },
   async mounted() {
-    this.loadData();
+    // this.loadData();
+    this.socket = this.$store.getters.socket[0];
+    // console.log(this.socket);
+    this.socket.emit("initial_data");
+    this.socket.on("getData", data => {this.getData(data)})
+    this.socket.on("changeData", () => this.changeData())
   },
   methods: {
     editEmployeeInfo(item) {
       this.$router.push(`/order-info/${item.id}`);
     },
 
+    //realtime update
+    getData(data) {
+      // console.log("get")
+      console.log(data)
+        this.mDataArray = data;
+    },
+    changeData(){
+      this.socket.emit("initial_data");
+      
+    },
+
 
     async loadData() {
       let result = await api.getOrder();
       this.mDataArray = result.data;
-      console.log(this.mDataArray)
+      
     }
-  }
+  },
+  beforeDestroy() {
+    this.socket.off("getData");
+    this.socket.off("changeData");
+  },
 };
 </script>
 

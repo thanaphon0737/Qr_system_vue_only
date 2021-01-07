@@ -72,7 +72,6 @@
 </template>
 
 <script>
-import io from "socket.io-client";
 import api from "@/services/api";
 export default {
   name: "Cart",
@@ -81,11 +80,10 @@ export default {
       dialog: false,
       items: [],
       total: 0,
+      socket: {},
     };
   },
-  created() {
-    this.socket = io("http://localhost:8081");
-  },
+  created() {},
   mounted() {
     this.loadData();
   },
@@ -108,36 +106,41 @@ export default {
       }
     },
     async orderConfirm() {
-      let pushOrder = {
-        data: this.items.map((item) => {
-          return {
-            order_product_status_id: 1,
-            order_qty: item.product_qty_added,
-            product_id: item.product_id,
-          };
-        }),
-        createOrder: {
-          customer_id: Number(this.$store.getters.id),
-          note: "",
-          order_status_id: 1,
-        },
-      };
-      try {
-        let result = await api.addOrderProduct(pushOrder);
-       
-        if(result.data){
-          const res = JSON.parse(result.data)
-          if(res.status === 'out of stock'){
-            console.log(res.collect_error)
-            alert(JSON.stringify(res.collect_error))
+      //socket on here
+      if (this.items.length > 0) {
+        this.socket = this.$store.getters.socket[0];
+        //createOrder
+        let pushOrder = {
+          data: this.items.map((item) => {
+            return {
+              order_product_status_id: 1,
+              order_qty: item.product_qty_added,
+              product_id: item.product_id,
+            };
+          }),
+          createOrder: {
+            customer_id: Number(this.$store.getters.id),
+            note: "",
+            order_status_id: 1,
+          },
+        };
+        try {
+          let result = await api.addOrderProduct(pushOrder);
+
+          if (result.data) {
+            const res = result.data;
+            if (res.status === "out of stock") {
+              console.log(res.collect_error);
+              alert(JSON.stringify(res.collect_error));
+            }
           }
+          this.socket.emit("putOrder");
+          this.clearData();
+          this.$router.back();
+        } catch (e) {
+          console.log(e);
         }
-        this.clearData();
-        this.$router.back();
-      } catch (e) {
-        console.log(e);
       }
-      
     },
   },
 };

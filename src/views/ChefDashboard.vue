@@ -2,85 +2,66 @@
   <div class="about text-center">
     <h1>Your role is {{ $store.getters["role_name"] }}</h1>
     <h1>Chef Dashboard</h1>
-    <v-col
-          v-for="(item, i) in items"
-          :key="i"
-          cols="12"
-        >
-          <v-card
-            :color="'#34eb59'"
-            dark
-          >
-            <div class="d-flex flex-no-wrap justify-space-between">
-              <div>
-                <v-card-title
-                  class="headline"
-                  v-text="item.product_name"
-                ></v-card-title>
+    <v-container justify col-6>
+      <v-card>
+        {{ inMessage }}
+      </v-card>
+      <v-textarea
+        solo
+        name="input-7-4"
+        v-model="message"
+        label="Solo textarea"
+      ></v-textarea>
+      {{ message }}
 
-
-                <v-card-actions>
-                  
-
-                  <v-btn
-                    
-                    class="ml-2 mt-5"
-                    outlined
-                    rounded
-                    small
-                  >
-                    confirm
-                  </v-btn>
-                </v-card-actions>
-              </div>
-
-              <v-avatar
-                class="ma-3"
-                size="125"
-                tile
-              >
-                <v-img
-                :src="item.product_image | imageUrl"
-                lazy-src="http://www.codemobiles.com/biz/images/cm_logo.png?ref=10"
-                aspect-ratio="1"
-                max-width="150"
-                max-height="150"
-              ></v-img>
-              </v-avatar>
-            </div>
-          </v-card>
-        </v-col>
-
-    <!-- <qrcode-vue :value="value" :size="size" level="H"></qrcode-vue> -->
+      <v-btn>
+        <v-icon>
+          mdi-send
+        </v-icon>
+      </v-btn>
+    </v-container>
   </div>
 </template>
 <script>
-import QrcodeVue from "qrcode.vue";
-import io from "socket.io-client";
 export default {
   data() {
     return {
-      items:[
-      ],
-
+      items: [],
+      message: "",
+      inMessage: "",
+      socket: {},
     };
   },
-  created() {
-    this.socket = io("http://localhost:8081");
-  },
+  created() {},
+
   mounted() {
-    this.socket.on("toChef", (data) => {
-      console.log("added")
-      this.items = data;
-      console.log(this.items)
-    });
-
-    
-
-    
+    this.socket = this.$store.getters.socket[0];
+    // console.log(this.socket);
+    this.socket.emit("initial_data");
+    this.socket.on("getData", data => {this.getData(data)})
+    this.socket.on("changeData", () => this.changeData())
   },
-  components: {
-    QrcodeVue,
+  
+  methods: {
+    getData(data) {
+      // console.log("get")
+        let showdata = data.map((data) => {
+          return {
+            order_id: data.id,
+            customer_id: data.customer_id,
+            price: data.total_price,
+          };
+        });
+        this.inMessage = showdata;
+    },
+    changeData(){
+      this.socket.emit("initial_data");
+      
+    }
+  },
+  beforeDestroy() {
+    this.socket.off("getData");
+    this.socket.off("changeData");
   },
 };
 </script>
