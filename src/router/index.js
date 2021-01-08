@@ -23,6 +23,7 @@ import OrderInfo from '@/views/Manager/OrderInfo'
 import notFoundPage from '@/views/notFoundPage'
 import Dashboard from '@/views/Customer/Dashboard'
 
+
 import auth from './middleware/auth'
 import managerAuth from "./middleware/managerAuth";
 import customerValid from "./middleware/customerValid"
@@ -194,7 +195,8 @@ const routes = [
     path: '/dashboard',
     name:'dashboard',
     component: Dashboard
-  }
+  },
+ 
   
 ];
 

@@ -47,7 +47,6 @@ export default {
         id: this.tableId
       });
 
-        // this.$router.push(`/customer/${this.tableId}`)
     }
   },
 };

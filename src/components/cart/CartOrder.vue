@@ -2,9 +2,9 @@
   <div>
     <v-dialog v-model="dialog" persistent max-width="400" class="mx-auto">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="orange" dark v-bind="attrs" v-on="on" @click="onclick">
+        <v-btn color="green" dark v-bind="attrs" v-on="on">
           <v-btn icon>
-          <v-icon>mdi-hamburger</v-icon>
+          <v-icon>mdi-food</v-icon>
         </v-btn>
         </v-btn>
       </template>
@@ -21,10 +21,10 @@
                     name:{{ item.product_name }}
                   </v-list-item-title>
                   <v-list-item-title>
-                    qty:{{ item.product_qty_added }}
+                    qty:{{ item.order_qty }}
                   </v-list-item-title>
                   <v-list-item-title>
-                    id:{{ item.product_id }}
+                    status:{{ item.status}}
                   </v-list-item-title>
                   <v-list-item-title>
                     price: {{ item.price }}
@@ -54,20 +54,12 @@
                 </v-list-item>
               </v-col>
             </v-row>
+            <v-btn icon @click="dialog= false">
+              close
+            </v-btn>
           </v-container>
         </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="red" text @click="clearData">
-            clear
-          </v-btn>
-          <v-btn color="blue darken-1" text @click="dialog = false">
-            Close
-          </v-btn>
-          <v-btn color="blue darken-1" text @click="orderConfirm">
-            Order
-          </v-btn>
-        </v-card-actions>
+        
       </v-card>
     </v-dialog>
   </div>
@@ -76,74 +68,47 @@
 <script>
 import api from "@/services/api";
 export default {
-  name: "Cart",
+  name: "CartOrder",
   data() {
     return {
       dialog: false,
       items: [],
       total: 0,
       socket: {},
+      dialog: false
     };
   },
   created() {},
   mounted() {
-    this.loadData();
+    this.socket = this.$store.getters.socket[0];
+    console.log(this.socket);
+    this.socket.emit("initial_data_chef");
+    this.socket.on("getData", (data) => {
+      this.getData(data);
+    });
+    this.socket.on("changeData", () => this.changeData());
   },
   methods: {
-    clearData() {
-      localStorage.removeItem("collection_food");
-      this.total = 0;
-      this.dialog = false;
-    },
-    onclick() {
-      this.loadData();
-    },
-    loadData() {
-      let getData = JSON.parse(localStorage.getItem("collection_food"));
-      this.items = getData;
-      if (getData) {
-        getData.forEach((elem) => {
-          this.total += elem.price;
-        });
-      }
-    },
-    async orderConfirm() {
-      //socket on here
-      if (this.items.length > 0) {
-        this.socket = this.$store.getters.socket[0];
-        //createOrder
-        let pushOrder = {
-          data: this.items.map((item) => {
-            return {
-              order_product_status_id: 1,
-              order_qty: item.product_qty_added,
-              product_id: item.product_id,
-            };
-          }),
-          createOrder: {
-            customer_id: Number(this.$store.getters.id),
-            note: "",
-            order_status_id: 1,
-          },
+    
+    getData(data) {
+      // console.log("get")
+      console.log(data)
+      let showdata = data.map((data) => {
+        return {
+          id: data.id,
+          product_name: data.product.product_name,
+          order_qty: data.order_qty,
+          status: data.orderProductStatus.name,
+          order_id: data.order_id,
+          price: data.price
         };
-        try {
-          let result = await api.addOrderProduct(pushOrder);
-
-          if (result.data) {
-            const res = result.data;
-            if (res.status === "out of stock") {
-              console.log(res.collect_error);
-              alert(JSON.stringify(res.collect_error));
-            }
-          }
-          this.socket.emit("putOrder");
-          this.clearData();
-          this.$router.back();
-        } catch (e) {
-          console.log(e);
-        }
-      }
+      });
+      this.items = showdata;
     },
+    changeData() {
+      this.socket.emit("initial_data_chef");
+    },
+    
   },
 };
 </script>

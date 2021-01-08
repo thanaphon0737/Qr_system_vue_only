@@ -78,7 +78,7 @@ export default {
     // this.loadData();
     this.socket = this.$store.getters.socket[0];
     // console.log(this.socket);
-    this.socket.emit("initial_data");
+    this.socket.emit("initial_data_acc");
     this.socket.on("getData", data => {this.getData(data)})
     this.socket.on("changeData", () => this.changeData())
   },
@@ -94,7 +94,7 @@ export default {
         this.mDataArray = data;
     },
     changeData(){
-      this.socket.emit("initial_data");
+      this.socket.emit("initial_data_acc");
       
     },
 
