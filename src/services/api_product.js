@@ -37,6 +37,9 @@ export const getOrderProductById = (id) => {
   return httpClient.get(`orderProduct/order-id/${id}`);
 };
 
+export const getOrderProductByCustomerId = (id) =>{
+  return httpClient.get(`orderProduct/customer-id/${id}`)
+}
 export const addOrder = (data)=> {
   return httpClient.post('order', data);
 }

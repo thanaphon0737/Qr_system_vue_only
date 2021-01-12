@@ -19,7 +19,7 @@ export default {
     Content
   },
   created(){
-    this.socket = io("http://192.168.1.22:8081");
+    this.socket = io("http://10.80.87.108:8081");
     this.$store.dispatch({
         type: "setSocket",
         socket: this.socket

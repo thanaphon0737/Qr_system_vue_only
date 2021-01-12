@@ -92,7 +92,6 @@ export default {
     
     getData(data) {
       // console.log("get")
-      console.log(data)
       let showdata = data.map((data) => {
         return {
           id: data.id,
