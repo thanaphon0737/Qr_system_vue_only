@@ -1,9 +1,9 @@
 <template>
-  <v-navigation-drawer app permanent dark src="@/assets/background_menu.jpg">
+  <v-navigation-drawer app permanent color="#febd2e">
     <v-list shaped>
       <v-list-item-group v-model="selectedMenu" mandatory color="primary">
         <v-list-item
-          class="tile"
+          class="title"
           v-for="([icon, title, route], index) in menus"
           :key="index"
           @click="onClickMenu(route)"

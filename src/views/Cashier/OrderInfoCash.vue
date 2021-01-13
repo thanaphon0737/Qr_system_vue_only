@@ -1,5 +1,11 @@
 <template>
-  <v-container>
+  <div>
+    
+    <v-container>
+      <div class="text-center">
+      <h1>Your role is {{ $store.getters["role_name"] }}</h1>
+      <h1>Cashier Dashboard</h1>
+      </div>
     <v-simple-table>
     <template v-slot:default>
       <thead>
@@ -33,10 +39,40 @@
           <td>{{ item.price}}</td>
         </tr>
       </tbody>
+      <tfoot>
+        <tr>
+          <th>
+            
+          </th>
+          <th></th>
+          <th></th>
+          <th>total</th>
+          <th>{{totalprice}}</th>
+        </tr>
+        <tr>
+          <th>
+            
+          </th>
+          <th></th>
+          <th></th>
+          <th>vat 7%</th>
+          <th>{{totalprice*1.07}}</th>
+        </tr>
+      </tfoot>
     </template>
+    
   </v-simple-table>
+  <div align='end'>
+    <v-row>
+      <v-col>
+        <v-btn color="#febd2e">checkout</v-btn>
+      </v-col>
+    </v-row>
+  </div>
 
   </v-container>
+  </div>
+  
 </template>
 
 <script>
@@ -48,6 +84,7 @@ export default {
       search: "",
       
       mDataArray: [],
+      totalprice: 0,
       
 
       
@@ -74,8 +111,10 @@ export default {
           price: data.price
         }
       })
-      console.table(showdata)
-
+      
+      showdata.forEach(element => {
+        this.totalprice += element.price
+      });
       this.mDataArray = showdata;
     }
   }

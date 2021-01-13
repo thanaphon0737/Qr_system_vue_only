@@ -4,8 +4,8 @@
       <v-card style="width:400px;">
         <v-img
           class="white--text align-end"
-          src="@/assets/login_header.jpg"
-          height="200px"
+          src="@/assets/loginHeader.png"
+          height="250px"
         >
           <v-card-title primary-title>
             Login
@@ -37,7 +37,7 @@
               <v-btn text @click.prevent="$router.push('/register')"
                 >Register</v-btn
               >
-              <v-btn type="submit" color="success">Login</v-btn>
+              <v-btn type="submit" color="#febd2e">Login</v-btn>
             </v-row>
           </v-form>
         </v-card-text>

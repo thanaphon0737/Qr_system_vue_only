@@ -1,8 +1,7 @@
 <template>
   <div>
-    <v-app-bar app color="primary" dense dark>
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
-      <v-list-item-content class="">
+    <v-app-bar app color="#febd2e" dense dark>
+      <v-list-item-content class="yText">
         <v-list-item-title
           >Role: {{ $store.getters["role_name"] }}</v-list-item-title
         >
@@ -41,7 +40,7 @@ export default {
 </script>
 
 <style>
-.Role {
-
+.yText{
+  color: #1f1e19;
 }
 </style>

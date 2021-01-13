@@ -4,8 +4,8 @@
       <v-card style="width:400px;">
         <v-img
           class="white--text align-end"
-          src="@/assets/login_header.jpg"
-          height="200px"
+          src="@/assets/loginHeader.png"
+          height="250px"
         >
           <v-card-title primary-title>
             Register
@@ -38,7 +38,7 @@
             <span>{{ account }}</span>
             <v-row class="justify-space-between px-3 pt-5">
               <v-btn text @click.prevent="$router.back()">Cancel</v-btn>
-              <v-btn type="submit" color="success">Confirm</v-btn>
+              <v-btn type="submit" color="#febd2f">Confirm</v-btn>
             </v-row>
           </v-form>
         </v-card-text>
