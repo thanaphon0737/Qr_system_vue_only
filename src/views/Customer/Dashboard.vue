@@ -37,7 +37,7 @@
 export default {
   data() {
     return {
-      tableId: 1,
+      tableId: this.$route.params.id,
     };
   },
   methods: {

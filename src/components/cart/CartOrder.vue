@@ -4,8 +4,8 @@
       <template v-slot:activator="{ on, attrs }">
         <v-btn color="green" dark v-bind="attrs" v-on="on">
           <v-btn icon>
-          <v-icon>mdi-food</v-icon>
-        </v-btn>
+            <v-icon>mdi-food</v-icon>
+          </v-btn>
         </v-btn>
       </template>
       <v-card>
@@ -17,20 +17,24 @@
             <v-row v-for="(item, i) in items" :key="i" cols="12">
               <v-list-item>
                 <v-list-item-content>
+                  <v-divider></v-divider>
                   <v-list-item-title>
-                    name:{{ item.product_name }}
+                    name:{{ item.product_name }} {{item.id}}
                   </v-list-item-title>
                   <v-list-item-title>
                     qty:{{ item.order_qty }}
                   </v-list-item-title>
                   <v-list-item-title>
-                    status:{{ item.status}}
+                    status:{{ item.status }}
                   </v-list-item-title>
                   <v-list-item-title>
                     price: {{ item.price }}
                   </v-list-item-title>
+                  <v-divider></v-divider>
                 </v-list-item-content>
+                
               </v-list-item>
+              
             </v-row>
             <v-row>
               <v-col>
@@ -54,12 +58,11 @@
                 </v-list-item>
               </v-col>
             </v-row>
-            <v-btn icon @click="dialog= false">
+            <v-btn icon @click="dialog = false">
               close
             </v-btn>
           </v-container>
         </v-card-text>
-        
       </v-card>
     </v-dialog>
   </div>
@@ -75,39 +78,45 @@ export default {
       items: [],
       total: 0,
       socket: {},
-      dialog: false
+      dialog: false,
+      customer_id: this.$store.getters.id,
     };
   },
   created() {},
   mounted() {
     this.socket = this.$store.getters.socket[0];
-    console.log(this.socket);
-    this.socket.emit("initial_data_chef");
-    this.socket.on("getData", (data) => {
-      this.getData(data);
+    // console.log(this.socket);
+    this.socket.emit("initial_data_customer", {id:this.customer_id});
+    this.socket.on("getData", (packet) => {
+      this.getData(packet);
     });
     this.socket.on("changeData", () => this.changeData());
   },
   methods: {
-    
-    getData(data) {
+    getData(packet) {
       // console.log("get")
-      let showdata = data.map((data) => {
-        return {
-          id: data.id,
-          product_name: data.product.product_name,
-          order_qty: data.order_qty,
-          status: data.orderProductStatus.name,
-          order_id: data.order_id,
-          price: data.price
-        };
-      });
+      //filter data
+      let filtered = 0
+      console.table(packet)
+      if(packet.customer_id_from_page == this.customer_id){
+        filtered = packet.data
+      }
+      console.log(filtered)
+      let showdata = filtered.map((data) => {
+            return {
+              id: data.id,
+              product_name: data.product.product_name,
+              order_qty: data.order_qty,
+              status: data.orderProductStatus.name,
+              order_id: data.order_id,
+              price: data.price,
+            };
+          });
       this.items = showdata;
     },
     changeData() {
-      this.socket.emit("initial_data_chef");
+      this.socket.emit("initial_data_customer", {id:this.customer_id});
     },
-    
   },
 };
 </script>

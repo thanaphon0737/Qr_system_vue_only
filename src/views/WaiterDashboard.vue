@@ -73,7 +73,6 @@ export default {
   },
   mounted() {
     this.socket = this.$store.getters.socket[0];
-    console.log(this.socket);
     this.socket.emit("initial_data_chef");
     this.socket.on("getData", (data) => {
       this.getData(data);
@@ -103,7 +102,6 @@ export default {
         
         return data.status_id < 4;
       }
-      console.log(showdata.filter(checkDelivered))
       this.items = showdata.filter(checkDelivered);
     },
     changeData() {
