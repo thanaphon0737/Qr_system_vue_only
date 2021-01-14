@@ -200,21 +200,34 @@ export default {
         };
       });
 
-      showdata.forEach((element) => {
-        this.totalprice += element.price;
-      });
+      
       function checkIsDelivered(data) {
         return data.status_id >= 4;
       }
-      this.mDataArray = showdata.filter(checkIsDelivered);
+      let filtered = showdata.filter(checkIsDelivered)
+      filtered.forEach((element) => {
+        this.totalprice += element.price;
+      });
+      this.mDataArray = filtered;
     },
-    billOrder(){
+      async billOrder(){
       this.socket = this.$store.getters.socket[0];
-      const data = {
-        id: this.$route.params.id,
-        status_id:5 // change proceeding to In kitchen
+      try{
+        let data = {
+          status_id :5 // 5 is status success
+        }
+        const result = await api.putOrderProductByCustomerId(this.$route.params.id, data) 
+        this.socket.emit("payOrder");
+        this.$router.back()
+      }catch(err){
+        console.log(err)
       }
-      this.socket.emit("accept_order", data)
+
+      // const data = {
+      //   id: this.$route.params.id,
+      //   status_id:5 // change proceeding to In kitchen
+      // }
+      
       this.dialog = false
     },
     close(){

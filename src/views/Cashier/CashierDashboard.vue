@@ -73,13 +73,10 @@ export default {
   data() {
     return {
       search: "",
-      selectedProductId: "",
-      selectedRole: "",
-      selectedRoleId: "",
-      confirmDeleteDlg: false,
-      confirmEditRoleDlg: false,
+
+
       mDataArray: [],
-      roleArray: [],
+
       customerTargetId: "",
       headers: [
         {
@@ -112,7 +109,6 @@ export default {
     //realtime update
     getData(data) {
       // console.log("get")
-      console.log(data)
         this.mDataArray = data;
     },
     changeData(){

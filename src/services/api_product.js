@@ -40,6 +40,11 @@ export const getOrderProductById = (id) => {
 export const getOrderProductByCustomerId = (id) =>{
   return httpClient.get(`orderProduct/customer-id/${id}`)
 }
+
+export const putOrderProductByCustomerId = (id,data) =>{
+  return httpClient.put(`orderProduct/customer-id/${id}`,data)
+}
+
 export const addOrder = (data)=> {
   return httpClient.post('order', data);
 }
