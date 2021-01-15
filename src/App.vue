@@ -11,7 +11,7 @@ import Header from "@/components/core/Header"
 import Menu from "@/components/core/Menu"
 import Content from "@/components/core/Content"
 import io from "socket.io-client";
-import {ip} from "@/services/constants"
+import {ip, ip2} from "@/services/constants"
 export default {
   name: "App",
   components:{
@@ -20,7 +20,7 @@ export default {
     Content
   },
   created(){
-    this.socket = io(`http://${ip}:8081`);
+    this.socket = io(`http://${ip2}:8081`);
     this.$store.dispatch({
         type: "setSocket",
         socket: this.socket

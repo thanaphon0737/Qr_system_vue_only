@@ -75,9 +75,7 @@ export default {
     };
   },
   async mounted() {
-    // this.loadData();
     this.socket = this.$store.getters.socket[0];
-    // console.log(this.socket);
     this.socket.emit("initial_data_acc");
     this.socket.on("getData", data => {this.getData(data)})
     this.socket.on("changeData", () => this.changeData())
@@ -89,8 +87,6 @@ export default {
 
     //realtime update
     getData(data) {
-      // console.log("get")
-      console.log(data)
         this.mDataArray = data;
     },
     changeData(){

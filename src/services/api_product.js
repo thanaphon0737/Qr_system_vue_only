@@ -40,7 +40,9 @@ export const getOrderProductById = (id) => {
 export const getOrderProductByCustomerId = (id) =>{
   return httpClient.get(`orderProduct/customer-id/${id}`)
 }
-
+export const getOrdersPriceAllYear = () =>{
+  return httpClient.get(`ordersPriceAllYear`)
+}
 export const putOrderProductByCustomerId = (id,data) =>{
   return httpClient.put(`orderProduct/customer-id/${id}`,data)
 }
