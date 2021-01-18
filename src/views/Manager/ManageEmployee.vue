@@ -30,6 +30,7 @@
             <td>{{ item.first_name }}</td>
             <td>{{ item.last_name }}</td>
             <td>{{ item.contact }}</td>
+            <td>{{ item.salary}}</td>
             <td>
               <v-icon class="mr-2" @click="editEmployeeInfo(item)">edit</v-icon>
               <span class="ma-1"></span>
@@ -92,7 +93,8 @@ export default {
         { text: "Role", value: "role_name" },
         { text: "Frist Name", value: "first_name" },
         { text: "Last Name", value: "last_name" },
-        { text: "Contact", value: "contact" }
+        { text: "Contact", value: "contact" },
+        { text: "Salary", value: "salary"}
       ]
     };
   },

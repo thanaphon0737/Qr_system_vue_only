@@ -171,7 +171,7 @@
 <script>
 import api from "@/services/api";
 export default {
-  name: "Stock",
+  name: "orderinfo",
   data() {
     return {
       search: "",

@@ -20,6 +20,7 @@ import CustomerDashboard from '@/views/Customer/CustomerDashboard';
 import productInfo from '@/views/Customer/productInfo';
 import CashierDashboard from '@/views/Cashier/CashierDashboard';
 import OrderInfoCash from '@/views/Cashier/OrderInfoCash';
+import CreateCustomer from '@/views/Cashier/CreateCustomer';
 import OrderInfo from '@/views/Manager/OrderInfo'
 import notFoundPage from '@/views/notFoundPage'
 import Dashboard from '@/views/Customer/Dashboard'
@@ -177,6 +178,11 @@ const routes = [
     path: '/orderinfocash/:id',
     name: 'orderinfocash',
     component: OrderInfoCash,
+  },
+  {
+    path: '/createCustomer',
+    name: 'createCustomer',
+    component: CreateCustomer,
   },
   //-------------------------------------customer(all) accesable----------------------------
   {

@@ -16,6 +16,16 @@
               hide-details
             ></v-text-field>
             <v-spacer></v-spacer>
+            <v-btn
+              @click="$router.push(`/createCustomer`)"
+              color="primary"
+              dark
+              class="mb-2"
+            >
+            
+              <v-icon left>add</v-icon>
+              <span>new customer</span>
+            </v-btn>
             <v-spacer></v-spacer>
             <v-spacer></v-spacer>
             <v-spacer></v-spacer>
