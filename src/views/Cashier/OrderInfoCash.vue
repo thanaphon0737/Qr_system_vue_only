@@ -218,16 +218,20 @@ export default {
         }
         const result = await api.putOrderProductByCustomerId(this.$route.params.id, data) 
         this.socket.emit("payOrder");
+        let dataSent = {
+          id:this.$route.params.id,
+          totalPrice: this.totalprice
+        }
+        const updatePrice = await api.updatePriceCustomer(dataSent)
+        if(updatePrice){
+          alert("updatePrice total already")
+        }
         this.$router.back()
       }catch(err){
         console.log(err)
       }
 
-      // const data = {
-      //   id: this.$route.params.id,
-      //   status_id:5 // change proceeding to In kitchen
-      // }
-      
+    
       this.dialog = false
     },
     close(){

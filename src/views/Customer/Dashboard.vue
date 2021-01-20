@@ -17,7 +17,7 @@
               >
             </v-card>
             <v-container class="ml-2 mt-5">
-              <span>Your NO. table is <strong>{{tableId}} </strong></span>
+              <span>Your NO. table is <strong>{{tableId}}</strong></span>
               <v-btn  
               outlined
               rounded
@@ -44,7 +44,8 @@ export default {
     goToMenu(){
       this.$store.dispatch({
         type: "setCustomerId",
-        id: this.tableId
+        id: this.tableId,
+        token: this.$route.params.timestamp
       });
 
     }

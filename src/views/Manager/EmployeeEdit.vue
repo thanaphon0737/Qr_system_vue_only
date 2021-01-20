@@ -2,7 +2,7 @@
   <v-container>
     <v-row class="justify-center">
       <v-col cols="8">
-        <v-card class="mx-10  pa-5" outlined>
+        <v-card class="mx-10 pa-5" outlined>
           <v-form @submit.prevent="submit">
             <v-row>
               <v-col>

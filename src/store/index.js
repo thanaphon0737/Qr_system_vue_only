@@ -12,6 +12,7 @@ export default new Vuex.Store({
     id: "",
     collection_food: [],
     socket: [],
+    
     user: {
       isLogged: false,
       isChef: false,
@@ -34,6 +35,7 @@ export default new Vuex.Store({
     id(state) {
       return state.id;
     },
+    
     foods(state) {
       return state.collection_food;
     },
@@ -70,6 +72,7 @@ export default new Vuex.Store({
     SET_ID(state, value) {
       state.id = value
     },
+    
     SET_FOOD(state, value) {
       state.collection_food = value;
     },
@@ -113,16 +116,18 @@ export default new Vuex.Store({
     setSocket({commit}, {socket}){
       commit("SET_SOCKET", socket)
     },
-    async setCustomerId({ commit }, { id }) {
+    async setCustomerId({ commit }, { id ,token}) {
       let Cid = await api.getCustomerById(id);
       // console.log(Cid)
-      if (Cid == true) {
+      
+      if (Cid == true && api.validCustomer(token)) {
         
         commit("SET_ROLE_NAME", localStorage.getItem('role_name'));
         commit("SET_ID", localStorage.getItem('id'));
         router.push(`/customer/${id}`)
       }else {
         // router.push('/dashboard')
+        alert("not authurized")
         console.log("no id match")
       }
     },

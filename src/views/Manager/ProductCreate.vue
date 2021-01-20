@@ -7,7 +7,7 @@
             <v-text-field
               v-model="product.product_name"
               :counter="10"
-              label="Name"
+              label="ชื่ออาหาร"
               required
             ></v-text-field>
             <v-text-field
@@ -21,21 +21,21 @@
               v-model="product.product_sell_price"
               suffix="THB"
               type="number"
-              label="Price"
+              label="ราคาขาย"
               required
             ></v-text-field>
             <v-text-field
               v-model="product.product_buy_price"
               suffix="THB"
               type="number"
-              label="Price"
+              label="ราคาซื้อ"
               required
             ></v-text-field>
             <v-text-field
               v-model="product.product_qty"
               suffix="ea"
               type="number"
-              label="qty"
+              label="จำนวน"
               required
             ></v-text-field>
             <v-menu offset-y>

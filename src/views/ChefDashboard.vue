@@ -83,7 +83,7 @@ export default {
     this.socket = this.$store.getters.socket[0];
     // console.log(this.socket);
     this.socket.emit("initial_data_chef");
-    this.socket.on("getData", (data) => {
+    this.socket.on("getDataChef", (data) => {
       this.getData(data);
     });
     this.socket.on("changeData", () => this.changeData());
@@ -130,7 +130,7 @@ export default {
     }
   },
   beforeDestroy() {
-    this.socket.off("getData");
+    this.socket.off("getDataChef");
     this.socket.off("changeData");
   },
 };

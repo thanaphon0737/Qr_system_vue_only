@@ -46,7 +46,7 @@
 <script>
 import api from "@/services/api";
 export default {
-  name: "Stock",
+  name: "Accouting",
   socket:{},
   data() {
     return {
@@ -77,7 +77,7 @@ export default {
   async mounted() {
     this.socket = this.$store.getters.socket[0];
     this.socket.emit("initial_data_acc");
-    this.socket.on("getData", data => {this.getData(data)})
+    this.socket.on("getDataAcc", data => {this.getData(data)})
     this.socket.on("changeData", () => this.changeData())
   },
   methods: {
@@ -102,7 +102,7 @@ export default {
     }
   },
   beforeDestroy() {
-    this.socket.off("getData");
+    this.socket.off("getDataAcc");
     this.socket.off("changeData");
   },
 };

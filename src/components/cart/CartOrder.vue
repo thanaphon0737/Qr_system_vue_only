@@ -87,7 +87,7 @@ export default {
     this.socket = this.$store.getters.socket[0];
     // console.log(this.socket);
     this.socket.emit("initial_data_customer", {id:this.customer_id});
-    this.socket.on("getData", (packet) => {
+    this.socket.on("getDataCustomer", (packet) => {
       this.getData(packet);
     });
     this.socket.on("changeData", () => this.changeData());
@@ -113,10 +113,17 @@ export default {
             };
           });
       this.items = showdata;
+      showdata.forEach(el =>{
+        this.total += el.price
+      })
     },
     changeData() {
       this.socket.emit("initial_data_customer", {id:this.customer_id});
     },
+  },
+  beforeDestroy() {
+    this.socket.off("getDataCustomer");
+    this.socket.off("changeData");
   },
 };
 </script>
