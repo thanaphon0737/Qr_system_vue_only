@@ -102,6 +102,7 @@
                             price:
                             {{ (item.price * item.order_qty) | currency("฿") }}
                           </v-list-item-content>
+                          
                         </v-list-item>
                       </v-col>
                       
@@ -197,6 +198,7 @@ export default {
           status_id: data.order_product_status_id,
           status: data.orderProductStatus.name,
           price: data.price,
+          pricetotal: data.price * data.order_qty
         };
       });
 
@@ -206,7 +208,10 @@ export default {
       }
       let filtered = showdata.filter(checkIsDelivered)
       filtered.forEach((element) => {
-        this.totalprice += element.price;
+        if(element.status_id != 999){
+          this.totalprice += element.pricetotal;
+        }
+        
       });
       this.mDataArray = filtered;
     },

@@ -36,17 +36,17 @@
               <td>{{ item.order_qty }}</td>
               <td>{{ item.order_id }}</td>
               <td>
-                <v-icon class="mr-2" @click="markAccept(item)">
-                  mdi-chef-hat
-                </v-icon>
+                <v-btn class="mr-2" @click="markAccept(item)">
+                  In Kitchen
+                </v-btn>
                 <span class="ma-1"></span>
-                <v-icon @click="markDone(item)">
-                  mdi-check
-                </v-icon>
+                <v-btn @click="markDone(item)">
+                  cooked
+                </v-btn>
                 <span class="ma-1"></span>
-                <v-icon @click="markCancel(item)">
-                  mdi-cookie-remove
-                </v-icon>
+                <v-btn @click="markCancel(item)">
+                  Cancel
+                </v-btn>
               </td>
             </tr>
           </template>
@@ -92,15 +92,22 @@ export default {
   methods: {
     getData(data) {
       // console.log("get")
-      let showdata = data.map((data) => {
-        return {
+      function checkUnBilled(data){
+        return data.order_product_status_id < 5 || data.order_product_status_id == 999
+      }
+      let showdata = data.filter(checkUnBilled).map((data) => {
+       
+          return {
           id: data.id,
           product_name: data.product.product_name,
           order_qty: data.order_qty,
           status: data.orderProductStatus.name,
           order_id: data.order_id,
         };
+        
+        
       });
+      
       this.mDataArray = showdata;
     },
     changeData() {
@@ -124,9 +131,10 @@ export default {
     markCancel(item){
       const data = {
         id: item.id,
-        status_id:4 // change proceeding to In kitchen
+        status_id:999 // change proceeding to In kitchen
       }
       this.socket.emit("accept_order", data)
+      
     }
   },
   beforeDestroy() {

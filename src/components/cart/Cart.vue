@@ -101,6 +101,8 @@ export default {
     loadData() {
       let getData = JSON.parse(localStorage.getItem("collection_food"));
       this.items = getData;
+      console.table(getData)
+      this.total = 0;
       if (getData) {
         getData.forEach((elem) => {
           this.total += elem.price;
@@ -138,7 +140,7 @@ export default {
           }
           this.socket.emit("putOrder");
           this.clearData();
-          this.$router.back();
+          
         } catch (e) {
           console.log(e);
         }
