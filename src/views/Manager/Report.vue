@@ -9,8 +9,8 @@
       />
       <BarChart
         style="height: 300px;"
-        v-if="datacollection != null"
-        :chartData="datacollection"
+        v-if="databar != null"
+        :chartData="databar"
       />
     </v-card>
   </v-container>
@@ -29,16 +29,26 @@ export default {
   data() {
     return {
       datacollection: null,
+      databar: null,
       fectchData: [],
-      allYearNumber: 0 ,
-      stYear:0,
-      endYear:0,
+      allProduct: [],
+      allYearNumber: 0,
+      stYear: 0,
+      endYear: 0,
     };
   },
   mounted() {
     this.loadData();
   },
   methods: {
+    getRandomColor() {
+      var letters = "0123456789ABCDEF";
+      var color = "#";
+      for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    },
     findMaxYear(years) {
       let max = years[0].year;
       years.forEach((elem) => {
@@ -59,77 +69,116 @@ export default {
     },
     async loadData() {
       const result = await api.getOrdersPriceAllYear();
-      console.table(result.data);
       let years = result.data.map((o) => {
         return {
           year: o.Year,
         };
       });
-      this.stYear = this.findMinYear(years)
-      this.endYear = this.findMaxYear(years)
-      this.allYearNumber = this.findMaxYear(years) - this.findMinYear(years) +1
+      this.stYear = this.findMinYear(years);
+      this.endYear = this.findMaxYear(years);
+      this.allYearNumber =
+        this.findMaxYear(years) - this.findMinYear(years) + 1;
 
       for (
-        let yearSt = this.findMinYear(years); yearSt <= this.findMaxYear(years); yearSt++) {
-          let slotYear = [];
-            for (let i = 0; i < 12; i++) {
-              slotYear.push(0);
-            }
-            result.data.forEach((elem) => {
-              if(elem.Year == yearSt){
-                slotYear[elem.Month - 1] = elem.totalPriceInMonth;
-              }
-            });
-            this.fectchData.push(slotYear);
+        let yearSt = this.findMinYear(years);
+        yearSt <= this.findMaxYear(years);
+        yearSt++
+      ) {
+        let slotYear = [];
+        for (let i = 0; i < 12; i++) {
+          slotYear.push(0);
+        }
+        result.data.forEach((elem) => {
+          if (elem.Year == yearSt) {
+            slotYear[elem.Month - 1] = elem.totalPriceInMonth;
+          }
+        });
+        this.fectchData.push(slotYear);
       }
 
+      this.allProduct = await this.getAllProduct();
       this.fillData();
       // console.table(this.fectchData);
     },
 
-    generateDataset(){
-      function getRandomColor() {
-        var letters = '0123456789ABCDEF';
-        var color = '#';
-        for (var i = 0; i < 6; i++) {
-          color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color;
-      }
-      
-      let data = {}
-      let dataset = []
-      let index_fD = 0
-      for(let y = this.stYear; y<= this.endYear; y ++){
+    generateDataset() {
+      let data = {};
+      let dataset = [];
+      let index_fD = 0;
+      for (let y = this.stYear; y <= this.endYear; y++) {
         dataset.push({
-            label: y,
-            pointBackgroundColor: "white",
-            borderWidth: 1,
-            pointBorderColor: getRandomColor().toString(),
-            data: this.fectchData[index_fD++],
+          label: y,
+          pointBackgroundColor: "white",
+          borderWidth: 1,
+          pointBorderColor: this.getRandomColor().toString(),
+          data: this.fectchData[index_fD++],
 
-            borderColor: [getRandomColor().toString()],
-            borderWidth: 2,
-            backgroundColor: [
-              "rgba(255, 99, 132, 0.2)",
-              "rgba(54, 162, 235, 0.2)",
-              "rgba(255, 206, 86, 0.2)",
-              "rgba(75, 192, 192, 0.2)",
-              "rgba(153, 102, 255, 0.2)",
-              "rgba(255, 159, 64, 0.2)",
-              "rgba(255, 99, 132, 0.2)",
-              "rgba(54, 162, 235, 0.2)",
-              "rgba(255, 206, 86, 0.2)",
-              "rgba(75, 192, 192, 0.2)",
-              "rgba(153, 102, 255, 0.2)",
-              "rgba(255, 159, 64, 0.2)",
-            ],
-
-        })
+          borderColor: [this.getRandomColor().toString()],
+          borderWidth: 2,
+          backgroundColor: [
+            "rgba(255, 99, 132, 0.2)",
+            "rgba(54, 162, 235, 0.2)",
+            "rgba(255, 206, 86, 0.2)",
+            "rgba(75, 192, 192, 0.2)",
+            "rgba(153, 102, 255, 0.2)",
+            "rgba(255, 159, 64, 0.2)",
+            "rgba(255, 99, 132, 0.2)",
+            "rgba(54, 162, 235, 0.2)",
+            "rgba(255, 206, 86, 0.2)",
+            "rgba(75, 192, 192, 0.2)",
+            "rgba(153, 102, 255, 0.2)",
+            "rgba(255, 159, 64, 0.2)",
+          ],
+        });
       }
-      return dataset
+      return dataset;
     },
-    fillData() {
+    async getdataForBar() {
+      const result = await api.getOrderTypeQtyAllTime();
+      let dataset = [];
+      result.data.forEach((er) => {
+        dataset.push(er.qty);
+      });
+      let datasets = [
+        {
+          label: "2021",
+          pointBackgroundColor: "white",
+          borderWidth: 1,
+          pointBorderColor: this.getRandomColor().toString(),
+          data: dataset,
+
+          borderColor: [this.getRandomColor().toString()],
+          borderWidth: 2,
+          backgroundColor: [
+            "rgba(255, 99, 132, 0.2)",
+            "rgba(54, 162, 235, 0.2)",
+            "rgba(255, 206, 86, 0.2)",
+            "rgba(75, 192, 192, 0.2)",
+            "rgba(153, 102, 255, 0.2)",
+            "rgba(255, 159, 64, 0.2)",
+            "rgba(255, 99, 132, 0.2)",
+            "rgba(54, 162, 235, 0.2)",
+            "rgba(255, 206, 86, 0.2)",
+            "rgba(75, 192, 192, 0.2)",
+            "rgba(153, 102, 255, 0.2)",
+            "rgba(255, 159, 64, 0.2)",
+          ],
+        },
+      ];
+
+      return datasets;
+    },
+    async getAllProduct() {
+      const allProduct = await api.getAllProductName();
+      let labels = [];
+      allProduct.data.forEach((el) => {
+        labels.push(el.product_name.toString());
+      });
+      console.table(labels);
+      console.log(labels)
+      return labels;
+    },
+    async fillData() {
       this.datacollection = {
         //Data to be represented on x-axis
         labels: [
@@ -146,59 +195,13 @@ export default {
           "November",
           "December",
         ],
-        datasets: this.generateDataset()
-        // datasets: [
-        //   {
-        //     label: "2020",
-        //     pointBackgroundColor: "white",
-        //     borderWidth: 1,
-        //     pointBorderColor: "#249EBF",
-        //     data: this.fectchData[0],
-
-        //     borderColor: ["#43A047"],
-        //     borderWidth: 2,
-        //     backgroundColor: [
-        //       "rgba(255, 99, 132, 0.2)",
-        //       "rgba(54, 162, 235, 0.2)",
-        //       "rgba(255, 206, 86, 0.2)",
-        //       "rgba(75, 192, 192, 0.2)",
-        //       "rgba(153, 102, 255, 0.2)",
-        //       "rgba(255, 159, 64, 0.2)",
-        //       "rgba(255, 99, 132, 0.2)",
-        //       "rgba(54, 162, 235, 0.2)",
-        //       "rgba(255, 206, 86, 0.2)",
-        //       "rgba(75, 192, 192, 0.2)",
-        //       "rgba(153, 102, 255, 0.2)",
-        //       "rgba(255, 159, 64, 0.2)",
-        //     ],
-        //   },
-
-        //   {
-        //     label: "2021",
-        //     pointBackgroundColor: "white",
-        //     borderWidth: 1,
-        //     pointBorderColor: "#249EBF",
-        //     data: this.fectchData[1],
-
-        //     borderColor: ["#ff0000"],
-        //     borderWidth: 2,
-        //     backgroundColor: [
-        //       "rgba(54, 162, 235, 0.2)",
-        //       "rgba(255, 99, 132, 0.2)",
-        //       "rgba(255, 206, 86, 0.2)",
-        //       "rgba(75, 192, 192, 0.2)",
-        //       "rgba(153, 102, 255, 0.2)",
-        //       "rgba(255, 159, 64, 0.2)",
-        //       "rgba(255, 99, 132, 0.2)",
-        //       "rgba(54, 162, 235, 0.2)",
-        //       "rgba(255, 206, 86, 0.2)",
-        //       "rgba(75, 192, 192, 0.2)",
-        //       "rgba(153, 102, 255, 0.2)",
-        //       "rgba(255, 159, 64, 0.2)",
-        //     ],
-        //   },
-        // ],
+        datasets: this.generateDataset(),
       };
+      this.databar = {
+        labels:this.allProduct,
+        datasets: await this.getdataForBar(),
+      };
+      console.log(this.databar)
     },
   },
 };

@@ -39,24 +39,26 @@
               required
             ></v-text-field>
             <v-menu offset-y>
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-btn color="primary" dark v-bind="attrs" v-on="on">
-                      {{ product.product_type_name}}
-                    </v-btn>
-                  </template>
-                  <v-list dense>
-                    <v-list-item-group color="primary">
-                      <v-list-item v-for="(items, i) in productTypeArray" :key="i">
-                        <v-list-item @click="editRole(items)">
-                          {{ items.name }}
-                        </v-list-item>
-                      </v-list-item>
-                    </v-list-item-group>
-                  </v-list>
-                </v-menu>
-            <input @change="onFileSelected" type="file" name="" id="" />
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn color="primary" dark v-bind="attrs" v-on="on">
+                  {{ product.product_type_name }}
+                </v-btn>
+              </template>
+              <v-list dense>
+                <v-list-item-group color="primary">
+                  <v-list-item v-for="(items, i) in productTypeArray" :key="i">
+                    <v-list-item @click="editRole(items)">
+                      {{ items.name }}
+                    </v-list-item>
+                  </v-list-item>
+                </v-list-item-group>
+              </v-list>
+            </v-menu>
+            <br/>
+            <input @change="onFileSelected" type="file" class="mt-3"/>
             <br />
-            <v-img              
+            <v-img
+              
               :src="getProductImage()"
               height="200"
               width="200"
@@ -85,17 +87,15 @@
 import api from "@/services/api";
 
 export default {
-  name: "stock-create",
+  name: "product-edit",
   data: () => ({
     product: {},
-    productTypeArray:[],
-    selectProductType:"",
-
+    productTypeArray: [],
+    selectProductType: "",
   }),
   async mounted() {
     let result = await api.getProductById(this.$route.params.id);
     this.product = result.data;
-    console.log(this.product)
     this.getProductType();
   },
 
@@ -109,7 +109,9 @@ export default {
     },
     onFileSelected(event) {
       const reader = new FileReader();
-      reader.onload = event => {
+      console.log(event)
+      
+      reader.onload = (event) => {
         // for preview
         this.product.product_image = event.target.result;
       };
@@ -118,16 +120,17 @@ export default {
       // for upload
       this.imageFile = event.target.files[0];
     },
-     async submit() {
+    async submit() {
       let formData = new FormData();
-      const { product_name, 
-      product_serving, 
-      product_sell_price ,
-      product_buy_price,
-      product_qty,
-      product_type_id,
+      const {
+        product_name,
+        product_serving,
+        product_sell_price,
+        product_buy_price,
+        product_qty,
+        product_type_id,
       } = this.product;
-      formData.append("id", this.$route.params.id)
+      formData.append("id", this.$route.params.id);
       formData.append("product_name", product_name);
       formData.append("product_serving", product_serving);
       formData.append("product_sell_price", product_sell_price);
@@ -142,7 +145,6 @@ export default {
       this.$router.back();
     },
     getProductImage() {
-      
       if (this.product.product_image.length > 100) {
         return this.product.product_image;
       } else {
@@ -150,11 +152,11 @@ export default {
         // return `${imageUrl}/${this.product.image}`;
       }
     },
-    async getProductType(){
+    async getProductType() {
       let result = await api.getProductType();
       this.productTypeArray = result.data;
-    }
-  }
+    },
+  },
 };
 </script>
 

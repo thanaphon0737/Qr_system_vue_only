@@ -93,7 +93,7 @@ export default {
     getData(data) {
       // console.log("get")
       function checkUnBilled(data){
-        return data.order_product_status_id < 5 || data.order_product_status_id == 999
+        return data.order_product_status_id < 5
       }
       let showdata = data.filter(checkUnBilled).map((data) => {
        
