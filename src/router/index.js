@@ -13,6 +13,7 @@ import Promotion from "@/views/Manager/Promotion.vue";
 import Employee from "@/views/Manager/ManageEmployee.vue";
 import EmployeeEdit from "@/views/Manager/EmployeeEdit.vue";
 import PromotionCreate from "@/views/Manager/PromotionCreate.vue";
+import PromotionEdit from "@/views/Manager/PromotionEdit.vue";
 import WaiterDashboard from '@/views/WaiterDashboard.vue';
 import ProductTypeCreate from '@/views/Manager/ProductTypeCreate.vue';
 import ChefDashboard from '@/views/ChefDashboard';
@@ -120,6 +121,14 @@ const routes = [
     path: "/promotion",
     name: "promotion",
     component: Promotion,
+    meta:{
+      middleware:[auth,managerAuth]
+    }
+  },
+  {
+    path: "/promotion-edit/:id",
+    name: "promotion-edit",
+    component: PromotionEdit,
     meta:{
       middleware:[auth,managerAuth]
     }

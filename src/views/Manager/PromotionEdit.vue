@@ -66,7 +66,7 @@
 import api from "@/services/api";
 
 export default {
-  name: "promo-create",
+  name: "promo-edit",
   data: () => ({
     promo: {
       discount_code: "",
@@ -83,8 +83,20 @@ export default {
   },
   methods: {
    async loadData(){
-      let result = await api.getDiscountType();
-      this.discountType = result.data
+      let result = await api.getDiscountById(this.$route.params.id);
+      let Type = await api.getDiscountType();
+      
+      this.discountType = Type.data
+      this.discountType.forEach(el =>{
+        if(el.id == result.data.discount_type_id){
+          this.discountTypenamed = el.name
+        }
+      })
+      let {discount_code,discount_remain,discount_amount,discount_type_id} = result.data
+      this.promo.discount_code = discount_code
+      this.promo.discount_remain = discount_remain
+      this.promo.discount_amount = discount_amount
+      this.promo.discount_type_id = discount_type_id
     },
 
     cancel() {
@@ -95,13 +107,11 @@ export default {
       this.discountTypenamed = obj.name;
     },
     async submit() {
-      // alert(JSON.stringify(this.promo))
-      try{
-        await api.addDiscount(this.promo);
+     
+        let res = await api.editDiscount(this.$route.params.id,this.promo);
+        console.log(res)
         this.$router.back();
-      }catch(err){
-        alert(err)
-      }
+      
     }
   }
 };

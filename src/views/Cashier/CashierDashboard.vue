@@ -2,7 +2,7 @@
   <v-container>
     <!-- Table section -->
     <v-card>
-      <v-data-table :search="search" :headers="headers" :items="mDataArray">
+      <v-data-table :search="search" :headers="headers" :items="mDataArray" hide-default-footer disable-pagination>
         <!-- table top section -->
         <template v-slot:top>
           <v-toolbar flat color="white">
@@ -78,7 +78,7 @@
 <script>
 import api from "@/services/api";
 export default {
-  name: "Stock",
+  name: "cashierDashboard",
   socket:{},
   data() {
     return {

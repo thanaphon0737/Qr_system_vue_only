@@ -100,7 +100,7 @@ export default {
       //filter order product status < 4
       function checkDelivered(data){
         
-        return data.status_id < 4;
+        return data.status_id == 3;
       }
       this.items = showdata.filter(checkDelivered);
     },

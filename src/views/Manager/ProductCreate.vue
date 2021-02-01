@@ -54,7 +54,7 @@
                     </v-list-item-group>
                   </v-list>
                 </v-menu>
-            <input @change="onFileSelected" type="file" name="" id="" />
+            <input @change="onFileSelected" type="file" name="" id="" class="mt-3" />
             <br />
             <v-img
               v-if="imageURL"

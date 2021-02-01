@@ -4,9 +4,10 @@ export const NETWORK_TIMEOUT_MESSAGE = "A network timeout has occurred, Please t
 export const UPLOAD_PHOTO_FAIL_MESSAGE = "An error has occurred. The photo was unable to upload.";
 export const NOT_CONNECT_NETWORK = "NOT_CONNECT_NETWORK";
 export const ip = '192.168.1.22'
-export const ip2 = '10.80.87.237'
-export const apiUrl = `http://${ip2}:8081/api/v2`;
-export const imageUrl = `http://${ip2}:8081/images`;
+export const ip2 = '10.80.84.195'
+export const ipglobal = ip2
+export const apiUrl = `http://${ipglobal}:8081/api/v2`;
+export const imageUrl = `http://${ipglobal}:8081/images`;
 
 export const server = {
   LOGIN_URL: `login`,

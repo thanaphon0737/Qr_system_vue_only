@@ -44,6 +44,11 @@
               label="Contact"
               required
             ></v-text-field>
+            <v-text-field
+              v-model="employee.salary"
+              label="Salary"
+              
+            ></v-text-field>
 
             <br />
 
@@ -77,6 +82,7 @@ export default {
       first_name: "",
       last_name: "",
       contact: "",
+      salary:0
     },
     roleArray: [],
     selectedRole: "",
@@ -91,6 +97,7 @@ export default {
     this.employee.last_name = getData.last_name;
     this.employee.contact = getData.contact;
     this.employee.role = getData.role_name;
+    this.employee.salary = getData.salary;
   },
 
   methods: {

@@ -208,7 +208,7 @@ export default {
       }
       let filtered = showdata.filter(checkIsDelivered)
       filtered.forEach((element) => {
-        if(element.status_id != 999){
+        if(element.status_id != 999 && element.status_id != 5){
           this.totalprice += element.pricetotal;
         }
         

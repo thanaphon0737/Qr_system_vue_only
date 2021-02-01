@@ -32,9 +32,10 @@
         <template v-slot:item="{ item }">
           <tr>
             <td>{{ item.id }}</td>
-            <td>{{ item.name }}</td>
-            <td>{{ item.price | currency("฿") }}</td>
-            <td>{{ item.stock | number("0,0") }} pcs.</td>
+            <td>{{ item.discount_code }}</td>
+            <td>{{ item.discount_remain | number("0,0") }}</td>
+            <td>{{ item.discount_amount | number("0,0") }}</td>
+            <td>{{ item.discountType.name}}</td>
             <td>
               <v-icon class="mr-2" @click="editItem(item)">
                 edit
@@ -92,10 +93,11 @@ export default {
           sortable: false,
           value: "id"
         },
-        { text: "Code", value: "code" },
-        { text: "Price", value: "price" },
-        { text: "Stock", value: "stock" },
-        { text: "Action", value: "action" }
+        { text: "Code", value: "" },
+        { text: "Remain", value: "" },
+        { text: "Amount", value: "" },
+        { text: "Type", value: "" },
+        { text: "Action", value: "" }
       ]
     };
   },
@@ -104,19 +106,20 @@ export default {
   },
   methods: {
     editItem(item) {
-      this.$router.push(`/stock-edit/${item.id}`);
+      this.$router.push(`/promotion-edit/${item.id}`);
     },
     deleteItem(item) {
       this.selectedProductId = item.id;
       this.confirmDeleteDlg = true;
     },
     async confirmDelete() {
-      await api.deleteProduct(this.selectedProductId);
+      await api.deleteDiscount(this.selectedProductId);
       this.confirmDeleteDlg = false;
       this.loadProducts();
     },
     async loadProducts() {
-      let result = await api.getProducts();
+      let result = await api.getDiscountAll();
+      console.log(result.data)
       this.mDataArray = result.data;
     }
   }

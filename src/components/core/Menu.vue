@@ -45,11 +45,10 @@ export default {
         ["mdi-account-box-multiple", "Manage Employee", "/employee"],
         ["mdi-file-document-box-check-outline", "About", "/about"],
         ["mdi-file-document-box-check-outline", "Product", "/product"],
-        ["mdi-file-document-box-check-outline", "Waiter", "/waiter/test"],
-        ["mdi-file-document-box-check-outline", "Chef", "/chef/test"],
-        ["mdi-file-document-box-check-outline", "Cashier", "/cashier/test"],
-        ["mdi-file-document-box-check-outline", "Customer", "/customer/1"],
-        ["mdi-file-document-box-check-outline", "Customer", "/customer/2"]
+        // ["mdi-file-document-box-check-outline", "Waiter", "/waiter/test"],
+        // ["mdi-file-document-box-check-outline", "Chef", "/chef/test"],
+        // ["mdi-file-document-box-check-outline", "Cashier", "/cashier/test"],
+        
 
       ]
     };

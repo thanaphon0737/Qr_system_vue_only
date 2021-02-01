@@ -1,9 +1,9 @@
 <template>
   <v-container>
     <!-- Table section -->
-    <StockCard/>
+    
     <v-card>
-      <v-data-table :search="search" :headers="headers" :items="mDataArray">
+      <v-data-table :search="search" :headers="headers" :items="mDataArray" hide-default-footer disable-pagination>
         <!-- table top section -->
         <template v-slot:top>
           <v-toolbar flat color="white">
@@ -121,7 +121,8 @@ export default {
         { text: "Sell Price", value: "sellPrice" },
         { text: "Buy Price", value: "buyPrice" },
         {text: "Qty", value:'qty'},
-        { text:'Product Type', value:'productType'}
+        { text:'Product Type', value:'productType'},
+        { text: 'Action', value:''}
       ]
     };
   },

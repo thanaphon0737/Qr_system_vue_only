@@ -22,3 +22,7 @@ export const getEmployeeById = (id) =>{
 export const deleteEmployee = id => {
   return httpClient.delete('employee' + `/id/${id}`);
 };
+
+export const updateSalary =(data) =>{
+  return httpClient.put('employeeSalary',data);
+}

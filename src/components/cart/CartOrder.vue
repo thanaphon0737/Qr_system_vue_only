@@ -106,7 +106,7 @@ export default {
         { text: "price/piece.", value: "price" },
         ,
         { text: "price", value: "pricetotal" },
-        { text: "cancel", value: ""}
+        { text: "cancel", value: "" },
       ],
       items: [],
       total: 0,
@@ -126,17 +126,21 @@ export default {
     this.socket.on("changeData", () => this.changeData());
   },
   methods: {
-    markCancel(item){
-      const data = {
-        id: item.id,
-        status_id:999 // change cancel to In kitchen
+    markCancel(item) {
+      if (item.status_id == 1) {
+        const data = {
+          id: item.id,
+          status_id: 999, // change cancel to In kitchen
+        };
+        this.socket.emit("accept_order", data);
+      }else {
+        alert('cant cancel now')
       }
-      this.socket.emit("accept_order", data)
     },
     getData(packet) {
       // console.log("get")
       //filter data
-      this.total = 0
+      this.total = 0;
       let filtered = 0;
       console.table(packet);
       if (packet.customer_id_from_page == this.customer_id) {
@@ -159,8 +163,7 @@ export default {
         };
       });
       showdata.forEach((el) => {
-        if(el.status_id != 999){
-
+        if (el.status_id != 999) {
           this.total += el.pricetotal;
         }
       });

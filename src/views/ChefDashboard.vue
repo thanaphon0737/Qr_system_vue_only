@@ -8,7 +8,7 @@
     <v-container>
       <!-- Table section -->
       <v-card>
-        <v-data-table :search="search" :headers="headers" :items="mDataArray">
+        <v-data-table :search="search" :headers="headers" :items="mDataArray" hide-default-footer disable-pagination>
           <!-- table top section -->
           <template v-slot:top>
             <v-toolbar flat color="white">
@@ -31,20 +31,24 @@
               <td>{{ item.id }}</td>
               <td>{{ item.product_name }}</td>
               <td>
+                <strong>
+
                 {{ item.status }}
+                </strong>
+                
               </td>
               <td>{{ item.order_qty }}</td>
               <td>{{ item.order_id }}</td>
               <td>
-                <v-btn class="mr-2" @click="markAccept(item)">
+                <v-btn class="mr-2" @click="markAccept(item)" color="warning">
                   In Kitchen
                 </v-btn>
                 <span class="ma-1"></span>
-                <v-btn @click="markDone(item)">
+                <v-btn @click="markDone(item)" color="primary">
                   cooked
                 </v-btn>
                 <span class="ma-1"></span>
-                <v-btn @click="markCancel(item)">
+                <v-btn @click="markCancel(item)" color="error">
                   Cancel
                 </v-btn>
               </td>
@@ -129,12 +133,15 @@ export default {
       this.socket.emit("accept_order", data)
     },
     markCancel(item){
-      const data = {
-        id: item.id,
-        status_id:999 // change proceeding to In kitchen
+      if (item.status_id == 1) {
+        const data = {
+          id: item.id,
+          status_id: 999, // change cancel to In kitchen
+        };
+        this.socket.emit("accept_order", data);
+      }else {
+        alert('cant cancel now')
       }
-      this.socket.emit("accept_order", data)
-      
     }
   },
   beforeDestroy() {

@@ -83,7 +83,7 @@
 <script>
 import api from "@/services/api";
 import QrcodeVue from "qrcode.vue";
-import {ip, ip2} from '@/services/constants'
+import {ipglobal} from '@/services/constants'
 export default {
   name: "createcustomer",
   components: {
@@ -91,7 +91,7 @@ export default {
   },
   data() {
     return {
-      path: `http://${ip2}:8080/dashboard/`,
+      path: `http://${ipglobal}:8080/dashboard/`,
       valueQr: "",
       size: 300,
       tableArray: [],

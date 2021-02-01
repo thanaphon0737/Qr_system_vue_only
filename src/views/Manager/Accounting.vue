@@ -2,7 +2,7 @@
   <v-container>
     <!-- Table section -->
     <v-card>
-      <v-data-table :search="search" :headers="headers" :items="mDataArray">
+      <v-data-table :search="search" :headers="headers" :items="mDataArray" hide-default-footer disable-pagination>
         <!-- table top section -->
         <template v-slot:top>
           <v-toolbar flat color="white">
@@ -14,6 +14,7 @@
               label="Search"
               single-line
               hide-details
+              
             ></v-text-field>
             <v-spacer></v-spacer>
           </v-toolbar>

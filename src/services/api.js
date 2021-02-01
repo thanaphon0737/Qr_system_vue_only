@@ -4,6 +4,7 @@ import router from "@/router";
 import * as productApis from "@/services/api_product.js"
 import * as employeeApis from "@/services/api_employee.js"
 import * as customerApis from "@/services/api_customer.js"
+import * as discountApis from "@/services/api_discount.js"
 const isLoggedIn = () => {
   let token = localStorage.getItem(server.TOKEN_KEY);
   return token != null;
@@ -46,5 +47,6 @@ export default {
   logoff,
   ...productApis,
   ...employeeApis,
-  ...customerApis
+  ...customerApis,
+  ...discountApis
 };
