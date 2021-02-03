@@ -35,7 +35,7 @@
               <td>{{ item.order_id }}</td>
               <td>{{ item.status }}</td>
               <td>{{ item.order_qty }}</td>
-              <td>{{ item.price | currency("฿")}}</td>
+              <td>{{ item.price | currency("฿") }}</td>
             </tr>
           </tbody>
           <tfoot>
@@ -45,7 +45,7 @@
               <th></th>
               <th></th>
               <th>Subtotal</th>
-              <th>{{ totalprice | currency("฿")}}</th>
+              <th>{{ totalprice | currency("฿") }}</th>
             </tr>
             <tr>
               <th></th>
@@ -53,7 +53,7 @@
               <th></th>
               <th></th>
               <th>Vat 7%</th>
-              <th>{{ totalprice * 0.07 | currency("฿")}}</th>
+              <th>{{ (totalprice * 0.07) | currency("฿") }}</th>
             </tr>
             <tr>
               <th></th>
@@ -61,7 +61,7 @@
               <th></th>
               <th></th>
               <th>Total</th>
-              <th>{{ totalprice * 1.07 | currency("฿")}}</th>
+              <th>{{ (totalprice * 1.07) | currency("฿") }}</th>
             </tr>
           </tfoot>
         </template>
@@ -69,7 +69,11 @@
       <div align="end">
         <v-row>
           <v-col>
-            <v-dialog v-model="dialog" transition="dialog-top-transition" max-width="600">
+            <v-dialog
+              v-model="dialog"
+              transition="dialog-top-transition"
+              max-width="600"
+            >
               <template v-slot:activator="{ on, attrs }">
                 <v-btn color="#febd2e" v-bind="attrs" v-on="on"
                   >Check out</v-btn
@@ -102,27 +106,39 @@
                             price:
                             {{ (item.price * item.order_qty) | currency("฿") }}
                           </v-list-item-content>
-                          
                         </v-list-item>
                       </v-col>
-                      
-                      <v-col 
-                      cols="12" 
-                      sm="12"
-                      
-                      >
-                      <v-divider></v-divider>
+
+                      <v-col cols="12" sm="12">
+                        <v-divider></v-divider>
                         <v-list-item>
-                          
+                          <v-list-item-content>
+                            discount
+                          </v-list-item-content>
+                          <v-list-item-content>
+                            <v-text-field
+                              v-model="discountCode"
+                              type="text"
+                              label="ใส่ส่วนลด"
+                              required
+                            ></v-text-field>
+                            <v-btn text color="primary" @click="checkDiscount()"
+                              >check</v-btn
+                            >
+                            Code:{{ discountDetail.discount_code }} amount:{{
+                              discountDetail.discount_amount
+                            }}
+                            type:{{ discountDetail.discountType.name }}
+                          </v-list-item-content>
+                        </v-list-item>
+                        <v-list-item>
                           <v-list-item-content>
                             Subtotal
                           </v-list-item-content>
-                          
-                          <v-list-item-content>
 
-                          </v-list-item-content>
+                          <v-list-item-content> </v-list-item-content>
                           <v-list-item-content>
-                            {{totalprice | currency("฿")}}
+                            {{ totalprice | currency("฿") }}
                           </v-list-item-content>
                         </v-list-item>
                       </v-col>
@@ -131,11 +147,9 @@
                           <v-list-item-content>
                             Tax
                           </v-list-item-content>
+                          <v-list-item-content> </v-list-item-content>
                           <v-list-item-content>
-                            
-                          </v-list-item-content>
-                          <v-list-item-content>
-                            {{totalprice*0.07 | currency("฿")}}
+                            {{ (totalprice * 0.07) | currency("฿") }}
                           </v-list-item-content>
                         </v-list-item>
                       </v-col>
@@ -144,11 +158,9 @@
                           <v-list-item-content>
                             Total
                           </v-list-item-content>
+                          <v-list-item-content> </v-list-item-content>
                           <v-list-item-content>
-                            
-                          </v-list-item-content>
-                          <v-list-item-content>
-                            {{totalprice*1.07 | currency("฿")}}
+                            {{ (totalprice * 1.07) | currency("฿") }}
                           </v-list-item-content>
                         </v-list-item>
                       </v-col>
@@ -179,7 +191,16 @@ export default {
       dialog: false,
       mDataArray: [],
       totalprice: 0,
-      socket:{}
+      socket: {},
+      cancelOrder: [],
+      discountCode: "",
+      discountDetail: {
+        discount_code: "",
+        discount_amount: "",
+        discountType: {
+          name: "",
+        },
+      },
     };
   },
   async mounted() {
@@ -198,50 +219,92 @@ export default {
           status_id: data.order_product_status_id,
           status: data.orderProductStatus.name,
           price: data.price,
-          pricetotal: data.price * data.order_qty
+          pricetotal: data.price * data.order_qty,
         };
       });
 
-      
       function checkIsDelivered(data) {
         return data.status_id >= 4;
       }
-      let filtered = showdata.filter(checkIsDelivered)
+      function findCancelOrder(data) {
+        return data.status_id == 999;
+      }
+      this.cancelOrder = showdata.filter(findCancelOrder);
+      let filtered = showdata.filter(checkIsDelivered);
       filtered.forEach((element) => {
-        if(element.status_id != 999 && element.status_id != 5){
+        if (element.status_id != 999 && element.status_id != 5) {
           this.totalprice += element.pricetotal;
         }
-        
       });
       this.mDataArray = filtered;
     },
-      async billOrder(){
+    async billOrder() {
       this.socket = this.$store.getters.socket[0];
-      try{
-        let data = {
-          status_id :5 // 5 is status success
+      try {
+        if (this.discountDetail.discount_code !== "") {
+          let updateDis = {
+            discount_id: this.discountDetail.id,
+            customer_id: this.$route.params.id,
+          };
+          const updateDiscountInOrder = await api.updateDiscountInOrder(
+            updateDis
+          );
+          // if (updateDiscountInOrder) {
+          //   if (this.discountDetail.discount_type_id == 1) {
+          //     this.totalprice -= this.discountDetail.discount_amount;
+          //   } else if (this.discountDetail.discount_type_id == 2) {
+          //     this.totalprice =
+          //       this.totalprice *
+          //       (1 - this.discountDetail.discount_amount / 100);
+          //   }
+          // }
         }
-        const result = await api.putOrderProductByCustomerId(this.$route.params.id, data) 
+        let data = {
+          status_id: 5, // 5 is status success
+        };
+        const result = await api.putOrderProductByCustomerId(
+          this.$route.params.id,
+          data
+        );
         this.socket.emit("payOrder");
         let dataSent = {
-          id:this.$route.params.id,
-          totalPrice: this.totalprice
+          id: this.$route.params.id,
+          totalPrice: this.totalprice,
+        };
+        let cancelOrderSent = this.cancelOrder.map((el) => {
+          return {
+            order_id: el.order_id,
+            totalPrice: el.price,
+          };
+        });
+
+        const updatePrice = await api.updatePriceCustomer(dataSent);
+        const updatePriceinOrder = await api.updatePriceinOrder(
+          cancelOrderSent
+        );
+        if (updatePrice && updatePriceinOrder) {
+          alert("updatePrice total already");
         }
-        const updatePrice = await api.updatePriceCustomer(dataSent)
-        if(updatePrice){
-          alert("updatePrice total already")
-        }
-        this.$router.back()
-      }catch(err){
-        console.log(err)
+        this.$router.back();
+      } catch (err) {
+        console.log(err);
       }
 
-    
-      this.dialog = false
+      this.dialog = false;
     },
-    close(){
-      this.dialog = false
-    }
+    close() {
+      this.dialog = false;
+    },
+
+    async checkDiscount() {
+      let discountAll = await api.getDiscountAll();
+      discountAll.data.forEach((el) => {
+        if (el.discount_code == this.discountCode) {
+          this.discountDetail = el;
+          return;
+        }
+      });
+    },
   },
 };
 </script>

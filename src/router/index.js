@@ -113,7 +113,7 @@ const routes = [
     name: 'order-info',
     component: OrderInfo,
     meta:{
-      middleware:[auth,managerAuth]
+      middleware:[auth]
     }
   },
 

@@ -148,7 +148,7 @@ export default {
       }
       console.log(filtered);
       function checkIsNotBilled(data) {
-        return data.order_product_status_id <= 4;
+        return data.order_product_status_id <= 5;
       }
       let showdata = filtered.filter(checkIsNotBilled).map((data) => {
         return {

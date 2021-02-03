@@ -62,3 +62,7 @@ export const addOrder = (data)=> {
 export const addOrderProduct = (data) =>{
   return httpClient.post('orderProduct',data);
 } 
+
+export const updatePriceinOrder = (data) =>{
+  return httpClient.put('updatePriceinOrder', data)
+}

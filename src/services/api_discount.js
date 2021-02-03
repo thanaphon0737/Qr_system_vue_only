@@ -26,3 +26,7 @@ export const getDiscountType = () =>{
 export const getDiscountById = id =>{
   return httpClient.get(`discount/${id}`);
 }
+
+export const updateDiscountInOrder = data =>{
+  return httpClient.put('updateDiscountInOrder',data);
+}
