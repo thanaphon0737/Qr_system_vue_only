@@ -44,7 +44,7 @@ export default {
     goToMenu(){
       this.$store.dispatch({
         type: "setCustomerId",
-        id: this.tableId,
+        table_id: this.tableId,
         token: this.$route.params.timestamp
       });
 

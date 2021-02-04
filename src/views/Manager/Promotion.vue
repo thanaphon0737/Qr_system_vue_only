@@ -35,7 +35,9 @@
             <td>{{ item.discount_code }}</td>
             <td>{{ item.discount_remain | number("0,0") }}</td>
             <td>{{ item.discount_amount | number("0,0") }}</td>
+            
             <td>{{ item.discountType.name}}</td>
+            <td>{{ item.minimum | number("0,0") }}</td>
             <td>
               <v-icon class="mr-2" @click="editItem(item)">
                 edit
@@ -97,6 +99,7 @@ export default {
         { text: "Remain", value: "" },
         { text: "Amount", value: "" },
         { text: "Type", value: "" },
+        { text: "Minimum", value: ""},
         { text: "Action", value: "" }
       ]
     };

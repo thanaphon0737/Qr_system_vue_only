@@ -25,7 +25,12 @@
               label="Quantity"
               required
             ></v-text-field>
-            
+            <v-text-field
+              v-model="promo.minimum"
+              type="number"
+              label="Minimum"
+              required
+            ></v-text-field>
             <v-menu offset-y>
                   <template v-slot:activator="{ on, attrs }">
                     <v-btn color="primary" dark v-bind="attrs" v-on="on">
@@ -73,6 +78,7 @@ export default {
       discount_remain: "",
       discount_amount: "",
       discount_type_id: "",
+      minimun:""
       
     },
     discountType:[],

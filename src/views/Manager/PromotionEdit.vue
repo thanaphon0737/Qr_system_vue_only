@@ -25,6 +25,12 @@
               label="Quantity"
               required
             ></v-text-field>
+            <v-text-field
+              v-model="promo.minimum"
+              type="number"
+              label="Minimum"
+              required
+            ></v-text-field>
             
             <v-menu offset-y>
                   <template v-slot:activator="{ on, attrs }">
@@ -73,6 +79,7 @@ export default {
       discount_remain: "",
       discount_amount: "",
       discount_type_id: "",
+      minimum:""
       
     },
     discountType:[],
@@ -92,11 +99,12 @@ export default {
           this.discountTypenamed = el.name
         }
       })
-      let {discount_code,discount_remain,discount_amount,discount_type_id} = result.data
+      let {discount_code,discount_remain,discount_amount,discount_type_id,minimum } = result.data
       this.promo.discount_code = discount_code
       this.promo.discount_remain = discount_remain
       this.promo.discount_amount = discount_amount
       this.promo.discount_type_id = discount_type_id
+      this.promo.minimum = minimum
     },
 
     cancel() {

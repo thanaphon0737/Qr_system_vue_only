@@ -10,13 +10,14 @@ export const validCustomer = (tokenfront) => {
 export const updatePriceCustomer = (data) =>{
   return httpClient.put('updatePriceCustomer',data);
 }
-export const getCustomerById = async (id) =>{
-  let result = await httpClient.get(`customer/${id}`);
-
+export const getCustomerByTableId = async (id) =>{
+  let result = await httpClient.get(`customer/table/${id}`);
+  console.log(id)
   if(result.data.result == 'ok'){
     let url = result.data.message.url_image;
     const token = url.toString().split("/")[1]
-    localStorage.setItem("id", id);
+    localStorage.setItem("table_id", id);
+    localStorage.setItem("id", result.data.message.id)
     localStorage.setItem("tokenCustomer",token)
     localStorage.setItem("role_name", "customer");
     return true;

@@ -116,10 +116,10 @@ export default new Vuex.Store({
     setSocket({commit}, {socket}){
       commit("SET_SOCKET", socket)
     },
-    async setCustomerId({ commit }, { id ,token}) {
-      let Cid = await api.getCustomerById(id);
-      // console.log(Cid)
-      
+    async setCustomerId({ commit }, { table_id ,token}) {
+      let Cid = await api.getCustomerByTableId(table_id);
+      console.log(Cid)
+      let id = localStorage.getItem("id");
       if (Cid == true && api.validCustomer(token)) {
         
         commit("SET_ROLE_NAME", localStorage.getItem('role_name'));

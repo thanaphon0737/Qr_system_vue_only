@@ -249,15 +249,6 @@ export default {
           const updateDiscountInOrder = await api.updateDiscountInOrder(
             updateDis
           );
-          // if (updateDiscountInOrder) {
-          //   if (this.discountDetail.discount_type_id == 1) {
-          //     this.totalprice -= this.discountDetail.discount_amount;
-          //   } else if (this.discountDetail.discount_type_id == 2) {
-          //     this.totalprice =
-          //       this.totalprice *
-          //       (1 - this.discountDetail.discount_amount / 100);
-          //   }
-          // }
         }
         let data = {
           status_id: 5, // 5 is status success
@@ -298,10 +289,14 @@ export default {
 
     async checkDiscount() {
       let discountAll = await api.getDiscountAll();
+      console.log(discountAll.data)
       discountAll.data.forEach((el) => {
         if (el.discount_code == this.discountCode) {
-          this.discountDetail = el;
-          return;
+          if (el.minimum < this.totalprice) {
+            this.discountDetail = el;
+            this.totalprice = this.totalprice *(1-el.discount_amount/100)
+            return;
+          }
         }
       });
     },
