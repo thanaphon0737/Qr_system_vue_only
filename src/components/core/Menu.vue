@@ -4,7 +4,7 @@
       <v-list-item-group v-model="selectedMenu" mandatory color="primary">
         <v-list-item
           class="title"
-          v-for="([icon, title, route], index) in menus"
+          v-for="([icon, title, route], index) in showMenus"
           :key="index"
           @click="onClickMenu(route)"
         >
@@ -27,35 +27,43 @@ export default {
     onClickMenu(link) {
       
       this.$router.push(link).catch(err => {});
+    },
+    checklistMenu(){
+      this.menus.forEach(el =>{
+        if(el[3] == this.$store.getters.role_name || el[3] == 'All'){
+          this.showMenus.push(el)
+        }
+      })
     }
   },
   mounted() {
-    this.selectedMenu = this.menus.findIndex(
+    this.selectedMenu = this.showMenus.findIndex(
       menu => menu[2] == this.$route.path
     );
+    this.checklistMenu()
   },
   data() {
     return {
       selectedMenu: 0,
       menus: [
-        ["mdi-account-edit","User Profile",`employee-edit/${this.$store.getters.id}`],
-        ["mdi-bank", "Accounting", "/accounting"],
-        ["mdi-chart-areaspline", "Report", "/report"],
-        ["mdi-tag", "Promotion", "/promotion"],
-        ["mdi-account-box-multiple", "Manage Employee", "/employee"],
-        ["mdi-file-document-box-check-outline", "About", "/about"],
-        ["mdi-file-document-box-check-outline", "Product", "/product"],
-        // ["mdi-file-document-box-check-outline", "Waiter", "/waiter/test"],
-        // ["mdi-file-document-box-check-outline", "Chef", "/chef/test"],
-        // ["mdi-file-document-box-check-outline", "Cashier", "/cashier/test"],
+        ["mdi-file-document-box-check-outline", "About", "/about",'All'],
+        ["mdi-account-edit","User Profile",`employee-edit/${this.$store.getters.id}`,'Manager'],
+        ["mdi-bank", "Accounting", "/accounting",'Manager'],
+        ["mdi-chart-areaspline", "Report", "/report",'Manager'],
+        ["mdi-tag", "Promotion", "/promotion",'Manager'],
+        ["mdi-account-box-multiple", "Manage Employee", "/employee",'Manager'],
         
-
-      ]
+        ["mdi-file-document-box-check-outline", "Product", "/product",'Manager'],
+        ["mdi-file-document-box-check-outline", "Waiter", `/waiter/${this.$store.getters.id}`, 'Waiter'],
+        ["mdi-file-document-box-check-outline", "Chef", `/chef/${this.$store.getters.id}`, 'Chef'],
+        ["mdi-file-document-box-check-outline", "Cashier", `/cashier/${this.$store.getters.id}`, 'Cashier'],
+      ],
+      showMenus:[]
     };
   },
   watch: {
     $route(to, from) {
-      this.selectedMenu = this.menus.findIndex(menu => menu[2] == to.path);
+      this.selectedMenu = this.showMenus.findIndex(menu => menu[2] == to.path);
     }
   }
 };

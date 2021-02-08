@@ -121,14 +121,17 @@ export default {
     markAccept(item){
       const data = {
         id: item.id,
-        status_id:2 // change proceeding to In kitchen
+        status_id:2, // change proceeding to In kitchen
+        cookedBy:Number(this.$store.getters.id)
       }
+      console.log(data)
       this.socket.emit("accept_order", data)
     },
     markDone(item){
       const data = {
         id: item.id,
-        status_id:3 // change proceeding to In kitchen
+        status_id:3, // change proceeding to In kitchen
+        cookedBy:Number(this.$store.getters.id)
       }
       this.socket.emit("accept_order", data)
     },
@@ -137,6 +140,7 @@ export default {
         const data = {
           id: item.id,
           status_id: 999, // change cancel to In kitchen
+          cookedBy:Number(this.$store.getters.id)
         };
         this.socket.emit("accept_order", data);
       }else {

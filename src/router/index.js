@@ -22,14 +22,17 @@ import productInfo from '@/views/Customer/productInfo';
 import CashierDashboard from '@/views/Cashier/CashierDashboard';
 import OrderInfoCash from '@/views/Cashier/OrderInfoCash';
 import CreateCustomer from '@/views/Cashier/CreateCustomer';
-import OrderInfo from '@/views/Manager/OrderInfo'
-import notFoundPage from '@/views/notFoundPage'
-import Dashboard from '@/views/Customer/Dashboard'
+import OrderInfo from '@/views/Manager/OrderInfo';
+import notFoundPage from '@/views/notFoundPage';
+import Dashboard from '@/views/Customer/Dashboard';
 
 
 import auth from './middleware/auth'
 import managerAuth from "./middleware/managerAuth";
 import customerValid from "./middleware/customerValid"
+import chefAuth from "./middleware/chefAuth"
+import cashierAuth from "./middleware/chefAuth"
+import waiterAuth from "./middleware/waiterAuth"
 Vue.use(VueRouter);
 
 const routes = [
@@ -170,28 +173,43 @@ const routes = [
     path: '/waiter/:username',
     name: 'waiter',
     component: WaiterDashboard,
+    meta:{
+      middleware:[auth,waiterAuth]
+    }
   },
   //-------------------------------------chef accesable----------------------------
   {
     path: '/chef/:username',
     name: 'chef',
     component: ChefDashboard,
+    meta:{
+      middleware:[auth,chefAuth]
+    }
   },
   //-------------------------------------cashier accesable----------------------------
   {
     path: '/cashier/:username',
     name: 'cashier',
     component: CashierDashboard,
+    meta:{
+      middleware:[auth,cashierAuth]
+    }
   },
   {
     path: '/orderinfocash/:id',
     name: 'orderinfocash',
     component: OrderInfoCash,
+    meta:{
+      middleware:[auth,cashierAuth]
+    }
   },
   {
     path: '/createCustomer',
     name: 'createCustomer',
     component: CreateCustomer,
+    meta:{
+      middleware:[auth,cashierAuth]
+    }
   },
   //-------------------------------------customer(all) accesable----------------------------
   {
@@ -226,5 +244,5 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 });
-router.beforeEach(VueRouteMiddleware({auth,managerAuth,customerValid}));
+router.beforeEach(VueRouteMiddleware({auth,managerAuth,customerValid,chefAuth}));
 export default router;

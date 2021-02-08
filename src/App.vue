@@ -1,7 +1,7 @@
 <template>
   <v-app> 
     <Header v-if="$store.getters.auth.isLogged"/>
-    <Menu v-if="$store.getters.auth.isManager"/>
+    <Menu v-if="$store.getters.auth.isLogged"/>
     <Content/>
   </v-app>
 </template>

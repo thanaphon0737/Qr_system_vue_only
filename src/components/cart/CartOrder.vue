@@ -131,6 +131,7 @@ export default {
         const data = {
           id: item.id,
           status_id: 999, // change cancel to In kitchen
+          cookedBy:999
         };
         this.socket.emit("accept_order", data);
       }else {
