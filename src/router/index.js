@@ -31,7 +31,7 @@ import auth from './middleware/auth'
 import managerAuth from "./middleware/managerAuth";
 import customerValid from "./middleware/customerValid"
 import chefAuth from "./middleware/chefAuth"
-import cashierAuth from "./middleware/chefAuth"
+import cashierAuth from "./middleware/cashierAuth"
 import waiterAuth from "./middleware/waiterAuth"
 Vue.use(VueRouter);
 
@@ -170,7 +170,7 @@ const routes = [
   },
   //-------------------------------------waiter accesable----------------------------
   {
-    path: '/waiter/:username',
+    path: '/waiter/:id',
     name: 'waiter',
     component: WaiterDashboard,
     meta:{
@@ -179,7 +179,7 @@ const routes = [
   },
   //-------------------------------------chef accesable----------------------------
   {
-    path: '/chef/:username',
+    path: '/chef/:id',
     name: 'chef',
     component: ChefDashboard,
     meta:{
@@ -188,7 +188,7 @@ const routes = [
   },
   //-------------------------------------cashier accesable----------------------------
   {
-    path: '/cashier/:username',
+    path: '/cashier/:id',
     name: 'cashier',
     component: CashierDashboard,
     meta:{

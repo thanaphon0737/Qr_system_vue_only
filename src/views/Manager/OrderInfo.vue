@@ -25,6 +25,7 @@
             <td>{{ item.product_id }}</td>
             <td>{{ item.product_name}}</td>
             <td>{{ item.order_qty }}</td>
+            <td>{{item.cookedBy}}</td>
             <td>
               {{ item.product_status_name }}
             </td>
@@ -63,6 +64,7 @@ export default {
         },
         { text: "ProductName", value: "" },
         { text: "amount", value: "" },
+        { text: "cookedById", value: ""},
         { text: "orderStatus", value: "" },
         { text: "Price", value: "" },
         
@@ -71,14 +73,14 @@ export default {
   },
   async mounted() {
     this.loadData();
+    
   },
   methods: {
     
-
-
     async loadData() {
       let result = await api.getOrderProductById(this.$route.params.id);
       this.mDataArray = result.data;
+      console.log(this.mDataArray)
     }
   }
 };

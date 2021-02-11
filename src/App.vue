@@ -2,7 +2,8 @@
   <v-app> 
     <Header v-if="$store.getters.auth.isLogged"/>
     <Menu v-if="$store.getters.auth.isLogged"/>
-    <Content/>
+    <Content />
+    
   </v-app>
 </template>
 
@@ -10,6 +11,7 @@
 import Header from "@/components/core/Header"
 import Menu from "@/components/core/Menu"
 import Content from "@/components/core/Content"
+
 import io from "socket.io-client";
 import {ipglobal} from "@/services/constants"
 export default {
@@ -17,7 +19,7 @@ export default {
   components:{
     Header,
     Menu,
-    Content
+    Content,
   },
   created(){
     this.socket = io(`http://${ipglobal}:8081`);

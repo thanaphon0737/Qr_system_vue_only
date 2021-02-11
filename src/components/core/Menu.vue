@@ -1,5 +1,10 @@
 <template>
-  <v-navigation-drawer app permanent color="#febd2e">
+  <v-navigation-drawer 
+  v-model="drawer"
+  app 
+  color="#febd2e"
+  width="260"
+  :src="barImage">
     <v-list shaped>
       <v-list-item-group v-model="selectedMenu" mandatory color="primary">
         <v-list-item
@@ -22,11 +27,23 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 export default {
+  computed:{
+    ...mapState(['barColor', 'barImage']),
+      drawer: {
+        get () {
+          return this.$store.state.drawer
+        },
+        set (val) {
+          this.$store.commit('SET_DRAWER', val)
+        },
+      },
+  },
   methods: {
     onClickMenu(link) {
       
-      this.$router.push(link).catch(err => {});
+      this.$router.push(link);
     },
     checklistMenu(){
       this.menus.forEach(el =>{
@@ -47,7 +64,7 @@ export default {
       selectedMenu: 0,
       menus: [
         ["mdi-file-document-box-check-outline", "About", "/about",'All'],
-        ["mdi-account-edit","User Profile",`employee-edit/${this.$store.getters.id}`,'Manager'],
+        // ["mdi-account-edit","User Profile",`employee-edit/${this.$store.getters.id}`,'Manager'],
         ["mdi-bank", "Accounting", "/accounting",'Manager'],
         ["mdi-chart-areaspline", "Report", "/report",'Manager'],
         ["mdi-tag", "Promotion", "/promotion",'Manager'],
