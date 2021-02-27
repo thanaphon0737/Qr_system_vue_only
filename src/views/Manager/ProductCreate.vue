@@ -38,6 +38,13 @@
               label="จำนวน"
               required
             ></v-text-field>
+            <v-text-field
+              v-model="product.product_limit_time"
+              suffix="s"
+              type="number"
+              label="เวลาในการทำอาหาร"
+              required
+            ></v-text-field>
             <v-menu offset-y>
                   <template v-slot:activator="{ on, attrs }">
                     <v-btn color="primary" dark v-bind="attrs" v-on="on">
@@ -99,6 +106,7 @@ export default {
       product_buy_price:"",
       product_qty:"",
       product_type_id:"",
+      product_limit_time:"",
       image: null
     },
     imageURL: null,
@@ -134,7 +142,10 @@ export default {
       product_buy_price,
       product_qty,
       product_type_id,
+      product_limit_time
       } = this.product;
+      console.log(this.product)
+
       formData.append("product_name", product_name);
       formData.append("product_serving", product_serving);
       formData.append("product_sell_price", product_sell_price);
@@ -142,6 +153,7 @@ export default {
       formData.append("product_qty", product_qty);
       formData.append("product_type_id", product_type_id);
       formData.append("image", this.product.image);
+      formData.append("product_limit_time", product_limit_time)
       await api.addProduct(formData);
       this.$router.back();
     },

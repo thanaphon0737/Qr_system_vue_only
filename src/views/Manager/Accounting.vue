@@ -24,7 +24,7 @@
         <template v-slot:item="{ item }">
           <tr>
             <td>{{ item.id }}</td>
-            <td>{{ item.order_date }}</td>
+            <td>{{ item.order_date | formatDate}}</td>
             <td>{{ item.customer_id}}</td>
             <td>
               {{ item.orderStatus.name }}

@@ -44,24 +44,8 @@
               <th></th>
               <th></th>
               <th></th>
-              <th>Subtotal</th>
-              <th>{{ totalprice | currency("฿") }}</th>
-            </tr>
-            <tr>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th>Vat 7%</th>
-              <th>{{ (totalprice * 0.07) | currency("฿") }}</th>
-            </tr>
-            <tr>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
               <th>Total</th>
-              <th>{{ (totalprice * 1.07) | currency("฿") }}</th>
+              <th>{{ totalprice | currency("฿") }}</th>
             </tr>
           </tfoot>
         </template>
@@ -87,7 +71,7 @@
                       <v-col
                         cols="12"
                         sm="12"
-                        v-for="(item, index) in mDataArray"
+                        v-for="(item, index) in mDialogArray"
                         :key="index"
                       >
                         <v-list-item>
@@ -142,7 +126,7 @@
                           </v-list-item-content>
                         </v-list-item>
                       </v-col>
-                      <v-col cols="12" sm="12"
+                      <!-- <v-col cols="12" sm="12"
                         ><v-list-item>
                           <v-list-item-content>
                             Tax
@@ -163,12 +147,12 @@
                             {{ (totalprice * 1.07) | currency("฿") }}
                           </v-list-item-content>
                         </v-list-item>
-                      </v-col>
+                      </v-col> -->
                     </v-row>
                   </v-card>
 
                   <v-card-actions class="justify-end">
-                    <v-btn color="#febd2e" @click="billOrder()">pay</v-btn>
+                    <v-btn color="#febd2e" @click="checkDeliveredBeforeSent()">pay</v-btn>
                     <v-btn text @click="close()">Close</v-btn>
                   </v-card-actions>
                 </v-card>
@@ -190,6 +174,7 @@ export default {
       search: "",
       dialog: false,
       mDataArray: [],
+      mDialogArray:[],
       totalprice: 0,
       socket: {},
       cancelOrder: [],
@@ -207,6 +192,15 @@ export default {
     this.loadData();
   },
   methods: {
+    async checkDeliveredBeforeSent(){
+      let {data} = await api.checkDelivered(this.$route.params.id);
+      console.log(data)
+      if(data.DeliveredAll){
+        this.billOrder()
+      }else {
+        alert('order in processing...')
+      }
+    },
     async loadData() {
       let result = await api.getOrderProductByCustomerId(this.$route.params.id);
       let showdata = result.data.map((data) => {
@@ -229,6 +223,9 @@ export default {
       function findCancelOrder(data) {
         return data.status_id == 999;
       }
+      function filterCancelOrder(data){
+        return data.status_id !== 999;
+      }
       this.cancelOrder = showdata.filter(findCancelOrder);
       let filtered = showdata.filter(checkIsDelivered);
       filtered.forEach((element) => {
@@ -237,6 +234,7 @@ export default {
         }
       });
       this.mDataArray = filtered;
+      this.mDialogArray = filtered.filter(filterCancelOrder)
     },
     async billOrder() {
       this.socket = this.$store.getters.socket[0];

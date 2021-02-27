@@ -127,11 +127,13 @@ export default {
   },
   methods: {
     markCancel(item) {
+      console.log(item.order_qty)
       if (item.status_id == 1) {
         const data = {
           id: item.id,
           status_id: 999, // change cancel to In kitchen
-          cookedBy:999
+          cookedBy:999,
+          order_qty:item.order_qty
         };
         this.socket.emit("accept_order", data);
       }else {

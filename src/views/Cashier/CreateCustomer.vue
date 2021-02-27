@@ -113,6 +113,7 @@ export default {
       this.getData(data);
     });
     this.socket.on("changeData", () => this.changeData());
+    this.socket.on("throwError unique name", () => this.showError())
   },
   methods: {
     async openDialog(item) {
@@ -204,11 +205,15 @@ export default {
         console.log(err);
       }
     },
+    showError(){
+      alert('error from database.')
+    }
   },
   beforeDestroy() {
     this.socket.off("getData");
     this.socket.off("changeData");
     this.socket.off("changeDataQr");
+    this.socket.off("throwError unique name")
   },
 };
 </script>

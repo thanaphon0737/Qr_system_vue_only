@@ -2,7 +2,6 @@
   <v-navigation-drawer 
   v-model="drawer"
   app 
-  color="#febd2e"
   width="260"
   :src="barImage">
     <v-list shaped>

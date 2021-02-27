@@ -58,6 +58,7 @@
             <td>{{ item.product_buy_price | currency("฿") }}</td>
             <td>{{ item.product_qty | number("0,0") }}</td>
             <td>{{ item.productType.name }}</td>
+            <td>{{ item.product_limit_time}}</td>
             <td>
               <v-icon class="mr-2" @click="editItem(item)">
                 edit
@@ -122,6 +123,7 @@ export default {
         { text: "Buy Price", value: "buyPrice" },
         {text: "Qty", value:'qty'},
         { text:'Product Type', value:'productType'},
+        { text:'Product Limit Time(s)', value:''},
         { text: 'Action', value:''}
       ]
     };

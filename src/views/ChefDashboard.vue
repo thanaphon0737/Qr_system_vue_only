@@ -8,7 +8,13 @@
     <v-container>
       <!-- Table section -->
       <v-card>
-        <v-data-table :search="search" :headers="headers" :items="mDataArray" hide-default-footer disable-pagination>
+        <v-data-table
+          :search="search"
+          :headers="headers"
+          :items="mDataArray"
+          hide-default-footer
+          disable-pagination
+        >
           <!-- table top section -->
           <template v-slot:top>
             <v-toolbar flat color="white">
@@ -32,10 +38,8 @@
               <td>{{ item.product_name }}</td>
               <td>
                 <strong>
-
-                {{ item.status }}
+                  {{ item.status }}
                 </strong>
-                
               </td>
               <td>{{ item.order_qty }}</td>
               <td>{{ item.order_id }}</td>
@@ -96,57 +100,65 @@ export default {
   methods: {
     getData(data) {
       // console.log("get")
-      function checkUnBilled(data){
-        return data.order_product_status_id < 5
+      let numberDevlivered = 4;
+      function checkUnBilled(data) {
+        return data.order_product_status_id < 4;
       }
       let showdata = data.filter(checkUnBilled).map((data) => {
-       
-          return {
+        return {
           id: data.id,
           product_name: data.product.product_name,
           order_qty: data.order_qty,
           status: data.orderProductStatus.name,
           order_id: data.order_id,
+          limit_time: data.product.product_limit_time,
+          status_id: data.orderProductStatus.id,
         };
-        
-        
       });
-      
+      console.log(showdata);
       this.mDataArray = showdata;
     },
     changeData() {
       this.socket.emit("initial_data_chef");
     },
 
-    markAccept(item){
-      const data = {
-        id: item.id,
-        status_id:2, // change proceeding to In kitchen
-        cookedBy:Number(this.$store.getters.id)
+    markAccept(item) {
+      if (item.status_id == 1) {
+        const data = {
+          id: item.id,
+          status_id: 2, // change proceeding to In kitchen
+          cookedBy: Number(this.$store.getters.id),
+        };
+        this.socket.emit("accept_order", data);
+      }else {
+        alert('pleas accept order click this.')
       }
-      console.log(data)
-      this.socket.emit("accept_order", data)
     },
-    markDone(item){
-      const data = {
-        id: item.id,
-        status_id:3, // change proceeding to In kitchen
-        cookedBy:Number(this.$store.getters.id)
+    markDone(item) {
+      if (item.status_id == 2) {
+        const data = {
+          id: item.id,
+          status_id: 3, // change proceeding to In kitchen
+          cookedBy: Number(this.$store.getters.id),
+        };
+        this.socket.emit("accept_order", data);
+      } else {
+        alert("please click in the kitchen before process. ");
       }
-      this.socket.emit("accept_order", data)
     },
-    markCancel(item){
+    markCancel(item) {
       if (item.status_id == 1) {
         const data = {
           id: item.id,
           status_id: 999, // change cancel to In kitchen
-          cookedBy:Number(this.$store.getters.id)
+          cookedBy: Number(this.$store.getters.id),
+          order_qty:item.order_qty
         };
         this.socket.emit("accept_order", data);
-      }else {
-        alert('cant cancel now')
+      } else {
+        alert("cant cancel now");
       }
-    }
+    },
   },
   beforeDestroy() {
     this.socket.off("getDataChef");

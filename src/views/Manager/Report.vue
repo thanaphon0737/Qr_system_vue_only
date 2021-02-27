@@ -174,8 +174,6 @@ export default {
       allProduct.data.forEach((el) => {
         labels.push(el.product_name.toString());
       });
-      console.table(labels);
-      console.log(labels)
       return labels;
     },
     async fillData() {
@@ -201,7 +199,7 @@ export default {
         labels:this.allProduct,
         datasets: await this.getdataForBar(),
       };
-      console.log(this.databar)
+      // console.log(this.databar)
     },
   },
 };
