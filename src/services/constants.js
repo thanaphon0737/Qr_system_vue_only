@@ -5,7 +5,7 @@ export const UPLOAD_PHOTO_FAIL_MESSAGE = "An error has occurred. The photo was u
 export const NOT_CONNECT_NETWORK = "NOT_CONNECT_NETWORK";
 export const ip = '192.168.1.22'
 export const ip2 = '10.10.186.68'
-export const ipglobal = ip2
+export const ipglobal = ip
 export const apiUrl = `http://${ipglobal}:8081/api/v2`;
 export const imageUrl = `http://${ipglobal}:8081/images`;
 

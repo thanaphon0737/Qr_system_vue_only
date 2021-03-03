@@ -85,7 +85,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .v-list-item-group .v-list-item--active {
   color: #fff !important;
   font-weight: bold;
