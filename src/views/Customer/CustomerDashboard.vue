@@ -73,12 +73,7 @@ export default {
   data() {
     return {
       items: [
-        {
-          color: "#34eb59",
-          src: "https://cdn.vuetifyjs.com/images/cards/foster.jpg",
-          title: "Supermodel",
-          artist: "Foster the People",
-        },
+        
       ],
       
     };

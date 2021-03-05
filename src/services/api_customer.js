@@ -17,8 +17,8 @@ export const getCustomerByTableId = async (id) =>{
     let url = result.data.message.url_image;
     const token = url.toString().split("/")[1]
     localStorage.setItem("table_id", id);
-    localStorage.setItem("id", result.data.message.id)
-    localStorage.setItem("tokenCustomer",token)
+    localStorage.setItem("id", result.data.message.id);
+    localStorage.setItem("tokenCustomer",token);
     localStorage.setItem("role_name", "customer");
     return true;
   }else{
@@ -28,9 +28,13 @@ export const getCustomerByTableId = async (id) =>{
 }
 
 export const getTableAll = async () =>{
-  return httpClient.get('table')
+  return httpClient.get('table');
 }
 
 export const getCustomerAll = async () =>{
-  return httpClient.get('customer')
+  return httpClient.get('customer');
+}
+
+export const customerReqToken = async (url) =>{
+  return httpClient.post('/customerRequestToken',url);
 }

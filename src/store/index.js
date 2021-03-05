@@ -101,9 +101,9 @@ export default new Vuex.Store({
       let result = await api.login({ username, password });
       if (result == true) {
         commit("SET_LOGGED_IN");
-        commit("SET_USERNAME", username);
-        commit("SET_ROLE_NAME", localStorage.getItem("role_name"))
-        commit("SET_ID", localStorage.getItem("id"))
+        commit("SET_USERNAME", localStorage.getItem(server.USERNAME));
+        commit("SET_ROLE_NAME", localStorage.getItem(server.ROLENAME))
+        commit("SET_ID", localStorage.getItem(server.ID))
       } else {
         dispatch("doLogout", {});
       }
@@ -118,11 +118,11 @@ export default new Vuex.Store({
     restoreLogin({ commit }) {
       if (api.isLoggedIn() == true) {
         let username = localStorage.getItem(server.USERNAME);
-        let role_name = localStorage.getItem('role_name');
+        let role_name = localStorage.getItem(server.ROLENAME);
         commit("SET_LOGGED_IN");
         commit("SET_USERNAME", username);
         commit("SET_ROLE_NAME", role_name);
-        commit("SET_ID", localStorage.getItem("id"));
+        commit("SET_ID", localStorage.getItem(server.ID));
       }
     },
     addfoods({ commit }) {
@@ -134,12 +134,11 @@ export default new Vuex.Store({
     },
     async setCustomerId({ commit }, { table_id ,token}) {
       let Cid = await api.getCustomerByTableId(table_id);
-      console.log(Cid)
-      let id = localStorage.getItem("id");
+      let id = localStorage.getItem(server.ID);
       if (Cid == true && api.validCustomer(token)) {
         
-        commit("SET_ROLE_NAME", localStorage.getItem('role_name'));
-        commit("SET_ID", localStorage.getItem('id'));
+        commit("SET_ROLE_NAME", localStorage.getItem(server.ROLENAME));
+        commit("SET_ID", localStorage.getItem(server.ID));
         router.push(`/customer/${id}`)
       }else {
         // router.push('/dashboard')

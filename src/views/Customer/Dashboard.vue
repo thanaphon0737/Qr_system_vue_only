@@ -17,13 +17,10 @@
               >
             </v-card>
             <v-container class="ml-2 mt-5">
-              <span>Your NO. table is <strong>{{tableId}}</strong></span>
-              <v-btn  
-              outlined
-              rounded
-              small
-              @click="goToMenu()"  
-                >
+              <span
+                >Your NO. table is <strong>{{ tableId }}</strong></span
+              >
+              <v-btn outlined rounded small @click="goToMenu()">
                 Go to Menu!!
               </v-btn>
             </v-container>
@@ -34,6 +31,7 @@
   </div>
 </template>
 <script>
+import api from "@/services/api";
 export default {
   data() {
     return {
@@ -41,14 +39,31 @@ export default {
     };
   },
   methods: {
-    goToMenu(){
-      this.$store.dispatch({
-        type: "setCustomerId",
-        table_id: this.tableId,
-        token: this.$route.params.timestamp
+    async reqToken() {
+      return new Promise(async (resolve, reject) => {
+        try {
+          const token = await api.customerReqToken(
+            {
+              url: `${this.tableId}/${this.$route.params.timestamp}`
+            }
+          );
+          localStorage.setItem("token", token.data.token);
+          resolve(true);
+        } catch (err) {
+          reject(err);
+        }
       });
-
-    }
+    },
+    async goToMenu() {
+      const result = await this.reqToken();
+      if (result) {
+        this.$store.dispatch({
+          type: "setCustomerId",
+          table_id: this.tableId,
+          token: this.$route.params.timestamp,
+        });
+      }
+    },
   },
 };
 </script>
