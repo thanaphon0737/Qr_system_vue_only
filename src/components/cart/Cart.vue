@@ -44,14 +44,14 @@
                     </h2>
                   </v-list-item-content>
                 </v-list-item>
-                <v-list-item>
+                <!-- <v-list-item>
                   <v-list-item-content>tax 7%</v-list-item-content>
                   <v-list-item-content>
                     <h2>
                       {{ "฿" + (total * 1.07).toFixed(2) }}
                     </h2>
                   </v-list-item-content>
-                </v-list-item>
+                </v-list-item> -->
               </v-col>
             </v-row>
           </v-container>

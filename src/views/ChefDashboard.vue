@@ -28,6 +28,13 @@
                 hide-details
               ></v-text-field>
               <v-spacer></v-spacer>
+              <v-btn color="green" dark @click="changeGroupNumb(1)"> 1 </v-btn
+              ><v-spacer></v-spacer>
+              <v-btn color="blue" dark @click="changeGroupNumb(3)"> 3 </v-btn
+              ><v-spacer></v-spacer>
+              <v-btn color="purple" dark @click="changeGroupNumb(5)">
+                5
+              </v-btn>
             </v-toolbar>
           </template>
 
@@ -70,7 +77,9 @@ export default {
       search: "",
       items: [],
       mDataArray: [],
+      tDataArray: [],
       socket: {},
+
       headers: [
         {
           text: "Id",
@@ -98,6 +107,56 @@ export default {
   },
 
   methods: {
+    changeGroupNumb(gNum = 1) {
+      localStorage.setItem("numberOfEpoch", gNum);
+      this.groupOption(this.tDataArray);
+    },
+    groupOption(showdata) {
+      function groupBy(collection, property) {
+        var i = 0,
+          val,
+          index,
+          values = [],
+          result = [];
+
+        let numberOfEpoch = localStorage.getItem("numberOfEpoch") || 1;
+        for (let i = 0; i < collection.length; i++) {
+          val = collection[i][property];
+          index = values.indexOf(val);
+          if (index > -1 && result[index].length < numberOfEpoch) {
+            result[index].push(collection[i]);
+          } else {
+            values.push(val);
+            result.push([collection[i]]);
+          }
+        }
+        return result;
+      }
+
+      var obj = groupBy(showdata, "product_name");
+
+      let showgroup = obj.map((data) => {
+        let idarr = [];
+        let order_qtyarr = [];
+        let order_idarr = [];
+        data.forEach((el) => {
+          idarr.push(el.id);
+          order_qtyarr.push(el.order_qty);
+          order_idarr.push(el.order_id);
+        });
+        return {
+          id: idarr,
+          product_name: data[0].product_name,
+          order_qty: order_qtyarr,
+          status: data[0].status,
+          order_id: order_idarr,
+          limit_time: data[0].limit_time,
+          status_id: data[0].status_id,
+        };
+      });
+      this.mDataArray = showgroup;
+      return showgroup;
+    },
     getData(data) {
       // console.log("get")
       let numberDevlivered = 4;
@@ -115,8 +174,8 @@ export default {
           status_id: data.orderProductStatus.id,
         };
       });
-      console.log(showdata);
-      this.mDataArray = showdata;
+      this.tDataArray = showdata;
+      this.mDataArray = this.groupOption(showdata);
     },
     changeData() {
       this.socket.emit("initial_data_chef");
@@ -130,8 +189,8 @@ export default {
           cookedBy: Number(this.$store.getters.id),
         };
         this.socket.emit("accept_order", data);
-      }else {
-        alert('pleas accept order click this.')
+      } else {
+        alert("pleas accept order click this.");
       }
     },
     markDone(item) {
@@ -147,16 +206,33 @@ export default {
       }
     },
     markCancel(item) {
-      if (item.status_id == 1) {
-        const data = {
-          id: item.id,
-          status_id: 999, // change cancel to In kitchen
-          cookedBy: Number(this.$store.getters.id),
-          order_qty:item.order_qty
-        };
-        this.socket.emit("accept_order", data);
+      if (item.id.length > 0) {
+        for (let i = 0; i < item.id.length; i++) {
+          if (item.status_id == 1) {
+            const data = {
+              id: item.id[i],
+              status_id: 999, // change cancel to In kitchen
+              cookedBy: Number(this.$store.getters.id),
+              order_qty: item.order_qty[i],
+            };
+            this.socket.emit("accept_order", data);
+          } else {
+            alert("cant cancel now");
+            return;
+          }
+        }
       } else {
-        alert("cant cancel now");
+        if (item.status_id == 1) {
+          const data = {
+            id: item.id[0],
+            status_id: 999, // change cancel to In kitchen
+            cookedBy: Number(this.$store.getters.id),
+            order_qty: item.order_qty[0],
+          };
+          this.socket.emit("accept_order", data);
+        } else {
+          alert("cant cancel now");
+        }
       }
     },
   },

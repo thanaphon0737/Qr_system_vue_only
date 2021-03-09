@@ -68,5 +68,5 @@ export const updatePriceinOrder = (data) =>{
 }
 
 export const checkDelivered = (cust_id) =>{
-  return httpClient.get(`/checkDelivered/${cust_id}`)
+  return httpClient.get(`checkDelivered/${cust_id}`)
 }
