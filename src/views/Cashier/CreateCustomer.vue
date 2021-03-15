@@ -92,7 +92,7 @@ export default {
   },
   data() {
     return {
-      path: `http://${ipglobal}:8080/dashboard/`,
+      path: `http://${ipglobal}/dashboard/`,
       valueQr: "",
       size: 300,
       tableArray: [],
