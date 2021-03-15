@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-app-bar dark color="pink">
+        <v-app-bar dark color="#890620">
         <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
         <v-toolbar-title>Menu</v-toolbar-title>

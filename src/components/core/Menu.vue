@@ -2,8 +2,8 @@
   <v-navigation-drawer 
   v-model="drawer"
   app 
-  width="260"
-  :src="barImage">
+  width="258"
+  src="../../assets/barImage.jpg">
     <v-list shaped>
       <v-list-item-group v-model="selectedMenu" mandatory color="primary">
         <v-list-item
@@ -62,17 +62,17 @@ export default {
     return {
       selectedMenu: 0,
       menus: [
-        ["mdi-file-document-box-check-outline", "About", "/about",'All'],
+        ["mdi-information", "About", "/about",'All'],
         // ["mdi-account-edit","User Profile",`employee-edit/${this.$store.getters.id}`,'Manager'],
         ["mdi-bank", "Accounting", "/accounting",'Manager'],
         ["mdi-chart-areaspline", "Report", "/report",'Manager'],
         ["mdi-tag", "Promotion", "/promotion",'Manager'],
         ["mdi-account-box-multiple", "Manage Employee", "/employee",'Manager'],
         
-        ["mdi-file-document-box-check-outline", "Product", "/product",'Manager'],
-        ["mdi-file-document-box-check-outline", "Waiter", `/waiter/${this.$store.getters.id}`, 'Waiter'],
-        ["mdi-file-document-box-check-outline", "Chef", `/chef/${this.$store.getters.id}`, 'Chef'],
-        ["mdi-file-document-box-check-outline", "Cashier", `/cashier/${this.$store.getters.id}`, 'Cashier'],
+        ["mdi-application", "Product", "/product",'Manager'],
+        ["mdi-file-cart", "Waiter", `/waiter/${this.$store.getters.id}`, 'Waiter'],
+        ["mdi-file-chef-hat", "Chef", `/chef/${this.$store.getters.id}`, 'Chef'],
+        ["mdi-file-account", "Cashier", `/cashier/${this.$store.getters.id}`, 'Cashier'],
       ],
       showMenus:[]
     };

@@ -4,7 +4,7 @@
       <v-container>
         <v-row dense>
           <v-col cols="12">
-            <v-card color="#385F73" dark>
+            <v-card color="#333333" dark>
               <v-card-title class="headline">
                 Order
               </v-card-title>
@@ -19,7 +19,7 @@
             <v-container class="ml-2 mt-5"> </v-container>
           </v-col>
           <v-col v-for="(item, i) in items" :key="i" cols="12">
-            <v-card :color="'#0099FF'" dark>
+            <v-card :color="'#f4e7e2'">
               <div class="d-flex flex-no-wrap justify-space-between">
                 <div>
                   <v-card-title class="headline"

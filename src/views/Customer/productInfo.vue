@@ -5,7 +5,7 @@
       <v-container>
         <v-row>
           <v-col>
-            <v-card :color="'#34eb59'" dark>
+            <v-card :color="'#f4e7e2'" >
               <div class="d-flex flex-no-wrap justify-space-between">
                 <v-row>
                   <v-col>

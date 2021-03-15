@@ -1,29 +1,28 @@
 <template>
   <div class="about text-center">
     <v-card max-width="400" class="mx-auto">
-      
-
-      
-      <Appbar/>
+      <Appbar />
       <v-container>
         <v-row dense>
           <v-col cols="12">
-            <v-card color="#385F73" dark>
+            <v-card color="#333333" dark>
               <v-card-title class="headline">
                 Menu today!!
               </v-card-title>
 
               <v-card-subtitle
-                >Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Deserunt facere, illo cum accusantium in assumenda perspiciatis
-                rem, totam corrupti asperiores sit ratione adipisci odio error
-                eius nobis ea reiciendis accusamus?</v-card-subtitle
+                >If you talk about food just as much as you eat it, you're in
+                good company. We've got famous chefs and stars—Julia Child,
+                Sophia Loren, Virginia Woolf—to thank for some of the greatest
+                food quotes of all time. Do what you will with these: Memorize
+                them, pin them, or print them out and tack them up all over your
+                kitchen.</v-card-subtitle
               >
             </v-card>
           </v-col>
 
           <v-col v-for="(item, i) in items" :key="i" cols="12">
-            <v-card :color="'#34eb59'" dark>
+            <v-card :color="'#f4e7e2'">
               <div class="d-flex flex-no-wrap justify-space-between">
                 <div>
                   <v-card-title
@@ -65,37 +64,28 @@
 // import io from 'socket.io-client';
 
 import api from "@/services/api";
-import Appbar from "@/components/mobile/Appbar.vue"
+import Appbar from "@/components/mobile/Appbar.vue";
 export default {
-  components:{
-    Appbar
+  components: {
+    Appbar,
   },
   data() {
     return {
-      items: [
-        
-      ],
-      
+      items: [],
     };
   },
-  created() {
-    
-  },
+  created() {},
   mounted() {
-    
-
     this.loadProducts();
-    
   },
   methods: {
     async loadProducts() {
       let result = await api.getProducts();
       this.items = result.data;
-      
     },
-    infofood(item){
+    infofood(item) {
       this.$router.push(`/productInfo/${item.id}`);
-    }
+    },
   },
 };
 </script>

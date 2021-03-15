@@ -2,7 +2,7 @@
   <div>
     <v-dialog v-model="dialog" persistent max-width="400" class="mx-auto">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="green" dark v-bind="attrs" v-on="on">
+        <v-btn color="#747454" dark v-bind="attrs" v-on="on">
           <v-btn icon>
             <v-icon>mdi-food</v-icon>
           </v-btn>

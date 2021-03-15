@@ -13,7 +13,7 @@ export default new Vuex.Store({
     collection_food: [],
     socket: [],
     barColor: 'rgba(0, 0, 0, .8), rgba(0, 0, 0, .8)',
-    barImage: 'https://demos.creative-tim.com/material-dashboard/assets/img/sidebar-1.jpg',
+    barImage: 'https://drive.google.com/file/d/17DpM3R7OzJ8tLj-Ug1kNo78b8J2mhnBY/view?usp=sharing',
     drawer: null,
     user: {
       isLogged: false,
