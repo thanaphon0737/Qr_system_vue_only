@@ -84,7 +84,7 @@
 import api from "@/services/api";
 import QrcodeVue from "qrcode.vue";
 import {ipglobal} from '@/services/constants'
-const ip = '192.168.1.22'
+
 export default {
   name: "createcustomer",
   components: {
@@ -92,7 +92,7 @@ export default {
   },
   data() {
     return {
-      path: `http://${ip}:8080/dashboard/`,
+      path: `http://${ipglobal}:8080/dashboard/`,
       valueQr: "",
       size: 300,
       tableArray: [],
