@@ -23,6 +23,9 @@
               <div class="d-flex flex-no-wrap justify-space-between">
                 <div>
                   <v-card-title class="headline"
+                    >table no. {{ item.tab_id }}</v-card-title
+                  >
+                  <v-card-title 
                     >customer no. {{ item.customer_id }}</v-card-title
                   >
                   <v-card-title>
@@ -64,7 +67,9 @@
   </div>
 </template>
 <script>
+import api from "@/services/api";
 export default {
+  
   data() {
     return {
       items: [],
@@ -80,10 +85,17 @@ export default {
     this.socket.on("changeData", () => this.changeData());
   },
   methods: {
-    getData(data) {
+    async getData(data) {
       // console.log("get")
-      
+      let customer = await api.getCustomerAll();
+      let table_id;
+      console.log(customer.data)
       let showdata = data.map((data) => {
+        customer.data.forEach(el => {
+          if (data.order.customer_id == el.id){
+            table_id = el.table_id
+          }
+        })
           return {
             id: data.id,
             product_name: data.product.product_name,
@@ -94,6 +106,7 @@ export default {
             price: data.price,
             customer_id: data.order.customer_id,
             product_image: data.product.product_image,
+            tab_id: table_id
           };
         
       });
@@ -103,6 +116,7 @@ export default {
         return data.status_id == 3;
       }
       this.items = showdata.filter(checkDelivered);
+      console.log(this.items)
     },
     changeData() {
       this.socket.emit("initial_data_chef");

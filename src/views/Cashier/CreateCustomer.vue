@@ -6,6 +6,9 @@
         <div>
           {{ this.mDataArray.message }}
         </div>
+        <div>
+          <v-btn @click="addtable()">add table</v-btn>
+        </div>
         <v-row>
           <v-col v-for="(item, index) in tableArray" :key="index" cols="2">
             <v-card outlined :color="color(item.status)">
@@ -117,6 +120,19 @@ export default {
     this.socket.on("throwError unique name", () => this.showError())
   },
   methods: {
+    async addtable(){
+      try{
+        let data = {
+          capacity: 1
+        }
+        let result = await api.addTableOne(data);
+        alert("add 1 table... this page will reload...")
+        location.reload()
+      }catch(err){
+        alert(err)
+      }
+      
+    },
     async openDialog(item) {
       this.dialog = true;
       this.current_table_id = item.id;

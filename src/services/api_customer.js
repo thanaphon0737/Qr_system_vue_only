@@ -31,6 +31,10 @@ export const getTableAll = async () =>{
   return httpClient.get('table');
 }
 
+export const addTableOne = (data) =>{
+  return httpClient.post('table')
+}
+
 export const getCustomerAll = async () =>{
   return httpClient.get('customer');
 }
