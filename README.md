@@ -1,4 +1,5 @@
 # QR Ordering System For Restaurant
+* Author Thanaphon Thanusan *
 ## installing
 1. clone this project
 2. cd in directory
