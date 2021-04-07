@@ -28,3 +28,10 @@ or npm run build
 # note after build we will get dist directory that can run by traditional webserver engine eg. NGINX, Apache
 
 ## [link to BackEnd](https://github.com/thanaphon0737/Qr_system_backend)
+# preview
+<img src="https://github.com/thanaphon0737/Qr_system_vue_only/blob/main/preview/thumbnail.png" width="90%"></img>
+<img src="https://github.com/thanaphon0737/Qr_system_vue_only/blob/main/preview/15.png" width="90%"></img>
+<img src="https://github.com/thanaphon0737/Qr_system_vue_only/blob/main/preview/Chef.png" width="90%"></img>
+<img src="https://github.com/thanaphon0737/Qr_system_vue_only/blob/main/preview/Customer.png" width="90%"></img>
+<img src="https://github.com/thanaphon0737/Qr_system_vue_only/blob/main/preview/Manager table and graph.png" width="90%"></img>
+<img src="https://github.com/thanaphon0737/Qr_system_vue_only/blob/main/preview/Waiter.png" width="90%"></img>
