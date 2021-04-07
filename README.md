@@ -25,10 +25,6 @@ yarn run build
 or npm run build
 ```
 
-### deploy with docker
-```
-docker compose up -d --build
-```
 # note after build we will get dist directory that can run by traditional webserver engine eg. NGINX, Apache
 
 ## [link to BackEnd](https://github.com/thanaphon0737/Qr_system_backend)
