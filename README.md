@@ -1,4 +1,5 @@
 # QR Ordering System For Restaurant
+- have two git because this project separate two task that have frontend and backend
 *Author Thanaphon Thanusan*
 ## installing
 1. clone this project
@@ -22,6 +23,11 @@ npm run serve
 ```
 yarn run build
 or npm run build
+```
+
+### deploy with docker
+```
+docker compose up -d --build
 ```
 # note after build we will get dist directory that can run by traditional webserver engine eg. NGINX, Apache
 
